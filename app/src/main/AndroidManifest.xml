@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.mrsoftit.dukander">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="true" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:requestLegacyExternalStorage="true"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity android:name=".DeliveryBoyListActivity"></activity>
+        <activity android:name=".Review_Product_Activity" />
+        <activity android:name=".ShopOrderlistActivity" />
+        <activity android:name=".OrderListActivity" />
+        <activity android:name=".ConfirmOrderActivity" />
+        <activity
+            android:name=".ProductFullViewOrderActivity"
+            android:configChanges="screenSize|orientation|keyboardHidden"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
+        <activity android:name=".GlobleCustomerActivity" />
+        <activity android:name=".ShopViewActivity" />
+        <activity android:name=".ShopListActivity" />
+        <activity android:name=".SelecedCatagoryActivity" />
+        <activity android:name=".CustomerLoginActivity" />
+        <activity
+            android:name=".GlobleProductListActivity"
+            android:configChanges="screenSize|orientation|keyboardHidden"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
+        <activity android:name=".CutomerOrShopManSeletionActivity" />
+        <activity android:name=".TotalSaleActivity" />
+        <activity android:name=".ProfitActivity" />
+        <activity android:name=".PinSetActivity" />
+        <activity android:name=".ChangePinActivity" />
+        <activity android:name=".rechargeActivity" />
+        <activity android:name=".UnknownCustomerActivity" />
+        <activity android:name=".PinViewActivity" />
+        <activity android:name=".CustomerProfileViewActivity" />
+        <activity android:name=".ConfirmUnerSaleActivity" />
+        <activity android:name=".TodaySaleActivity" />
+        <activity android:name=".PDFActivity" />
+        <activity android:name=".RegestationActivity" />
+        <activity android:name=".WitdrawActivity" />
+        <activity android:name=".InvesmentActivity" />
+        <activity android:name=".SeleTwoActivity" />
+        <activity android:name=".SaleoOneActivity" />
+        <activity android:name=".ContactUsActivity" />
+        <activity android:name=".MyInfoActivity" />
+        <activity android:name=".LoginActivity" />
+        <activity android:name=".ProductAddActivity" />
+        <activity android:name=".ProductListActivity" />
+        <activity android:name=".CustomerAddActivity" />
+        <activity android:name=".CustumarActivity" />
+        <activity android:name=".SplashScreenActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="sellersmarkets.page.link"
+                    android:scheme="https" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".MainActivity" />
+
+        <service
+            android:name=".MyFirebaseMessagingService"
+            android:permission="com.google.android.c2dm.permission.SEND"
+            android:stopWithTask="false">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+            </intent-filter>
+        </service>
+
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="com.mrsoftit.dukander"
+            android:exported="false"
+            android:grantUriPermissions="true"
+            android:requestLegacyExternalStorage="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/provider_paths" />
+            <meta-data
+                android:name="preloaded_fonts"
+                android:resource="@array/preloaded_fonts" />
+        </provider>
+    </application>
+
+</manifest>

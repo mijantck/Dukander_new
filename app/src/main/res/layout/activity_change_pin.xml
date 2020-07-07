@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ChangePinActivity"
+    android:orientation="vertical">
+
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar_support"
+        android:layout_width="match_parent"
+        app:titleTextColor="#ffff"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@drawable/main_header_bk"
+        >
+
+        <TextView
+            android:textSize="20sp"
+            android:textColor="#FFFF"
+            android:gravity="center"
+            android:text="Change pin code"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+    </androidx.appcompat.widget.Toolbar>
+
+    <RelativeLayout
+      android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <androidx.cardview.widget.CardView
+            android:id="@+id/newPinCode"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            app:cardBackgroundColor="@color/register_bk_color"
+            app:cardCornerRadius="10dp">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="10dp"
+                android:padding="5dp"
+                android:background="@color/register_bk_color"
+                android:orientation="vertical">
+                <TextView
+                    android:textColor="@color/whiteCardColor"
+                    android:text="Old pi code"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+                <com.alimuzaffar.lib.pin.PinEntryEditText
+                    android:id="@+id/old_pin_entry"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@null"
+                    android:cursorVisible="false"
+                    android:digits="1234567890"
+                    android:inputType="numberPassword"
+                    android:maxLength="4"
+                    android:textIsSelectable="false"
+                    android:textSize="24dp"
+                    app:pinAnimationType="fromBottom"
+                    app:pinBackgroundDrawable="@drawable/home_bg_pin"
+                    app:pinBackgroundIsSquare="true"
+                    app:pinCharacterSpacing="4dp"
+                    app:pinTextBottomPadding="16dp"
+                    tools:ignore="SpUsage" />
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+        <androidx.cardview.widget.CardView
+            android:layout_marginTop="10dp"
+            android:layout_below="@+id/newPinCode"
+            android:id="@+id/oldPinCode"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            app:cardBackgroundColor="@color/register_bk_color"
+            app:cardCornerRadius="10dp">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="10dp"
+                android:padding="5dp"
+                android:background="@color/register_bk_color"
+                android:orientation="vertical">
+                <TextView
+                    android:textColor="@color/whiteCardColor"
+                    android:text="new pin code"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+                <com.alimuzaffar.lib.pin.PinEntryEditText
+                    android:id="@+id/new_pin_entry"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@null"
+                    android:cursorVisible="false"
+                    android:digits="1234567890"
+                    android:inputType="numberPassword"
+                    android:maxLength="4"
+                    android:textIsSelectable="false"
+                    android:textSize="24dp"
+                    app:pinAnimationType="fromBottom"
+                    app:pinBackgroundDrawable="@drawable/home_bg_pin"
+                    app:pinBackgroundIsSquare="true"
+                    app:pinCharacterSpacing="4dp"
+                    app:pinTextBottomPadding="16dp"
+                    tools:ignore="SpUsage" />
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+        <LinearLayout
+            android:gravity="center"
+            android:layout_below="@+id/oldPinCode"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        <com.google.android.material.button.MaterialButton
+            android:gravity="center"
+            android:id="@+id/newPindButton"
+           android:layout_alignParentRight="true"
+            android:layout_width="wrap_content"
+            android:background="@drawable/main_header_bk"
+            android:text="confirm"
+            style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
+            android:layout_height="wrap_content"/>
+
+        </LinearLayout>
+    </RelativeLayout>
+
+</LinearLayout>

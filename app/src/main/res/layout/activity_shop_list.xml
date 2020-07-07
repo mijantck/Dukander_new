@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".ShopListActivity">
+
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar_support"
+        android:layout_width="match_parent"
+        app:titleTextColor="#ffff"
+        android:background="@drawable/main_header_bk"
+        android:layout_height="?attr/actionBarSize"
+        android:elevation="10dp"
+        >
+
+        <TextView
+            android:textSize="20sp"
+            android:textColor="#FFFF"
+            android:gravity="center"
+            android:text="Shop List "
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+    </androidx.appcompat.widget.Toolbar>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/shopListRecyrview"
+        android:layout_width="match_parent"
+        tools:listitem="@layout/shop_list_single_item"
+        android:layout_height="match_parent"/>
+
+
+</LinearLayout>

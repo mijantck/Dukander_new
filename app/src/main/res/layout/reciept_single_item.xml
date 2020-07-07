@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:weightSum="7">
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="20dp"
+        android:layout_weight="2">
+        <TextView
+            android:id="@+id/receptIemview"
+            android:gravity="center_vertical"
+            android:text="sendalina shop"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="20dp"
+        android:layout_weight="1">
+
+        <TextView
+            android:id="@+id/recepQytview"
+            android:gravity="center"
+            android:text="1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="20dp"
+        android:layout_weight="1">
+        <TextView
+            android:id="@+id/receptsinglepric"
+            android:gravity="center_vertical"
+            android:text="Single price "
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="20dp"
+        android:layout_weight="1.8">
+        <TextView
+            android:gravity="center"
+            android:id="@+id/receptpriceview"
+            android:text="13788.005"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="20dp"
+        android:layout_weight=".8">
+        <TextView
+            android:gravity="center"
+            android:id="@+id/receptpaidview"
+            android:textColor="@color/colorPrimary"
+            android:text="   "
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+    </LinearLayout>
+
+</LinearLayout>

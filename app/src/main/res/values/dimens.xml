@@ -1,0 +1,24 @@
+<resources>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="headerTextSizeNew">30sp</dimen>
+    <!--dimes for design 3-->
+    <dimen name="newsMoreTextSize">12sp</dimen>
+    <dimen name="loginCardRadius">20dp</dimen>
+    <dimen name="loginViewsMargin">20dp</dimen>
+    <dimen name="signup_text_margin_top">10dp</dimen>
+
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="headerTextSize">25sp</dimen>
+
+    <dimen name="text_body_size">14sp</dimen>
+    <dimen name="margin_layout">24dp</dimen>
+    <dimen name="margin_standard">8dp</dimen>
+    <dimen name="margin_ic_splash">120dp</dimen>
+    <dimen name="margin_input_layout">64dp</dimen>
+    <dimen name="text_btn_size">14sp</dimen>
+    <dimen name="margin_btn">64dp</dimen>
+    <dimen name="padding_standard">8dp</dimen>
+    <dimen name="text_caption_size">12sp</dimen>
+    <dimen name="margin_title_app">64dp</dimen>
+
+</resources>

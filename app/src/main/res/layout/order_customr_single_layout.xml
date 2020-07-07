@@ -1,0 +1,464 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    card_view:cardCornerRadius="5dp"
+    card_view:contentPadding="2dp"
+    card_view:cardElevation="2dp"
+    card_view:cardBackgroundColor="@android:color/white"
+    card_view:cardUseCompatPadding="true" >
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:weightSum="10"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_weight="4"
+            android:layout_width="0dp"
+            android:layout_height="120dp">
+
+            <ImageView
+                android:id="@+id/corderProductPicURL"
+                android:scaleType="fitXY"
+                android:src="@drawable/textimage"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:paddingLeft="5dp"
+            android:layout_weight="6"
+            android:layout_width="0dp"
+            android:layout_height="120dp">
+            <TextView
+                android:id="@+id/corderProductName"
+                android:textSize="20dp"
+                android:maxLines="1"
+                android:scrollbars="horizontal"
+                android:textColor="@android:color/holo_blue_dark"
+                android:fontFamily="@font/nunito_sans_bold"
+                android:text="Product Name "
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <LinearLayout
+                android:weightSum="10"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <LinearLayout
+                    android:layout_weight="5"
+                    android:weightSum="2.5"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content">
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent">
+                        <TextView
+                            android:maxLines="1"
+                            android:scrollbars="horizontal"
+                            android:textColor="@color/listview_group_text_color_after"
+                            android:fontFamily="@font/nunito_sans_bold"
+                            android:text="Code :"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"/>
+                        <TextView
+                            android:maxLines="1"
+                            android:scrollbars="horizontal"
+                            android:textColor="@color/listview_group_text_color_after"
+                            android:text="Quan :"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"/>
+                        <TextView
+                            android:maxLines="1"
+                            android:scrollbars="horizontal"
+                            android:textColor="@color/listview_group_text_color_after"
+                            android:text="Price :"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"/>
+
+                        <TextView
+                            android:maxLines="1"
+                            android:scrollbars="horizontal"
+                            android:textColor="@color/listview_group_text_color_after"
+                            android:fontFamily="@font/nunito_sans_bold"
+                            android:text="Date :"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"/>
+
+                    </LinearLayout>
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_weight="1.5"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content">
+                        <TextView
+                            android:id="@+id/corderProductCode"
+                            android:maxLines="1"
+                            android:scrollbars="horizontal"
+                            android:textColor="@color/listview_group_text_color_after"
+                            android:fontFamily="@font/nunito_sans_bold"
+                            android:text="Product Code "
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"/>
+                        <TextView
+                            android:id="@+id/corderProductQuantity"
+                            android:maxLines="1"
+                            android:scrollbars="horizontal"
+                            android:textColor="@color/listview_group_text_color_after"
+                            android:text="Product Quantity "
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"/>
+                        <TextView
+                            android:id="@+id/corderProductPrice"
+                            android:maxLines="1"
+                            android:scrollbars="horizontal"
+                            android:textColor="@color/listview_group_text_color_after"
+                            android:text="Product Price "
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"/>
+
+                        <TextView
+                            android:id="@+id/corderProductDate"
+                            android:maxLines="1"
+                            android:scrollbars="horizontal"
+                            android:textColor="@color/listview_group_text_color_after"
+                            android:fontFamily="@font/nunito_sans_bold"
+                            android:text="Product Date "
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"/>
+                    </LinearLayout>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_weight="5"
+                    android:weightSum="2.5"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content">
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent">
+                        <TextView
+                            android:maxLines="1"
+                            android:scrollbars="horizontal"
+                            android:textColor="@color/listview_group_text_color_after"
+                            android:fontFamily="@font/nunito_sans_bold"
+                            android:text="Color :"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"/>
+                        <TextView
+                            android:maxLines="1"
+                            android:scrollbars="horizontal"
+                            android:textColor="@color/listview_group_text_color_after"
+                            android:text="Size :"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"/>
+                        <TextView
+                            android:maxLines="1"
+                            android:scrollbars="horizontal"
+                            android:textColor="@color/listview_group_text_color_after"
+                            android:text="Type :"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"/>
+
+                        <TextView
+                            android:maxLines="1"
+                            android:scrollbars="horizontal"
+                            android:textColor="@color/listview_group_text_color_after"
+                            android:fontFamily="@font/nunito_sans_bold"
+                            android:text=""
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"/>
+
+                    </LinearLayout>
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_weight="1.5"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content">
+                        <TextView
+                            android:id="@+id/corderProductColor"
+                            android:maxLines="1"
+                            android:scrollbars="horizontal"
+                            android:textColor="@color/listview_group_text_color_after"
+                            android:fontFamily="@font/nunito_sans_bold"
+                            android:text="color"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"/>
+                        <TextView
+                            android:id="@+id/corderProductSize"
+                            android:maxLines="1"
+                            android:scrollbars="horizontal"
+                            android:textColor="@color/listview_group_text_color_after"
+                            android:text="Size"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"/>
+                        <TextView
+                            android:id="@+id/corderProductType"
+                            android:maxLines="1"
+                            android:scrollbars="horizontal"
+                            android:textColor="@color/listview_group_text_color_after"
+                            android:text="Product Price "
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"/>
+
+                        <TextView
+                            android:maxLines="1"
+                            android:scrollbars="horizontal"
+                            android:textColor="@color/listview_group_text_color_after"
+                            android:fontFamily="@font/nunito_sans_bold"
+                            android:text=""
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"/>
+                    </LinearLayout>
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+    <LinearLayout
+
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:weightSum="10"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+        <LinearLayout
+            android:paddingLeft="5dp"
+            android:layout_weight="5"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content">
+            <TextView
+                android:textColor="@color/black"
+                android:fontFamily="@font/nunito_sans_bold"
+                android:textSize="17dp"
+                android:text="Order Status"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:paddingLeft="5dp"
+            android:layout_weight="5"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/corderProducCinfimeTexview"
+                android:textColor="@color/tcolorPrimary"
+                android:fontFamily="@font/nunito_sans_bold"
+                android:textSize="17dp"
+                android:text="Confirm"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:visibility="visible"
+        android:id="@+id/productWonerLayout"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:weightSum="10"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+
+            <LinearLayout
+                android:paddingLeft="5dp"
+                android:layout_weight="5"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:textColor="@color/black"
+                    android:fontFamily="@font/nunito_sans_bold"
+                    android:textSize="17dp"
+                    android:text="Order Confirmation "
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:paddingLeft="5dp"
+                android:layout_weight="5"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content">
+                <Button
+                    android:id="@+id/corderProductConfimeOrCancel"
+                    android:textColor="#FFFF"
+                    android:gravity="center"
+                    android:textSize="15sp"
+                    android:fontFamily="@font/nunito_sans_bold"
+                    android:text="cancel"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:visibility="visible"
+        android:id="@+id/deliveryBoyLayout"
+        android:weightSum="10"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:paddingLeft="5dp"
+            android:layout_weight="5"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content">
+            <TextView
+                android:textColor="@color/black"
+                android:fontFamily="@font/nunito_sans_bold"
+                android:textSize="17dp"
+                android:text="Delivery Boy info"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:paddingLeft="5dp"
+            android:layout_weight="5"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/corderProductDeliveryBoyName"
+                android:textColor="@color/black"
+                android:fontFamily="@font/nunito_sans_bold"
+                android:textSize="15dp"
+                android:text="Waiting..."
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+            <TextView
+                android:id="@+id/corderProductDeliveryBoyPhone"
+                android:fontFamily="@font/nunito_sans_bold"
+                android:textSize="15dp"
+                android:text="017XX-XXXXXX"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+        <LinearLayout
+            android:padding="4dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:background="@color/primaryTextColor"
+                android:layout_width="match_parent"
+                android:layout_height="3dp"/>
+        </LinearLayout>
+    <LinearLayout
+        android:layout_marginTop="5dp"
+        android:weightSum="10"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:paddingLeft="5dp"
+            android:orientation="vertical"
+            android:layout_weight="5"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content">
+            <TextView
+                android:textColor="@android:color/holo_blue_dark"
+                android:fontFamily="@font/nunito_sans_bold"
+                android:text="COSTUMER INFO"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:id="@+id/corderCustomertName"
+                android:scrollbars="horizontal"
+                android:maxLines="1"
+                android:textColor="@color/black"
+                android:fontFamily="@font/nunito_sans_bold"
+                android:text="Name "
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+            <TextView
+                android:id="@+id/corderCustomertPhone"
+                android:scrollbars="horizontal"
+                android:maxLines="1"
+                android:fontFamily="@font/nunito_sans_bold"
+                android:text="01733-883310 "
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+            <TextView
+                android:id="@+id/corderCustomertAddress"
+                android:fontFamily="@font/nunito_sans_bold"
+                android:text="Takterchala,Hatibanda "
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+    </LinearLayout>
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_weight="5"
+            android:layout_width="0dp"
+            android:paddingLeft="5dp"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:textColor="@android:color/holo_blue_dark"
+                android:fontFamily="@font/nunito_sans_bold"
+                android:text="SHOP INFO"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+
+            <TextView
+                android:id="@+id/corderShopName"
+                android:scrollbars="horizontal"
+                android:maxLines="1"
+                android:textColor="@color/black"
+                android:fontFamily="@font/nunito_sans_bold"
+                android:text="Name "
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+            <TextView
+                android:id="@+id/corderShopPhone"
+                android:scrollbars="horizontal"
+                android:maxLines="1"
+                android:fontFamily="@font/nunito_sans_bold"
+                android:text="01733-883310 "
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+            <TextView
+                android:id="@+id/corderShopAddress"
+                android:fontFamily="@font/nunito_sans_bold"
+                android:text="Takterchala,Hatibanda "
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+        </LinearLayout>
+
+</LinearLayout>
+
+</LinearLayout>
+</androidx.cardview.widget.CardView>

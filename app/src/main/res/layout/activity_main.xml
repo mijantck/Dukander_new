@@ -1,0 +1,293 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.drawerlayout.widget.DrawerLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/drawer_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity"
+    android:background="@color/color_white"
+    android:fitsSystemWindows="true"
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <androidx.appcompat.widget.Toolbar
+                    android:id="@+id/toolbar_support"
+                    android:layout_width="match_parent"
+                    app:titleTextColor="#ffff"
+                   android:background="@drawable/main_header_bk"
+                    android:layout_height="?attr/actionBarSize"
+                    android:elevation="10dp"
+                    >
+
+
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:baselineAligned="false">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            >
+
+                            <TextView
+                                android:textSize="20sp"
+                                android:textColor="#FFFF"
+                                android:gravity="center"
+                                android:text="@string/dukander"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"/>
+                        </LinearLayout>
+
+
+
+
+                    </LinearLayout>
+
+
+
+
+                </androidx.appcompat.widget.Toolbar>
+                <RelativeLayout
+                    android:id="@+id/headerLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/main_header_bk"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="20dp"
+                    android:paddingBottom="20dp"
+                    android:paddingTop="60dp">
+
+                    <LinearLayout
+                        android:id="@+id/list_item_recyclearviews"
+                        android:layout_width="match_parent"
+                        android:layout_height="300dp"
+                        android:baselineAligned="false"
+                        android:orientation="horizontal"
+                        android:weightSum="4">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="233dp"
+                            android:layout_weight="2"
+                            android:orientation="vertical">
+
+
+                            <TextView
+                                android:text="Product List "
+                                android:textColor="#ffff"
+                                android:gravity="center"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"/>
+
+                            <androidx.recyclerview.widget.RecyclerView
+                                android:id="@+id/minimumPruduct"
+                                android:layout_width="match_parent"
+                                android:layout_height="242dp" />
+
+
+                        </LinearLayout>
+
+                        <LinearLayout
+
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="2"
+                            android:orientation="vertical">
+                            <TextView
+                                android:text="Customer List"
+                                android:textColor="#ffff"
+                                android:gravity="center"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"/>
+
+                            <androidx.recyclerview.widget.RecyclerView
+                                android:id="@+id/dueCustomer"
+                                android:layout_width="match_parent"
+                                android:layout_height="242dp" />
+
+
+                        </LinearLayout>
+                    </LinearLayout>
+
+
+                </RelativeLayout>
+
+                <LinearLayout
+                    android:id="@+id/cardLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/headerLayout"
+                    android:layout_marginTop="-80dp">
+
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/salecard"
+                        app:cardCornerRadius="16dp"
+                        app:cardBackgroundColor="@color/whiteTextColor"
+                        style="@style/reportsCardStyle">
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:orientation="vertical">
+
+                            <ImageView
+                                android:layout_width="80dp"
+                                android:layout_height="80dp"
+                                android:layout_gravity="center"
+                                android:layout_marginBottom="5dp"
+                                android:src="@drawable/iconcustomer" />
+
+                        </LinearLayout>
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="bottom"
+                            android:fontFamily="@font/adamina"
+                            android:gravity="center"
+                            android:text="@string/sale"
+                            style="@style/headerText"
+                            android:textColor="#2ECC71"
+                            android:textStyle="bold"
+                            android:textSize="15sp" />
+
+                    </androidx.cardview.widget.CardView>
+
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/todaysale"
+                        app:cardCornerRadius="16dp"
+                        app:cardBackgroundColor="@color/whiteTextColor"
+                        style="@style/reportsCardStyle">
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:orientation="vertical">
+
+                            <ImageView
+                                android:layout_gravity="center"
+                                android:layout_width="80dp"
+                                android:layout_height="80dp"
+                                android:src="@drawable/icontoday"
+                                android:contentDescription="@string/todo" />
+
+                        </LinearLayout>
+                        <TextView
+                            android:layout_gravity="bottom"
+                            android:gravity="center"
+                            android:fontFamily="@font/adamina"
+                            android:text="@string/today_sale"
+                            android:textColor="#2ECC71"
+                            android:textStyle="bold"
+                            android:textSize="15sp"
+                            style="@style/headerText"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"/>
+
+                    </androidx.cardview.widget.CardView>
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:id="@+id/cardLayout2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/cardLayout"
+                    >
+
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/imvesment"
+                        app:cardCornerRadius="16dp"
+                        app:cardBackgroundColor="@color/whiteTextColor"
+                        style="@style/reportsCardStyle">
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:orientation="vertical">
+
+                            <ImageView
+                                android:layout_width="100dp"
+                                android:layout_height="100dp"
+                                android:layout_gravity="center"
+
+                                android:src="@drawable/iconmoneybag" />
+
+                            <TextView
+                                android:layout_gravity="bottom"
+                                android:gravity="center"
+                                android:text="@string/investment"
+                                android:textSize="15sp"
+                                android:fontFamily="@font/adamina"
+                                android:textColor="#2ECC71"
+                                android:textStyle="bold"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"/>
+                        </LinearLayout>
+
+                    </androidx.cardview.widget.CardView>
+
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/withdraw"
+                        app:cardCornerRadius="16dp"
+                        app:cardBackgroundColor="@color/whiteTextColor"
+                        style="@style/reportsCardStyle">
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:orientation="vertical">
+
+                            <ImageView
+                                android:layout_gravity="center"
+                                android:src="@drawable/iconwithdrawallimit"
+                                android:layout_width="100dp"
+                                android:layout_height="80dp"
+                                android:contentDescription="@string/todo" />
+
+                        </LinearLayout>
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="bottom"
+                            android:fontFamily="@font/adamina"
+                            android:gravity="center"
+                            android:text="Cash Out"
+                            android:textColor="#2ECC71"
+                            android:textSize="15sp"
+                            android:textStyle="bold" />
+                    </androidx.cardview.widget.CardView>
+                </LinearLayout>
+
+
+            </RelativeLayout>
+        </ScrollView>
+
+    </LinearLayout>
+
+    <com.google.android.material.navigation.NavigationView
+        android:id="@+id/navigationView"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:fitsSystemWindows="true"
+        app:headerLayout="@layout/header_layout"
+        app:menu="@menu/drawer_menu" />
+
+</androidx.drawerlayout.widget.DrawerLayout>

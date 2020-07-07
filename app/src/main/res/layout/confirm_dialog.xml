@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="10dp"
+    android:layout_margin="10dp"
+    android:orientation="vertical">
+    <TextView
+        android:textSize="20dp"
+        android:textColor="@color/colorPrimary"
+        android:gravity="center"
+        android:layout_gravity="center"
+        android:id="@+id/TitelId"
+        android:text="Approved pin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <com.rengwuxian.materialedittext.MaterialEditText
+        android:id="@+id/EnterConfirmCode"
+        android:layout_width="match_parent"
+        android:inputType="numberPassword"
+        android:textSize="20dp"
+        android:maxLines="1"
+        android:hint="Approved pin"
+        android:gravity="center"
+        android:layout_height="wrap_content"/>
+
+    <com.rengwuxian.materialedittext.MaterialEditText
+        android:id="@+id/SetConfirmCode"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:inputType="numberPassword"
+        android:textSize="20dp"
+        android:maxLines="1"
+        android:hint=" অনুমোদিত পিন"
+        android:gravity="center"
+        android:layout_height="wrap_content"/>
+
+    <com.google.android.material.button.MaterialButton
+       android:id="@+id/confirmButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="confirm" />
+</LinearLayout>

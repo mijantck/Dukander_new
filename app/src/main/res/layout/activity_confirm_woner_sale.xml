@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ConfirmUnerSaleActivity">
+
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipeLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar_support"
+            android:layout_width="match_parent"
+            app:titleTextColor="#ffff"
+            android:background="@drawable/main_header_bk"
+            android:layout_height="?attr/actionBarSize"
+            android:elevation="10dp"
+            >
+
+            <TextView
+                android:textSize="20sp"
+                android:textColor="#FFFF"
+                android:gravity="center"
+                android:text=" Approved sale"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+        </androidx.appcompat.widget.Toolbar>
+
+        <RelativeLayout
+            android:id="@+id/headerLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/main_header_bk"
+            android:paddingLeft="20dp"
+            android:paddingTop="60dp"
+            android:paddingRight="20dp"
+            android:paddingBottom="20dp">
+
+            <TextView
+                android:id="@+id/dateTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="01 April 2017 to 01 April 2019"
+                android:layout_alignParentTop="true"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textColor="@color/whiteTextColor"/>
+
+            <ImageView
+                android:id="@+id/calanderid"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentRight="true"
+                android:src="@drawable/iconscalendar" />
+
+            <TextView
+                android:id="@+id/salesHeaderTextView"
+                style="@style/reportContentText"
+                android:layout_marginTop="30dp"
+                android:text="Total sale" />
+
+            <TextView
+                android:layout_alignParentRight="true"
+                android:id="@+id/dueHeaderTextView"
+                style="@style/reportContentText"
+                android:textSize="15dp"
+                android:layout_marginTop="50dp"
+                android:text="Dur Money " />
+            <TextView
+                android:id="@+id/todayTotalSale"
+                style="@style/viewParent.headerText"
+                android:layout_below="@id/salesHeaderTextView"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="10dp"
+                android:text="00.00"
+                android:textColor="@color/whiteTextColor" />
+
+            <TextView
+                android:id="@+id/Totaldue"
+                style="@style/viewParent.headerText"
+                android:layout_centerHorizontal="true"
+                android:layout_alignParentRight="true"
+                android:textSize="20dp"
+                android:textColor="@color/whiteTextColor"
+                android:layout_below="@id/dueHeaderTextView"
+                android:text="00.00"
+                android:layout_marginTop="10dp" />
+
+        </RelativeLayout>
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_below="@+id/headerLayout"
+            android:id="@+id/totalsaletoday"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+    </RelativeLayout>
+
+
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+</LinearLayout>

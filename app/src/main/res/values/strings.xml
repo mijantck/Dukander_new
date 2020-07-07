@@ -1,0 +1,72 @@
+<resources>
+    <string name="app_name">Sellers Market</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="Upload">Upload</string>
+    <string name="Error">Error</string>
+    <string name="Complete">Complete</string>
+    <string name="IndeterminateProgressSample">Indeterminate Progress Sample</string>
+    <string name="IntegerProgressSample">Integer Progress Sample</string>
+    <string name="StateChangeSample">State Change Sample</string>
+    <string name="ProgressPaddingSample">Progress Padding Sample</string>
+    <string name="CustomSelectorSample">Custom Selector Sample</string>
+    <string name="dukander">Sale Market</string>
+    <string name="totalbalace">58924</string>
+    <string name="todo">TODO</string>
+    <string name="withdraw">Cash out</string>
+    <string name="sale">Sale</string>
+    <string name="today_sale">Today Sale </string>
+    <string name="investment">Investment</string>
+
+
+    <string name="text_title_app"><font size='34'>Sellers Market</font></string>
+    <string name="text_subtitle_splash">Help you manage the store</string>
+    <string name="text_subtitle_sign_in">Please SignIn to continue</string>
+    <string name="text_hint_email">Email</string>
+    <string name="text_hint_password">Password</string>
+    <string name="text_btn_forgot_password">Forgot password?</string>
+    <string name="text_btn_sign_in">Sign In</string>
+    <string name="text_or">OR</string>
+    <string name="text_btn_google">Google</string>
+    <string name="text_btn_facebook">Facebook</string>
+    <string name="text_to_sign_up">Don\'t have an account? <b><font color='#03A9F4'>SIGN UP</font></b></string>
+    <string name="text_subtitle_sign_up">Please SignUp for a new user</string>
+    <string name="text_hint_name">Name</string>
+    <string name="text_privacy_policy">I agree with <b><font color='#03A9F4'>Privacy</font></b> and <b><font color='#03A9F4'>Policy</font></b></string>
+    <string name="text_to_sign_in">Already have an account? <b><font color='#03A9F4'>SIGN IN</font></b></string>
+    <string name="text_btn_sign_up">Sign Up</string>
+
+    <string name="privacy"> privacy </string>
+    <string name="Category"> Category </string>
+
+    <array name="sample_list">
+        <item>@string/IndeterminateProgressSample</item>
+        <item>@string/IntegerProgressSample</item>
+        <item>@string/StateChangeSample</item>
+        <item>@string/ProgressPaddingSample</item>
+        <item>@string/CustomSelectorSample</item>
+    </array>
+
+
+    <string name="login_email_hint">Email</string>
+    <string name="login_password_hint">Password</string>
+
+    <string name="shop_phone">Shop Phone </string>
+    <string name="shop_name">Shop name </string>
+    <string name="shop_addres">Shop Address </string>
+    <string name="cutomer_added">Customer add</string>
+    <string name="prebeastDue"> Due</string>
+    <string name="custumarName"> Name </string>
+    <string name="phoneNumber"> phone</string>
+    <string name="quantidy"> Quantity </string>
+    <string name="addres"> Address</string>
+    <string name="addedProduct"> Product add</string>
+    <string name="product"> Product</string>
+    <string name="singleProduct"> Single</string>
+    <string name="price"> Price</string>
+    <string name="stutas"> Status</string>
+    <string name="TotalPrice"> Total Quantity</string>
+    <string name="default_notification_channel_id">CHANNEL</string>
+
+</resources>

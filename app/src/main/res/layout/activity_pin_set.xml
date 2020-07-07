@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".PinViewActivity"
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        >
+        <LinearLayout
+
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <RelativeLayout
+                android:gravity="center"
+                android:layout_marginTop="100dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:id="@+id/door"
+                    android:src="@drawable/iconsopen_door"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+                <TextView
+                    android:gravity="center"
+                    android:layout_below="@+id/door"
+                    android:id="@+id/titeleTaxt"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="30dp"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:textSize="20dp"
+
+                    android:text="Enter our new pin code"/>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/newPinCode"
+                    android:visibility="visible"
+                    android:layout_marginTop="50dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:padding="5dp"
+                    app:cardCornerRadius="10dp">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_margin="10dp"
+                        android:padding="5dp"
+
+                        android:orientation="vertical">
+                        <TextView
+                            android:textColor="#000"
+                            android:gravity="center"
+                            android:textSize="20dp"
+                            android:text=""
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"/>
+                        <com.alimuzaffar.lib.pin.PinEntryEditText
+                            android:id="@+id/txt_pin_entry_new"
+                            android:layout_width="match_parent"
+                            android:layout_height="48dp"
+                            android:layout_gravity="center_horizontal"
+                            android:background="@null"
+                            android:cursorVisible="false"
+                            android:digits="1234567890"
+                            android:inputType="numberPassword"
+                            android:maxLength="4"
+                            android:textIsSelectable="false"
+                            android:textSize="24dp"
+                            app:pinAnimationType="fromBottom"
+                            app:pinBackgroundDrawable="@drawable/home_bg_pin"
+                            app:pinBackgroundIsSquare="true"
+                            app:pinCharacterSpacing="4dp"
+                            app:pinTextBottomPadding="16dp"
+                            tools:ignore="SpUsage" />
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
+
+
+            </RelativeLayout>
+        </LinearLayout>
+    </LinearLayout>
+</ScrollView>
