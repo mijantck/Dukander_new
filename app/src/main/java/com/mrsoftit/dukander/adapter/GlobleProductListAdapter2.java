@@ -2,6 +2,7 @@ package com.mrsoftit.dukander.adapter;
 
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.icu.text.DecimalFormat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,6 +38,8 @@ public class GlobleProductListAdapter2 extends FirestoreRecyclerAdapter<GloblePr
 
     private OnItemClickListener listener;
 
+    DecimalFormat df2 = new DecimalFormat("#.##");
+
     public GlobleProductListAdapter2(@NonNull FirestoreRecyclerOptions<GlobleProductNote2> options) {
         super(options);
     }
@@ -70,7 +73,7 @@ public class GlobleProductListAdapter2 extends FirestoreRecyclerAdapter<GloblePr
             holder.dicuntLayout.setVisibility(View.VISIBLE);
             holder.price.setPaintFlags(holder.price.getPaintFlags()| Paint.STRIKE_THRU_TEXT_FLAG);
             Double d2 =Double.valueOf(model.getPruductDiscount());
-            holder.discountParsent.setText(calcuateDiscount(model.getProPrice(),d2)+"");
+            holder.discountParsent.setText(df2.format(calcuateDiscount(model.getProPrice(),d2))+"");
         }
 
         int newTag = model.getDate()+1;

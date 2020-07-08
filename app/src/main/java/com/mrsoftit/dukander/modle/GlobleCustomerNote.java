@@ -11,11 +11,15 @@ public class GlobleCustomerNote {
     private int coine;
     private String referCode;
     private boolean firstTimeRafer;
+    private String imageURL;
+    private String zipCode;
 
     public GlobleCustomerNote(){}
 
 
-    public GlobleCustomerNote(String glovleCustomerID, String id, String customerType, String name, String email, String phoneNumber, String address, int coine, String referCode, boolean firstTimeRafer) {
+    public GlobleCustomerNote(String glovleCustomerID, String id, String customerType, String name,
+                              String email, String phoneNumber, String address, int coine, String referCode,
+                              boolean firstTimeRafer, String imageURL, String zipCode) {
         this.glovleCustomerID = glovleCustomerID;
         Id = id;
         this.customerType = customerType;
@@ -26,6 +30,24 @@ public class GlobleCustomerNote {
         this.coine = coine;
         this.referCode = referCode;
         this.firstTimeRafer = firstTimeRafer;
+        this.imageURL = imageURL;
+        this.zipCode = zipCode;
+    }
+
+    public String getZipCode() {
+        return zipCode;
+    }
+
+    public void setZipCode(String zipCode) {
+        this.zipCode = zipCode;
+    }
+
+    public String getImageURL() {
+        return imageURL;
+    }
+
+    public void setImageURL(String imageURL) {
+        this.imageURL = imageURL;
     }
 
     public boolean isFirstTimeRafer() {

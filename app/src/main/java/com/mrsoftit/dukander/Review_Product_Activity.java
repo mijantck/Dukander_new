@@ -2,6 +2,7 @@ package com.mrsoftit.dukander;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -33,9 +34,11 @@ import com.squareup.picasso.Picasso;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
@@ -56,6 +59,7 @@ public class Review_Product_Activity extends AppCompatActivity {
     String globleCustomerName;
     String globleCustomerEmail;
     String globalCustomerInfoId;
+    String globalCustomerImageURL;
 
     private String proIdup,fromURL, proNameup,proPriceup,productCodeup,productPrivacyup,proImgeUrlup,
             ShopNameup,ShopPhoneup,ShopAddressup,ShopImageUrlup,ShopIdup,UserIdup,productCategoryup,dateup,proQuaup,discuntup;
@@ -79,6 +83,22 @@ public class Review_Product_Activity extends AppCompatActivity {
             globlecutouser_id = currentUser.getUid();
         }
 
+        androidx.appcompat.widget.Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_support);
+
+        setSupportActionBar(toolbar);
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+
+        toolbar.setSubtitleTextColor(getResources().getColor(R.color.grey));
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Review_Product_Activity.this,ProductFullViewOrderActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
 
         final Bundle bundle = getIntent().getExtras();
 
@@ -163,83 +183,60 @@ public class Review_Product_Activity extends AppCompatActivity {
                     if (currentUser.getUid().equals(UserIdup)){
 
                         OnerCommentcomment(proIdup,UserIdup,proNameup,proImgeUrlup,revieweditText1);
-
+                        Toast.makeText(Review_Product_Activity.this, "owner", Toast.LENGTH_SHORT).show();
                     }
-
-                    final CollectionReference Review = FirebaseFirestore.getInstance()
-                            .collection("GlobleProduct").document(proIdup).collection("review");
-                    Query query = Review.whereEqualTo("reviewCustomerID",currentUser.getUid());
-                    query.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                        @Override
-                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                            if (task.isSuccessful()){
-
-                                if (!currentUser.getUid().equals(UserIdup)){
-                                    progressDialog.dismiss();
-                                    new MaterialAlertDialogBuilder(Review_Product_Activity.this)
-                                            .setTitle(" Sorry ")
-                                            .setMessage("You already comment here \n because one product one review ")
-                                            .setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
-                                                @Override
-                                                public void onClick(DialogInterface dialogInterface, int i) {
-                                                    dialogInterface.dismiss();
-                                                }
-                                            })
-                                            .show();
-                                }
-
-                            }else {
-                                    if (currentUser != null) {
-                                        String customerId = globlecutouser_id;
-
-                                        final CollectionReference Reviewcustomer = FirebaseFirestore.getInstance()
-                                                .collection("Globlecustomers").document(customerId).collection("info");
-                                        Reviewcustomer.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                                            @Override
-                                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-
-                                                if (task.isSuccessful()) {
-                                                    for (QueryDocumentSnapshot document : Objects.requireNonNull(task.getResult())) {
-                                                        GlobleCustomerNote globleCustomerNote = document.toObject(GlobleCustomerNote.class);
-                                                        coinupdet = globleCustomerNote.getCoine();
-                                                        globalCustomerInfoId = globleCustomerNote.getId();
-                                                        globleCustomerName = globleCustomerNote.getName();
-                                                        globleCustomerEmail = globleCustomerNote.getEmail();
-                                                    }
-                                                    String proId = proIdup;
-                                                    String shopUserId = UserIdup;
-                                                    String proURL = proImgeUrlup;
-                                                    String proName = proNameup;
-
-                                                    if (globalCustomerInfoId !=null) {
-                                                        testUserforpreviusComment(proId, shopUserId, globleCustomerName, globleCustomerEmail,
-                                                                proName, proURL, revieweditText1, coinupdet, globalCustomerInfoId);
-                                                    }
-                                                    else {
-                                                        progressDialog.dismiss();
-                                                        new MaterialAlertDialogBuilder(Review_Product_Activity.this)
-                                                                .setTitle(" Sorry ")
-                                                                .setMessage("You are not comment hare  \n because you are shopkeeper ")
-                                                                .setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
-                                                                    @Override
-                                                                    public void onClick(DialogInterface dialogInterface, int i) {
-                                                                        dialogInterface.dismiss();
-                                                                    }
-                                                                })
-                                                                .show();
-                                                    }
+                    else {
+                        if (currentUser != null) {
+                            String customerId = globlecutouser_id;
+                            final CollectionReference Reviewcustomer = FirebaseFirestore.getInstance()
+                                    .collection("Globlecustomers").document(customerId).collection("info");
+                            Reviewcustomer.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                @Override
+                                public void onComplete(@NonNull Task<QuerySnapshot> task) {
 
 
-                                                }
-                                            }
-                                        });
+                                    if (task.isSuccessful()) {
+                                        for (QueryDocumentSnapshot document : Objects.requireNonNull(task.getResult())) {
+                                            GlobleCustomerNote globleCustomerNote = document.toObject(GlobleCustomerNote.class);
+                                            coinupdet = globleCustomerNote.getCoine();
+                                            globalCustomerInfoId = globleCustomerNote.getId();
+                                            globleCustomerName = globleCustomerNote.getName();
+                                            globleCustomerEmail = globleCustomerNote.getEmail();
+                                            globalCustomerImageURL = globleCustomerNote.getImageURL();
+                                        }
+                                        String proId = proIdup;
+                                        String shopUserId = UserIdup;
+                                        String proURL = proImgeUrlup;
+                                        String proName = proNameup;
+
+                                        if (globalCustomerInfoId !=null) {
+                                            testUserforpreviusComment(proId, shopUserId, globleCustomerName, globleCustomerEmail,
+                                                    proName, proURL, revieweditText1, coinupdet, globalCustomerInfoId,globalCustomerImageURL);
+                                        }
+                                        else {
+                                            progressDialog.dismiss();
+                                            new MaterialAlertDialogBuilder(Review_Product_Activity.this)
+                                                    .setTitle(" Sorry ")
+                                                    .setMessage("You are not comment hare  \n because you are shopkeeper ")
+                                                    .setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
+                                                        @Override
+                                                        public void onClick(DialogInterface dialogInterface, int i) {
+                                                            dialogInterface.dismiss();
+                                                        }
+                                                    })
+                                                    .show();
+                                        }
 
 
                                     }
+                                }
+                            });
 
-                            }
+
                         }
-                    });
+                    }
+
+
                 }
 
                 else {
@@ -295,7 +292,7 @@ public class Review_Product_Activity extends AppCompatActivity {
 
 
     public void  testUserforpreviusComment(final String productID, final String shopUserID, final String custumerName, final String custumerEmail, final String productName,
-                                           final String productURL , final String reviewComment, final int coinupdet1, final String globalCustomerInfoId1 ){
+                                           final String productURL , final String reviewComment, final int coinupdet1, final String globalCustomerInfoId1, final String globalCustomerImageURL ){
 
         final CollectionReference Review = FirebaseFirestore.getInstance()
                 .collection("GlobleProduct").document(productID).collection("review");
@@ -305,16 +302,35 @@ public class Review_Product_Activity extends AppCompatActivity {
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
 
                 if (task.isSuccessful()){
-                    String reviewCustomerId = null;
 
+                    ArrayList<String> list = new ArrayList<>();
                     for (QueryDocumentSnapshot document : Objects.requireNonNull(task.getResult())) {
-                        final ReviewComentNote reviewComentNote = document.toObject(ReviewComentNote.class);
-                        reviewCustomerId = reviewComentNote.getReviewCustomerID();
+
+                      list.add(document.getId());
+
                     }
 
-                    if (reviewCustomerId == null){
-                        comment(productID, shopUserID, globlecutouser_id, custumerName,custumerEmail,productName,productURL, reviewComment, coinupdet1, globalCustomerInfoId1);
+
+
+                    if (list.contains(globlecutouser_id)) {
+                        progressDialog.dismiss();
+                        new MaterialAlertDialogBuilder(Review_Product_Activity.this)
+                                .setTitle(" Sorry ")
+                                .setMessage("You already comment here \n because one product one review ")
+                                .setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialogInterface, int i) {
+                                        dialogInterface.dismiss();
+                                    }
+                                })
+                                .show();
                     }
+                    else {
+                        comment(productID, shopUserID, globlecutouser_id, custumerName,custumerEmail,productName,
+                                productURL, reviewComment, coinupdet1, globalCustomerInfoId1,globalCustomerImageURL);
+                    }
+
+
                 }
 
             }
@@ -323,7 +339,7 @@ public class Review_Product_Activity extends AppCompatActivity {
     }
 
     public void comment(final String productID,final String shopUserID, final String customerID, final String custumerName, final String reviewCustomerEmail,
-                        final String productName , final String productImageURL, final  String reviewComment, final int coinupdet1, final String globalCustomerInfoId1){
+                        final String productName , final String productImageURL, final  String reviewComment, final int coinupdet1, final String globalCustomerInfoId1,String globalCustomerImageURL){
 
 
         final CollectionReference Review = FirebaseFirestore.getInstance()
@@ -356,6 +372,7 @@ public class Review_Product_Activity extends AppCompatActivity {
         reviewindivsualProdut.put("dateAndTime",datereview);
         reviewindivsualProdut.put("producrName",productName);
         reviewindivsualProdut.put("productEmail",productImageURL);
+        reviewindivsualProdut.put("reviewCustomerImageURL",globalCustomerImageURL);
 
         Review.document(customerID).set(reviewindivsualProdut).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
@@ -399,6 +416,7 @@ public class Review_Product_Activity extends AppCompatActivity {
                                     }
                                 });
                             }
+
                         }
                     });
                 }
@@ -430,11 +448,12 @@ public class Review_Product_Activity extends AppCompatActivity {
 
 
         reviewindivsualProdut.put("reviewShopMainID",shopUserID);
-        reviewindivsualProdut.put("reviewCustomerName","Product Owner");
+        reviewindivsualProdut.put("reviewCustomerName",ShopNameup+"(Product Owner)");
         reviewindivsualProdut.put("reviewComment",reviewComment);
         reviewindivsualProdut.put("dateAndTime",datereview);
         reviewindivsualProdut.put("producrName",productName);
         reviewindivsualProdut.put("productEmail",productImageURL);
+        reviewindivsualProdut.put("reviewCustomerImageURL",ShopImageUrlup);
 
         Review.document().set(reviewindivsualProdut).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override

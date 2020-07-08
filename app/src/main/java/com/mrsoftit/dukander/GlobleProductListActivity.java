@@ -77,6 +77,7 @@ import com.smarteist.autoimageslider.IndicatorView.draw.controller.DrawControlle
 import com.smarteist.autoimageslider.SliderAnimations;
 import com.smarteist.autoimageslider.SliderView;
 import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Target;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -87,6 +88,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class GlobleProductListActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
 
@@ -965,10 +968,12 @@ public class GlobleProductListActivity extends AppCompatActivity implements Navi
                     .collection("Globlecustomers").document(user_id).collection("info");
 
             NavigationView navigationView = findViewById(R.id.globle_navigationView);
+
             View headeView = navigationView.getHeaderView(0);
 
             //final ImageView appCompatImageView = headeView.findViewById(R.id.appCompatImageView);
             final TextView dukanname = headeView.findViewById(R.id.globle_customer_name);
+            final CircleImageView globle_cutomer_profile_pic = headeView.findViewById(R.id.globle_cutomer_profile_pic);
             final TextView dukanEmail = headeView.findViewById(R.id.globle_cutomer_Email);
 
             dukanEmail.setText(currentUser.getEmail() + "");
@@ -981,6 +986,10 @@ public class GlobleProductListActivity extends AppCompatActivity implements Navi
                             GlobleCustomerNote globleCustomerNote = document.toObject(GlobleCustomerNote.class);
                             dukanname.setText(globleCustomerNote.getName());
 
+                            if (globleCustomerNote.getImageURL() !=null){
+                                Uri uri = Uri.parse(globleCustomerNote.getImageURL());
+                                Picasso.get().load(uri).into(globle_cutomer_profile_pic);
+                            }
                         }
                     }
                 }

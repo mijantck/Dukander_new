@@ -128,6 +128,16 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
         progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         progressDialog.setCanceledOnTouchOutside(false);
 
+        FirebaseInstanceId.getInstance().getInstanceId().addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
+            @Override
+            public void onComplete(@NonNull Task<InstanceIdResult> task) {
+                if (task.isSuccessful()){
+                    tokenjustTime = task.getResult().getToken();
+                }
+            }
+        });
+
+
         Toolbar toolbar = findViewById(R.id.toolbar_support);
         toolbar.setTitle("Dukandar");
         setSupportActionBar(toolbar);
@@ -490,14 +500,7 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
 
 
 
-                        FirebaseInstanceId.getInstance().getInstanceId().addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
-                            @Override
-                            public void onComplete(@NonNull Task<InstanceIdResult> task) {
-                                if (task.isSuccessful()){
-                                  tokenjustTime = task.getResult().getToken();
-                                }
-                            }
-                        });
+
 
                         for (QueryDocumentSnapshot document : Objects.requireNonNull(task.getResult())) {
                             MyInfoNote myInfoNote = document.toObject(MyInfoNote.class);

@@ -1,6 +1,7 @@
 package com.mrsoftit.dukander.adapter;
 
 import android.content.DialogInterface;
+import android.icu.text.DecimalFormat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -51,6 +52,8 @@ public class ProductOrderAdapter extends FirestoreRecyclerAdapter<OrderNote, Pro
     String  user_id;
 
     String productUserID;
+    DecimalFormat df2 = new DecimalFormat("#.##");
+
 
     public ProductOrderAdapter(@NonNull FirestoreRecyclerOptions<OrderNote> options) {
         super(options);

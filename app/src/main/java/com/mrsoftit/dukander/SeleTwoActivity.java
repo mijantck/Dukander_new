@@ -372,7 +372,7 @@ public class SeleTwoActivity extends AppCompatActivity {
                 // Include dialog.xml file
                 dialog.setContentView(R.layout.cutomar_pay_taka);
                 // Set dialog title
-                dialog.setTitle("বিল পরিশোধ");
+                dialog.setTitle("Bill Pay");
                 dialog.show();
                 dialog.setCanceledOnTouchOutside(false);
                 final Button okButton = dialog.findViewById(R.id.okButton);
@@ -389,7 +389,7 @@ public class SeleTwoActivity extends AppCompatActivity {
                     public void onClick(View v) {
                        String paymony = payeditetext.getText().toString();
                         if (paymony.isEmpty()){
-                            Toast.makeText(SeleTwoActivity.this, "খালি ", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(SeleTwoActivity.this, "Empty ", Toast.LENGTH_SHORT).show();
                             return;
                         }
 
@@ -412,7 +412,7 @@ public class SeleTwoActivity extends AppCompatActivity {
                         daubill = dautakaccustomer + withpaytaka;
 
                         if (conditonBil < paymonyDouable){
-                            payeditetext.setError("ভুল ইনপুট");
+                            payeditetext.setError(" wrong Input");
                             return;
                         }
 
@@ -467,7 +467,7 @@ public class SeleTwoActivity extends AppCompatActivity {
 
                         if (bundelId!=null) {
                             final ProgressDialog pd = new ProgressDialog(SeleTwoActivity.this);
-                            pd.setMessage("তথ্য প্রস্তুত হচ্ছে...");
+                            pd.setMessage("Loading...");
                             pd.setCancelable(false);
                             pd.show();
                             final CollectionReference customer = FirebaseFirestore.getInstance()
@@ -509,7 +509,7 @@ public class SeleTwoActivity extends AppCompatActivity {
                         }if (unknonwnCustomerId!=null){
 
                             final ProgressDialog pd = new ProgressDialog(SeleTwoActivity.this);
-                            pd.setMessage("তথ্য প্রস্তুত হচ্ছে...");
+                            pd.setMessage("Loading...");
                             pd.setCancelable(false);
                             pd.show();
                             String name = unKnoneName.getText().toString();

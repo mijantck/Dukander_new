@@ -5,6 +5,7 @@ public class ReviewComentNote {
     private String reviewCustomerID;
     private String reviewShopMainID;
     private String reviewCustomerName;
+    private String reviewCustomerImageURL;
     private String producrName;
     private String productEmail;
     private String reviewCustomerEmail;
@@ -29,6 +30,14 @@ public class ReviewComentNote {
         this.reviewCustomerEmail = reviewCustomerEmail;
         this.reviewComment = reviewComment;
         this.dateAndTime = dateAndTime;
+    }
+
+    public String getReviewCustomerImageURL() {
+        return reviewCustomerImageURL;
+    }
+
+    public void setReviewCustomerImageURL(String reviewCustomerImageURL) {
+        this.reviewCustomerImageURL = reviewCustomerImageURL;
     }
 
     public String getReviewShopMainID() {

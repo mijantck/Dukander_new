@@ -27,6 +27,8 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class ReviewAdapter extends FirestoreRecyclerAdapter<ReviewComentNote, ReviewAdapter.ViewHolde> {
 
     /**
@@ -47,6 +49,10 @@ public class ReviewAdapter extends FirestoreRecyclerAdapter<ReviewComentNote, Re
         holder.reviewname.setText(model.getReviewCustomerName());
         holder.reviewComment.setText(model.getReviewComment());
 
+        if (model.getReviewCustomerImageURL()!=null){
+            String Url = model.getReviewCustomerImageURL();
+            Picasso.get().load(Url).into(holder.globle_cutomer_Imgae__URL);
+        }
 
         Integer value = model.getDateAndTime();
         SimpleDateFormat originalFormat = new SimpleDateFormat("yyMMddHHmm");
@@ -73,6 +79,7 @@ public class ReviewAdapter extends FirestoreRecyclerAdapter<ReviewComentNote, Re
 
 
         TextView reviewname,reviewComment,date;
+        CircleImageView globle_cutomer_Imgae__URL;
 
         public ViewHolde(@NonNull View itemView) {
             super(itemView);
@@ -81,6 +88,7 @@ public class ReviewAdapter extends FirestoreRecyclerAdapter<ReviewComentNote, Re
             reviewname = itemView.findViewById(R.id.customer_name_for_review);
             reviewComment = itemView.findViewById(R.id.review_comment_textView);
             date = itemView.findViewById(R.id.review_Date_And_Time);
+            globle_cutomer_Imgae__URL = itemView.findViewById(R.id.globle_cutomer_Imgae__URL);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

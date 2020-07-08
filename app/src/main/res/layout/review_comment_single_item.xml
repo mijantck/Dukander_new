@@ -22,7 +22,8 @@
             android:layout_width="0dp"
             android:layout_height="40dp">
 
-            <ImageView
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/globle_cutomer_Imgae__URL"
                 android:src="@drawable/person"
                 android:layout_width="40dp"
                 android:layout_height="40dp"/>

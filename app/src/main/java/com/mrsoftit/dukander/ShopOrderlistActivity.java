@@ -80,8 +80,10 @@ public class ShopOrderlistActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         currentUser = FirebaseAuth.getInstance().getCurrentUser();
 
-        user_id = currentUser.getUid();
+        if (currentUser !=null) {
 
+            user_id = currentUser.getUid();
+        }
         Toolbar toolbar =  findViewById(R.id.toolbar_support);
         setSupportActionBar(toolbar);
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
@@ -222,80 +224,14 @@ public class ShopOrderlistActivity extends AppCompatActivity {
                 final String customerToken = orderNote.getCustomerToken();
                 final String productID =  orderNote.getOrderID();
 
+                Intent intent = new  Intent(ShopOrderlistActivity.this,DeliveryBoyListActivity.class);
 
-                CollectionReference customer = FirebaseFirestore.getInstance()
-                        .collection("GlobleBoy");
+                intent.putExtra("customerID",customerID);
+                intent.putExtra("shopUserID",shopUserID);
+                intent.putExtra("customerToken",customerToken);
+                intent.putExtra("productID",productID);
 
-                Query query = customer.whereEqualTo("boyOnline","online");
-
-                final FirestoreRecyclerOptions<DeliveryBoyListNote> options = new FirestoreRecyclerOptions.Builder<DeliveryBoyListNote>()
-                        .setQuery(query, DeliveryBoyListNote.class)
-                        .build();
-
-                final Dialog boy_list_dialog = new Dialog(ShopOrderlistActivity.this);
-
-                boy_list_dialog.setContentView(R.layout.boy_list_dialog);
-                // Set dialogpayment title
-                boy_list_dialog.setTitle("Delivery boy list ");
-                boy_list_dialog.setCanceledOnTouchOutside(false);
-
-
-
-             boyAdapter = new BoyAdapter(options);
-
-               RecyclerView  boyrecyclerView = (RecyclerView) boy_list_dialog.findViewById(R.id.shopOrderListRecyclervview);
-
-                recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false));
-              //  boyrecyclerView.setLayoutManager(new LinearLayoutManager(boy_list_dialog.getOwnerActivity()));
-                // recyclerView.setLayoutManager(new LinearLayoutManager(this));
-                boyrecyclerView.setAdapter(boyAdapter);
-
-                boyAdapter.setOnItemClickListener(new BoyAdapter.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(DocumentSnapshot documentSnapshot, int position) {
-                        DeliveryBoyListNote deliveryBoyListNote = documentSnapshot.toObject(DeliveryBoyListNote.class);
-                        final String boyName = deliveryBoyListNote.getBoyName();
-                        final String boyPhone = deliveryBoyListNote.getBoyPhone();
-
-                        final CollectionReference customerForOrder = FirebaseFirestore.getInstance()
-                                .collection("Globlecustomers").document(customerID).collection("OrderList");
-
-                        final CollectionReference shopForOrder = FirebaseFirestore.getInstance()
-                                .collection("users").document(shopUserID).collection("OrderList");
-
-                        final CollectionReference globleForOrder = FirebaseFirestore.getInstance()
-                                .collection("GlobleOrderList");
-
-
-                        shopForOrder.document(productID).update("deliveryBoyName",boyName,"deliveryBoyPhone",boyPhone).addOnCompleteListener(new OnCompleteListener<Void>() {
-                            @Override
-                            public void onComplete(@NonNull Task<Void> task) {
-                                customerForOrder.document(productID).update("deliveryBoyName",boyName,"deliveryBoyPhone",boyPhone).addOnCompleteListener(new OnCompleteListener<Void>() {
-                                    @Override
-                                    public void onComplete(@NonNull Task<Void> task) {
-                                        globleForOrder.document(productID).update("deliveryBoyName",boyName,"deliveryBoyPhone",boyPhone).addOnCompleteListener(new OnCompleteListener<Void>() {
-                                            @Override
-                                            public void onComplete(@NonNull Task<Void> task) {
-
-
-                                                notificationSend(customerToken);
-
-                                                boy_list_dialog.dismiss();
-
-                                            }
-                                        })  ;
-
-                                    }
-                                });
-
-                            }
-                        });
-
-
-                    }
-                });
-
-            boy_list_dialog.show();
+                startActivity(intent);
 
             }
         });

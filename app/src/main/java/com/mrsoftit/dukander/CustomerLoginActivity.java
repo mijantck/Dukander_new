@@ -38,7 +38,9 @@ public class CustomerLoginActivity extends AppCompatActivity {
 
     FirebaseAuth Auth;
 
-    TextInputEditText input_name_customer,input_email_cutomer,input_password_customer,confirm_input_password,input_phoneNumber_customer,input_Address_customer;
+    TextInputEditText input_name_customer,input_email_cutomer,input_password_customer,
+            confirm_input_password,input_phoneNumber_customer,input_Address_customer,
+            input_Code_phoneNumber_customer,input_ZipCode_customer;
 
     ProgressDialog progressDialog;
     Button customer_singup_button;
@@ -59,6 +61,8 @@ public class CustomerLoginActivity extends AppCompatActivity {
         confirm_input_password = findViewById(R.id.confirm_input_password);
         input_phoneNumber_customer = findViewById(R.id.input_phoneNumber_customer);
         input_Address_customer = findViewById(R.id.input_Address_customer);
+        input_Code_phoneNumber_customer = findViewById(R.id.input_Code_phoneNumber_customer);
+        input_ZipCode_customer = findViewById(R.id.input_ZipCode_customer);
         customer_singup_button = findViewById(R.id.customer_singup_button);
 
         customer_singup_button.setOnClickListener(new View.OnClickListener() {
@@ -72,11 +76,14 @@ public class CustomerLoginActivity extends AppCompatActivity {
 
                 final String name = input_name_customer.getText().toString();
                 final String email = input_email_cutomer.getText().toString();
+                final String zipcode = input_ZipCode_customer.getText().toString();
                 final String password1 = input_password_customer.getText().toString();
                 String password2 = confirm_input_password.getText().toString();
-                final String phoneNumber = input_phoneNumber_customer.getText().toString();
+                final String phNumber = input_phoneNumber_customer.getText().toString();
+                final String CodephoneNumber = input_Code_phoneNumber_customer.getText().toString();
                 final String address = input_Address_customer.getText().toString();
 
+                final  String phoneNumber = CodephoneNumber+phNumber;
                 if(TextUtils.isEmpty(name)){
                     Toast.makeText(getApplicationContext(),"Name is empty",Toast.LENGTH_SHORT).show();
 
@@ -100,7 +107,7 @@ public class CustomerLoginActivity extends AppCompatActivity {
                     Toast.makeText(CustomerLoginActivity.this, "Confirm password not equal", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                if(TextUtils.isEmpty(phoneNumber)){
+                if(TextUtils.isEmpty(phNumber) ||TextUtils.isEmpty(CodephoneNumber) ){
                     Toast.makeText(getApplicationContext(),"Phone Number is Empty",Toast.LENGTH_SHORT).show();
 
                     return;
@@ -145,7 +152,7 @@ public class CustomerLoginActivity extends AppCompatActivity {
 
 
 
-                                                            Info.add(new GlobleCustomerNote(user_id,"id","globleCustomer",name,email,phoneNumber,address,0,randomStr,false))
+                                                            Info.add(new GlobleCustomerNote(user_id,"id","globleCustomer",name,email,phoneNumber,address,0,randomStr,false,null,zipcode))
                                                                     .addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
                                                                         @Override
                                                                         public void onComplete(@NonNull Task<DocumentReference> task) {
@@ -162,6 +169,8 @@ public class CustomerLoginActivity extends AppCompatActivity {
                                                                                        RefercodeOdject.put("phoneNumber",phoneNumber);
                                                                                        RefercodeOdject.put("address",address);
                                                                                        RefercodeOdject.put("referCode",randomStr);
+                                                                                       RefercodeOdject.put("imageURL",null);
+                                                                                       RefercodeOdject.put("zipCode",zipcode);
 
                                                                                        globleRefercode.document(user_id).set(RefercodeOdject).addOnCompleteListener(new OnCompleteListener<Void>() {
                                                                                            @Override

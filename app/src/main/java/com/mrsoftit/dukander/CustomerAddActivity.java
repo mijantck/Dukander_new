@@ -324,6 +324,8 @@ public class CustomerAddActivity extends AppCompatActivity implements EasyPermis
 
 
     }
+
+
     @RequiresApi(api = Build.VERSION_CODES.M)
     @AfterPermissionGranted(PICK_IMAGE_REQUEST)
     private void getIMEGE() {
@@ -439,19 +441,8 @@ public class CustomerAddActivity extends AppCompatActivity implements EasyPermis
             }
         }}
 
-/*
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-
-        EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this);
-    }
-*/
-
     @Override
     public void onPermissionsGranted(int requestCode, @NonNull List<String> perms) {
-
     }
 
     @Override
@@ -572,7 +563,7 @@ public class CustomerAddActivity extends AppCompatActivity implements EasyPermis
 
         progressDialog = new ProgressDialog(this);
         progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-        progressDialog.setTitle("আপলোড হচ্ছে...");
+        progressDialog.setMessage("Uploading...");
         progressDialog.show();
         progressDialog.setCanceledOnTouchOutside(false);
 
@@ -639,7 +630,7 @@ public class CustomerAddActivity extends AppCompatActivity implements EasyPermis
                                         public void onComplete(@NonNull Task<Void> task) {
 
 
-                                            Toast.makeText(CustomerAddActivity.this, " সফল ", Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(CustomerAddActivity.this, " Succesful ", Toast.LENGTH_SHORT).show();
 
                                         }
                                     });

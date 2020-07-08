@@ -2,6 +2,8 @@ package com.mrsoftit.dukander;
 
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.icu.text.DecimalFormat;
+import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
@@ -25,6 +28,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
+@RequiresApi(api = Build.VERSION_CODES.N)
 public class GlobleProductListAdapter  extends FirestoreRecyclerAdapter<GlobleProductNote,GlobleProductListAdapter.ViewHolde> {
 
     /**
@@ -35,6 +39,8 @@ public class GlobleProductListAdapter  extends FirestoreRecyclerAdapter<GloblePr
      */
 
     private OnItemClickListener listener;
+
+    DecimalFormat df2 = new DecimalFormat("#.##");
 
     public GlobleProductListAdapter(@NonNull FirestoreRecyclerOptions<GlobleProductNote> options) {
         super(options);
@@ -71,7 +77,7 @@ public class GlobleProductListAdapter  extends FirestoreRecyclerAdapter<GloblePr
             holder.price.setPaintFlags(holder.price.getPaintFlags()| Paint.STRIKE_THRU_TEXT_FLAG);
             Double d2 =Double.valueOf(model.getPruductDiscount());
 
-            holder.discountParsent.setText(calcuateDiscount(model.getProPrice(),d2)+"");
+            holder.discountParsent.setText(df2.format(calcuateDiscount(model.getProPrice(),d2))+"");
         }
 
         int newTag = model.getDate()+1;

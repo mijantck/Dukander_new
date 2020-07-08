@@ -2,6 +2,7 @@ package com.mrsoftit.dukander;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -11,6 +12,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.icu.text.DecimalFormat;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -100,6 +102,7 @@ public class ProductFullViewOrderActivity extends AppCompatActivity {
     private Uri dynamicLink1 = null;
 
 
+    DecimalFormat df2 = new DecimalFormat("#.##");
 
     TextView reviewID;
 
@@ -141,6 +144,23 @@ public class ProductFullViewOrderActivity extends AppCompatActivity {
         if (currentUser!=null){
             globlecutouser_id = currentUser.getUid();
         }
+
+        androidx.appcompat.widget.Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_support);
+
+        setSupportActionBar(toolbar);
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+
+        toolbar.setSubtitleTextColor(getResources().getColor(R.color.grey));
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ProductFullViewOrderActivity.this,GlobleProductListActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
         productImageDetail = findViewById(R.id.productImageDetail);
         ProductNameDetails  = findViewById(R.id.ProductNameDetails);
         inStockDetails = findViewById(R.id.inStockDetails);
@@ -390,7 +410,7 @@ public class ProductFullViewOrderActivity extends AppCompatActivity {
                 if (!s1.isEmpty()){
                     double ProductQuantidy =Double.parseDouble(s1);
                     double sumPrice = ProductQuantidy*commonPrice;
-                    productPriceDetails.setText(sumPrice+"");
+                    productPriceDetails.setText(df2.format( sumPrice)+"");
                 }else {
 
                     productPriceDetails.setText(commonPrice+"");
