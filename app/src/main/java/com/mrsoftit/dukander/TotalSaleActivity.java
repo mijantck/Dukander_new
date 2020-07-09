@@ -355,22 +355,21 @@ public class TotalSaleActivity extends AppCompatActivity {
                 new AlertDialog.Builder(TotalSaleActivity.this)
                         .setIcon(R.drawable.ic_delete)
                         .setTitle(name)
-                        .setMessage("আপনি কি নিশ্চিত মুছে ফেলেন?")
-                        .setPositiveButton("হ্যাঁ",
+                        .setMessage("Are you sure?")
+                        .setPositiveButton("Yeas",
                                 new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface dialog, int which) {
 
                                         progressDialog = new ProgressDialog(TotalSaleActivity.this);
-                                        progressDialog.setMessage("লোড করছে..."); // Setting Message
+                                        progressDialog.setMessage("Loading..."); // Setting Message
                                         progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
                                         progressDialog.setCancelable(false);
                                         progressDialog.show();
 
+                                        final CollectionReference Profite = FirebaseFirestore.getInstance()
+                                                .collection("users").document(user_id).collection("profit");
 
                                         if (customerID!=null) {
-
-
-
                                             final CollectionReference customerProductSale = FirebaseFirestore.getInstance()
                                                     .collection("users").document(user_id).collection("Customers").document(customerID).collection("saleProduct");
                                             customerProductSale.document(saleID).delete().addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -391,7 +390,11 @@ public class TotalSaleActivity extends AppCompatActivity {
                                                                     double totaltest = (double) document.get("taka");
                                                                     presentTaka1 = totaltest;
                                                                 }
-                                                                presentTaka = presentTaka1 - taka;
+                                                                if (taka >=presentTaka1){
+                                                                    presentTaka = 0;
+                                                                }if (taka <=presentTaka1){
+                                                                    presentTaka = presentTaka1 - taka;
+                                                                }
                                                                 Toast.makeText(TotalSaleActivity.this, presentTaka+"", Toast.LENGTH_SHORT).show();
 
                                                                 customerTakaUpdate.document(customerID).update("taka",presentTaka).addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -405,18 +408,42 @@ public class TotalSaleActivity extends AppCompatActivity {
                                                                                 if (task.isSuccessful()) {
                                                                                     double totalpaybil = 0.0;
                                                                                     double presentDukantaka = 0.0;
+                                                                                    double totalActiveBalenc = 0.0;
+                                                                                    double presentActiveBalenc = 0.0;
                                                                                     String dukandrId = null;
                                                                                     for (QueryDocumentSnapshot document : task.getResult()) {
                                                                                         double totaltest = (double) document.get("totalpaybil");
+                                                                                        double activeBalancelast = (double) document.get("activeBalance");
                                                                                         dukandrId = document.getId();
-                                                                                        totalpaybil = totaltest;
-                                                                                    }
-                                                                                    presentDukantaka = totalpaybil - taka;
 
-                                                                                    Totaldue.setText(presentDukantaka+"");
-                                                                                    dukandertakaUpdate.document(dukandrId).update("totalpaybil",totalpaybil).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                                                        totalpaybil = totaltest;
+
+                                                                                        totalActiveBalenc = activeBalancelast;
+
+                                                                                    }
+                                                                                    if (taka >= totalpaybil){
+                                                                                        presentDukantaka = 0;
+                                                                                    }
+                                                                                    if (taka <= totalpaybil){
+
+                                                                                        presentDukantaka = totalpaybil - taka;
+                                                                                    }
+                                                                                    if (taka >= totalActiveBalenc){
+                                                                                        presentActiveBalenc = 0;
+                                                                                    }
+                                                                                    if (taka <= totalActiveBalenc){
+
+                                                                                        presentActiveBalenc = totalActiveBalenc - taka;
+                                                                                    }
+
+
+                                                                                    dukandertakaUpdate.document(dukandrId).update("totalpaybil",presentDukantaka,"activeBalance",presentActiveBalenc).addOnCompleteListener(new OnCompleteListener<Void>() {
                                                                                         @Override
                                                                                         public void onComplete(@NonNull Task<Void> task) {
+
+
+                                                                                            Profite.document(saleID).delete();
+
                                                                                             adapter.deleteItem(position);
                                                                                             progressDialog.dismiss();
 
@@ -462,9 +489,11 @@ public class TotalSaleActivity extends AppCompatActivity {
                                                                     double totaltest = (double) document.get("taka");
                                                                     presentTaka1 = totaltest;
                                                                 }
-                                                                presentTaka = presentTaka1 - taka;
-                                                                Toast.makeText(TotalSaleActivity.this, presentTaka+"", Toast.LENGTH_SHORT).show();
-
+                                                                if (taka >=presentTaka1){
+                                                                    presentTaka = 0;
+                                                                }if (taka <=presentTaka1){
+                                                                    presentTaka = presentTaka1 - taka;
+                                                                }
                                                                 unncustomerTakaUpdate.document(uncustomerID).update("taka",presentTaka).addOnCompleteListener(new OnCompleteListener<Void>() {
                                                                     @Override
                                                                     public void onComplete(@NonNull Task<Void> task) {
@@ -476,18 +505,40 @@ public class TotalSaleActivity extends AppCompatActivity {
                                                                                 if (task.isSuccessful()) {
                                                                                     double totalpaybil = 0.0;
                                                                                     double presentDukantaka = 0.0;
+                                                                                    double totalActiveBalenc = 0.0;
+                                                                                    double presentActiveBalenc = 0.0;
                                                                                     String dukandrId = null;
                                                                                     for (QueryDocumentSnapshot document : task.getResult()) {
                                                                                         double totaltest = (double) document.get("totalpaybil");
+                                                                                        double activeBalancelast = (double) document.get("activeBalance");
                                                                                         dukandrId = document.getId();
-                                                                                        totalpaybil = totaltest;
-                                                                                    }
-                                                                                    presentDukantaka = totalpaybil - taka;
 
-                                                                                    Totaldue.setText(presentDukantaka+"");
-                                                                                    dukandertakaUpdate.document(dukandrId).update("totalpaybil",totalpaybil).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                                                        totalpaybil = totaltest;
+
+                                                                                        totalActiveBalenc = activeBalancelast;
+
+                                                                                    }
+                                                                                    if (taka >= totalpaybil){
+                                                                                        presentDukantaka = 0;
+                                                                                    }
+                                                                                    if (taka <= totalpaybil){
+
+                                                                                        presentDukantaka = totalpaybil - taka;
+                                                                                    }
+                                                                                    if (taka >= totalActiveBalenc){
+                                                                                        presentActiveBalenc = 0;
+                                                                                    }
+                                                                                    if (taka <= totalActiveBalenc){
+
+                                                                                        presentActiveBalenc = totalActiveBalenc - taka;
+                                                                                    }
+
+
+                                                                                    dukandertakaUpdate.document(dukandrId).update("totalpaybil",presentDukantaka,"activeBalance",presentActiveBalenc).addOnCompleteListener(new OnCompleteListener<Void>() {
                                                                                         @Override
                                                                                         public void onComplete(@NonNull Task<Void> task) {
+
+                                                                                            Profite.document(saleID).delete();
                                                                                             adapter.deleteItem(position);
                                                                                             progressDialog.dismiss();
 

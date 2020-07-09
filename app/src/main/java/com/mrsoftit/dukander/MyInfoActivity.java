@@ -104,6 +104,9 @@ public class MyInfoActivity extends AppCompatActivity implements EasyPermissions
             .collection("users").document(user_id).collection("DukanInfo");
 
 
+    CollectionReference confirmSaleCode = FirebaseFirestore.getInstance()
+            .collection("users").document(user_id).collection("confirmSaleCode");
+
 
     private static final int PICK_IMAGE_REQUEST = 1;
     public Uri mImageUri;
@@ -117,7 +120,7 @@ public class MyInfoActivity extends AppCompatActivity implements EasyPermissions
 
     String token;
 
-    private LinearLayout shopediteView,shopdelaisView,passChange,PinLayout;
+    private LinearLayout shopediteView,shopdelaisView,passChange,PinLayout,ApprovedLayout;
     private MaterialButton etideButton;
     private boolean vigivity =true;
     private ImageView appCompatImageView,shopeImageView;
@@ -127,11 +130,11 @@ public class MyInfoActivity extends AppCompatActivity implements EasyPermissions
 
 
 
-    private TextInputEditText dukanName, dukanPhone,dukanaddess,orldpass,newpass;
-    private MaterialButton addmyinfo,confirm,HomeId;
+    private TextInputEditText dukanName, dukanPhone,dukanaddess,orldpass,newpass,oldapproved,newApproved;
+    private MaterialButton addmyinfo,confirm,HomeId,newApprovedButton;
 
     FirebaseFirestore firestore;
-    TextView chagepasswordtextview;
+    TextView chagepasswordtextview,changeApprovedPintextview;
     TextView chagepintextview;
     TextView recharchButton;
 
@@ -244,11 +247,16 @@ public class MyInfoActivity extends AppCompatActivity implements EasyPermissions
         confirm =findViewById(R.id.newPasswordButton);
 
         passChange = findViewById(R.id.chagepintextviewLiniarlayout);
-
         chagepintextview = findViewById(R.id.chagepintextview);
-
-
         imageSelet = findViewById(R.id.imageSelet);
+
+
+
+        changeApprovedPintextview = findViewById(R.id.changeApprovedPintextview);
+        ApprovedLayout = findViewById(R.id.ApprovedLayout);
+        oldapproved = findViewById(R.id.oldapproved);
+        changeApprovedPintextview = findViewById(R.id.changeApprovedPintextview);
+        changeApprovedPintextview = findViewById(R.id.changeApprovedPintextview);
 
 
 

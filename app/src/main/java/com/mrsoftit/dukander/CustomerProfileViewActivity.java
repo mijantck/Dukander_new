@@ -320,7 +320,7 @@ public class CustomerProfileViewActivity extends AppCompatActivity {
             public void onClick(View view) {
 
                 android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(CustomerProfileViewActivity.this);
-                String[] option = {" অর্থ প্রদান", "পণ্য বিক্রয়"};
+                String[] option = {" Pay Money", "Product Sale"};
 
                 builder.setItems(option, new DialogInterface.OnClickListener() {
                     @Override
@@ -351,7 +351,7 @@ public class CustomerProfileViewActivity extends AppCompatActivity {
 
                                     progressDialog = new ProgressDialog(CustomerProfileViewActivity.this);
                                     // Setting Message
-                                    progressDialog.setTitle("তথ্য প্রস্তুত হচ্ছে..."); // Setting Title
+                                    progressDialog.setMessage("Loading..."); // Setting Title
                                     progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
                                     progressDialog.setCancelable(false);
                                     progressDialog.show();
@@ -379,7 +379,7 @@ public class CustomerProfileViewActivity extends AppCompatActivity {
                                     }
                                     if (dautakaccustomer <paymonyDouable ){
 
-                                        Toast.makeText(CustomerProfileViewActivity.this, "ভুল ইনপুট", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(CustomerProfileViewActivity.this, "Wrong Input", Toast.LENGTH_SHORT).show();
                                         return;
                                     }
                                     double withpaytaka = dautakaccustomer - paymonyDouable;
@@ -496,19 +496,19 @@ public class CustomerProfileViewActivity extends AppCompatActivity {
                                     final String paymony = paymentProductToatalPrice.getText().toString();
 
                                     if (proname.isEmpty()){
-                                        Toast.makeText(CustomerProfileViewActivity.this, "  সব পূরণ করুন ", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(CustomerProfileViewActivity.this, "product Name ", Toast.LENGTH_SHORT).show();
                                         return;
                                     }
                                     if (proSingPrice.isEmpty()){
-                                        Toast.makeText(CustomerProfileViewActivity.this, "সব পূরণ করুন", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(CustomerProfileViewActivity.this, "Product unit price", Toast.LENGTH_SHORT).show();
                                         return;
                                     }
                                     if (proQuatidy.isEmpty()){
-                                        Toast.makeText(CustomerProfileViewActivity.this, "সব পূরণ করুন", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(CustomerProfileViewActivity.this, "Quantity", Toast.LENGTH_SHORT).show();
                                         return;
                                     }
                                     if (paymony.isEmpty()){
-                                        Toast.makeText(CustomerProfileViewActivity.this, "সব পূরণ করুন", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(CustomerProfileViewActivity.this, "pay maony", Toast.LENGTH_SHORT).show();
                                         return;
                                     }
 
@@ -516,7 +516,7 @@ public class CustomerProfileViewActivity extends AppCompatActivity {
 
                                     progressDialog = new ProgressDialog(CustomerProfileViewActivity.this);
                                     // Setting Message
-                                    progressDialog.setTitle("তথ্য প্রস্তুত হচ্ছে..."); // Setting Title
+                                    progressDialog.setMessage("Loading..."); // Setting Title
                                     progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
                                     progressDialog.setCancelable(false);
                                     progressDialog.show();
