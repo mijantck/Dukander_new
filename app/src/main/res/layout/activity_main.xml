@@ -44,7 +44,9 @@
                             >
 
                             <TextView
+                                android:textStyle="bold"
                                 android:textSize="20sp"
+                                android:fontFamily="@font/adamina"
                                 android:textColor="#FFFF"
                                 android:gravity="center"
                                 android:text="@string/dukander"
@@ -90,6 +92,8 @@
                                 android:text="Product List "
                                 android:textColor="#ffff"
                                 android:gravity="center"
+                                android:textStyle="bold"
+                                android:fontFamily="@font/adamina"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"/>
 
@@ -111,6 +115,8 @@
                                 android:text="Customer List"
                                 android:textColor="#ffff"
                                 android:gravity="center"
+                                android:textStyle="bold"
+                                android:fontFamily="@font/adamina"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"/>
 

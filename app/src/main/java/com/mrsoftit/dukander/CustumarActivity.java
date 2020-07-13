@@ -237,15 +237,15 @@ public class CustumarActivity extends AppCompatActivity {
                             new AlertDialog.Builder(CustumarActivity.this)
                                     .setIcon(R.drawable.ic_delete)
                                     .setTitle(name)
-                                    .setMessage("নিশ্চিত বাতিল?")
-                                    .setPositiveButton("হ্যাঁ",
+                                    .setMessage("Confirm Cancel?")
+                                    .setPositiveButton("Yes",
                                             new DialogInterface.OnClickListener() {
                                                 public void onClick(DialogInterface dialog, int which) {
                                                     adapter.deleteItem(position);
                                                     dialog.dismiss();
                                                 }
                                             })
-                                    .setNegativeButton("না", new DialogInterface.OnClickListener() {
+                                    .setNegativeButton("No", new DialogInterface.OnClickListener() {
                                         @Override
                                         public void onClick(DialogInterface dialog, int which) {
                                             // Do nothing
@@ -287,7 +287,7 @@ public class CustumarActivity extends AppCompatActivity {
             public void onItemClick(final DocumentSnapshot documentSnapshot, final int position) {
 
                 android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(CustumarActivity.this);
-                String[] option = {"প্রোফাইল এডিট ", "প্রোফাইল দেখুন","মুছে ফেলা"};
+                String[] option = {"Profile Edit ", "View Profile","Delete"};
                 builder.setItems(option, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -367,15 +367,15 @@ public class CustumarActivity extends AppCompatActivity {
                             new AlertDialog.Builder(CustumarActivity.this)
                                     .setIcon(R.drawable.ic_delete)
                                     .setTitle(name)
-                                    .setMessage("নিশ্চিত বাতিল?")
-                                    .setPositiveButton("হ্যাঁ",
+                                    .setMessage("Confirm delete?")
+                                    .setPositiveButton("Yes",
                                             new DialogInterface.OnClickListener() {
                                                 public void onClick(DialogInterface dialog, int which) {
                                                     adapter.deleteItem(position);
                                                     dialog.dismiss();
                                                 }
                                             })
-                                    .setNegativeButton("না", new DialogInterface.OnClickListener() {
+                                    .setNegativeButton("No", new DialogInterface.OnClickListener() {
                                         @Override
                                         public void onClick(DialogInterface dialog, int which) {
                                             // Do nothing

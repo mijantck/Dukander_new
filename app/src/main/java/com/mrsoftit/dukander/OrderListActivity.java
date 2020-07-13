@@ -174,6 +174,8 @@ public class OrderListActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
 
-        productOrderAdapter.startListening();
+        if (currentUser!=null){
+            productOrderAdapter.startListening();
+        }
     }
 }

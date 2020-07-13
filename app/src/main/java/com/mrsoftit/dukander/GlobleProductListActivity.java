@@ -174,7 +174,7 @@ public class GlobleProductListActivity extends AppCompatActivity implements Navi
 
         progressDialog = new ProgressDialog(GlobleProductListActivity.this);
         progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-        progressDialog.setTitle("Loading...");
+        progressDialog.setMessage("Loading...");
 
         wholProductListlayout = findViewById(R.id.wholProductListlayout);
         NavigationView navigationView = findViewById(R.id.globle_navigationView);

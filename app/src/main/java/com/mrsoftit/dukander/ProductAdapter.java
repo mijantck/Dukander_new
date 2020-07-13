@@ -42,6 +42,8 @@ public class ProductAdapter  extends FirestoreRecyclerAdapter<ProductNote,Produc
 
         String pp = String.valueOf(model.getProPrice());
         holder.product_price_textview.setText(pp);
+        holder.product_category_textview.setText(model.getProductCategory());
+        holder.product_privecy_textview.setText(model.getProductPrivacy());
 
 
         String pq = String.valueOf(model.getProQua());
@@ -70,7 +72,8 @@ public class ProductAdapter  extends FirestoreRecyclerAdapter<ProductNote,Produc
 
         ImageView ImageView;
 
-        TextView product_name_textview,product_price_textview,product_quantedy_textview,product_mini_textview;
+        TextView product_name_textview,product_price_textview,product_quantedy_textview,
+                product_mini_textview,product_privecy_textview,product_category_textview,product_shear_textview;
 
         public NotViewHolde(@NonNull View itemView) {
             super(itemView);
@@ -80,6 +83,22 @@ public class ProductAdapter  extends FirestoreRecyclerAdapter<ProductNote,Produc
             product_price_textview = itemView.findViewById(R.id.product_price_textview);
             product_quantedy_textview = itemView.findViewById(R.id.product_quantedy_textview);
             product_mini_textview = itemView.findViewById(R.id.product_mini_textview);
+            product_privecy_textview = itemView.findViewById(R.id.product_privecy_textview);
+            product_category_textview = itemView.findViewById(R.id.product_category_textview);
+            product_shear_textview = itemView.findViewById(R.id.product_shear_textview);
+
+
+            product_shear_textview.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    int position = getAdapterPosition();
+                    if (position != RecyclerView.NO_POSITION && listener != null) {
+                        listener.onShearClick(getSnapshots().getSnapshot(position), position);
+                    }
+
+                }
+            });
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -95,6 +114,7 @@ public class ProductAdapter  extends FirestoreRecyclerAdapter<ProductNote,Produc
 
     public interface OnItemClickListener {
         void onItemClick(DocumentSnapshot documentSnapshot, int position);
+        void onShearClick(DocumentSnapshot documentSnapshot, int position);
     }
 
     public void setOnItemClickListener(OnItemClickListener listener) {

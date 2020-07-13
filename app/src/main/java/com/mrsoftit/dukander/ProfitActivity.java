@@ -103,7 +103,7 @@ public class ProfitActivity extends AppCompatActivity {
 
         progressDialog = new ProgressDialog(ProfitActivity.this);
         // Setting Message
-        progressDialog.setTitle("তথ্য প্রস্তুত হচ্ছে..."); // Setting Title
+        progressDialog.setMessage("Loading..."); // Setting Title
         progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         progressDialog.show();
 
@@ -131,7 +131,7 @@ public class ProfitActivity extends AppCompatActivity {
 
                     }
 
-                    data.add(new ValueDataEntry("উত্তোলন", totalpaybilint));
+                    data.add(new ValueDataEntry("Cash Out", totalpaybilint));
 
                     TotalcustomerProductSale.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                         @Override
@@ -148,7 +148,7 @@ public class ProfitActivity extends AppCompatActivity {
                                     }
 
                                 }
-                                data.add(new ValueDataEntry("মোট বিক্রয় ", totalsum));
+                                data.add(new ValueDataEntry("Total Sale ", totalsum));
 
                                 Profit.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                                     @Override
@@ -165,7 +165,7 @@ public class ProfitActivity extends AppCompatActivity {
                                                 }
 
                                             }
-                                            data.add(new ValueDataEntry("মোট লাভ ", ProfitSum));
+                                            data.add(new ValueDataEntry("Total profit ", ProfitSum));
 
 
                                             investmentgetacticBalance.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -183,7 +183,7 @@ public class ProfitActivity extends AppCompatActivity {
                                                             }
 
                                                         }
-                                                        data.add(new ValueDataEntry("বিনিয়োগ ", investment));
+                                                        data.add(new ValueDataEntry("Investment ", investment));
 
                                                         anyPichart( data);
                                                     }
@@ -294,7 +294,7 @@ public class ProfitActivity extends AppCompatActivity {
 
         pie.data(data);
 
-        pie.title("আপনার দোকানের এক নজরে হিসাবনিকাশ ");
+        pie.title(" Total Summary");
 
         pie.labels().position("outside");
 

@@ -50,6 +50,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.WriteBatch;
@@ -121,7 +122,7 @@ public class MyInfoActivity extends AppCompatActivity implements EasyPermissions
     String token;
 
     private LinearLayout shopediteView,shopdelaisView,passChange,PinLayout,ApprovedLayout;
-    private MaterialButton etideButton;
+    private MaterialButton etideButton,ShopOnlineButton;
     private boolean vigivity =true;
     private ImageView appCompatImageView,shopeImageView;
     private TextView shopname,shopphone,shopaddres;
@@ -160,13 +161,25 @@ public class MyInfoActivity extends AppCompatActivity implements EasyPermissions
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()) {
+
+                    String ShopOnline = null;
                     for (QueryDocumentSnapshot document : task.getResult()) {
                         MyInfoNote myInfoNote = document.toObject(MyInfoNote.class);
                         imageuploadurl = myInfoNote.getDukanaddpicurl();
                         id = myInfoNote.getMyid();
                         firstTime = myInfoNote.isFirsttime();
+                        if (myInfoNote.getShopOnline() != null){
+                            ShopOnline = myInfoNote.getShopOnline();
+
+                        }else {
+                            ShopOnline = "online";
+
+                        }
+
 
                     }
+
+                    ShopOnlineButton.setText(ShopOnline);
 
                     if (TextUtils.isEmpty(id)){
                         chagepasswordtextview.setVisibility(View.GONE);
@@ -203,7 +216,7 @@ public class MyInfoActivity extends AppCompatActivity implements EasyPermissions
 
         progressDialog = new ProgressDialog(MyInfoActivity.this);
         // Setting Message
-        progressDialog.setTitle("তথ্য প্রস্তুত হচ্ছে..."); // Setting Title
+        progressDialog.setMessage("Loading..."); // Setting Title
         progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         progressDialog.show();
 
@@ -256,7 +269,9 @@ public class MyInfoActivity extends AppCompatActivity implements EasyPermissions
         ApprovedLayout = findViewById(R.id.ApprovedLayout);
         oldapproved = findViewById(R.id.oldapproved);
         changeApprovedPintextview = findViewById(R.id.changeApprovedPintextview);
-        changeApprovedPintextview = findViewById(R.id.changeApprovedPintextview);
+        ShopOnlineButton = findViewById(R.id.ShopOnlineButton);
+        newApprovedButton = findViewById(R.id.newApprovedButton);
+
 
 
 
@@ -275,6 +290,89 @@ public class MyInfoActivity extends AppCompatActivity implements EasyPermissions
         });
 
 
+        ShopOnlineButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                progressDialog.show();
+                String getTextFromButton = null;
+              final String buttonText =  ShopOnlineButton.getText().toString();
+
+              if (buttonText.equals("Public")){
+
+                  getTextFromButton = "private";
+
+              }
+                if (buttonText.equals("private")){
+
+                    getTextFromButton = "Public";
+                }
+
+                CollectionReference customerProductSale = FirebaseFirestore.getInstance()
+                        .collection("users").document(user_id).collection("Product");
+                Query query = customerProductSale.whereEqualTo("productPrivacy", "Public");
+
+                final String finalGetTextFromButton = getTextFromButton;
+
+                final String finalGetTextFromButton1 = getTextFromButton;
+                query.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+
+                            List<String> list = new ArrayList<>();
+                            for (QueryDocumentSnapshot document : Objects.requireNonNull(task.getResult())) {
+                                list.add(document.getId());
+                            }
+
+
+                            privecyupdateData((ArrayList) list, finalGetTextFromButton); // *** new ***
+
+
+                            final CollectionReference myInfo = FirebaseFirestore.getInstance()
+                                    .collection("users").document(user_id).collection("DukanInfo");
+
+                            myInfo.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                @Override
+                                public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                    if (task.isSuccessful()) {
+
+                                        String id1=null;
+                                        for (QueryDocumentSnapshot document : task.getResult()) {
+                                            MyInfoNote myInfoNote = document.toObject(MyInfoNote.class);
+                                            imageuploadurl = myInfoNote.getDukanaddpicurl();
+                                            id1 = myInfoNote.getMyid();
+                                        }
+
+                                        myInfo.document(id1).update("shopOnline", finalGetTextFromButton1).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<Void> task) {
+
+
+                                                if (buttonText.equals("private")){
+
+                                                    ShopOnlineButton.setText("Public");
+
+                                                }
+                                                if (buttonText.equals("Public")){
+
+                                                    ShopOnlineButton.setText("private");
+                                                }
+
+                                                progressDialog.dismiss();
+                                            }
+                                        });
+                                    }
+                                }
+                            });
+
+                        }
+                    }
+
+
+                });
+            }
+        });
 
         etideButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -326,7 +424,7 @@ public class MyInfoActivity extends AppCompatActivity implements EasyPermissions
 
                 if(!checkIntert()) {
 
-                    Toast.makeText(MyInfoActivity.this, " কোনও ইন্টারনেট সংযোগ নেই ", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MyInfoActivity.this, "No internet", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
@@ -335,23 +433,20 @@ public class MyInfoActivity extends AppCompatActivity implements EasyPermissions
                 String ppq = dukanaddess.getText().toString();
 
                 if (TextUtils.isEmpty(name) ){
-                    Toast.makeText(getApplicationContext(), "নাম লিখুন...", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "Name is empty...", Toast.LENGTH_LONG).show();
                     return;
                 }
                 if (TextUtils.isEmpty(price) ){
-                    Toast.makeText(getApplicationContext(), "মোবাইল নম্বর লিখুন...", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "Phone Number is empty...", Toast.LENGTH_LONG).show();
                     return;
                 }
                 if (TextUtils.isEmpty(ppq) ){
-                    Toast.makeText(getApplicationContext(), "ঠিকানা লিখুন...", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "Address is empty...", Toast.LENGTH_LONG).show();
                     return;
                 }
-
-
-
                 progressDialog = new ProgressDialog(MyInfoActivity.this);
                 progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-                progressDialog.setTitle("আপলোড হচ্ছে...");
+                progressDialog.setMessage(" Loading...");
                 progressDialog.show();
                 progressDialog.setCanceledOnTouchOutside(false);
 
@@ -365,7 +460,7 @@ public class MyInfoActivity extends AppCompatActivity implements EasyPermissions
 
                     progressDialog = new ProgressDialog(MyInfoActivity.this);
                     progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-                    progressDialog.setTitle("আপলোড হচ্ছে...");
+                    progressDialog.setMessage(" Loading...");
                     progressDialog.show();
                     progressDialog.setCanceledOnTouchOutside(false);
 
@@ -419,7 +514,6 @@ public class MyInfoActivity extends AppCompatActivity implements EasyPermissions
                     myInfo.add(new MyInfoNote(null, dukanName1, dukanphon1, dukanAddres1,true,picname,0.0,0.0,0.0,0,token)).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
                         @Override
                         public void onComplete(@NonNull Task<DocumentReference> task) {
-
                             if (task.isSuccessful()) {
 
                                 final String id = task.getResult().getId();
@@ -436,18 +530,15 @@ public class MyInfoActivity extends AppCompatActivity implements EasyPermissions
 
                                         setGlobleSoplist(false,user_id,id,dukanName1,dukanphon1,dukanAddres1);
 
-                                        Toast.makeText(MyInfoActivity.this, " সফল ", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(MyInfoActivity.this, " Successful ", Toast.LENGTH_SHORT).show();
 
                                     }
                                 });
                             }
-
                         }
                     });
-
                 }
                 else if (mImageUri == null && id !=null ){
-
                     final String dukanName1 = dukanName.getText().toString();
                     final String dukanphon1 = dukanPhone.getText().toString();
                     final String dukanAddres1 = dukanaddess.getText().toString();
@@ -481,6 +572,55 @@ public class MyInfoActivity extends AppCompatActivity implements EasyPermissions
 
 
 
+        changeApprovedPintextview.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if ( open == true){
+                    ApprovedLayout.setVisibility(View.VISIBLE);
+                    open = false;
+                }else  if (open == false){
+                    ApprovedLayout.setVisibility(View.GONE);
+                    open = true;
+                }
+
+            }
+        });
+
+        newApprovedButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+               String oldAprovedCode = oldapproved.getText().toString();
+
+               String newAprovedCode = newApproved.getText().toString();
+
+
+               if (TextUtils.isEmpty(oldAprovedCode) && TextUtils.isEmpty(newAprovedCode)){
+
+                   Toast.makeText(MyInfoActivity.this, " Approved pin code", Toast.LENGTH_SHORT).show();
+                   return;
+               }
+
+                CollectionReference confirmSaleCode = FirebaseFirestore.getInstance()
+                        .collection("users").document(user_id).collection("confirmSaleCode");
+
+                confirmSaleCode.document("confirmCode")
+
+                        .update("code",newAprovedCode).addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+
+                        oldapproved.setText("");
+                        newApproved.setText("");
+
+                        Toast.makeText(MyInfoActivity.this, " Complete Updated ", Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+            }
+        });
+
         imageSelet.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -512,7 +652,6 @@ public class MyInfoActivity extends AppCompatActivity implements EasyPermissions
             public void onClick(View v) {
 
               startActivity(new Intent(MyInfoActivity.this,ChangePinActivity.class));
-
             }
         });
 
@@ -525,11 +664,11 @@ public class MyInfoActivity extends AppCompatActivity implements EasyPermissions
               final String newdpassowr=  newpass.getText().toString();
 
               if (olrdpassowr.isEmpty()){
-                  Toast.makeText(MyInfoActivity.this, " পুরানো পাসওয়ার্ড লিখুন", Toast.LENGTH_SHORT).show();
+                  Toast.makeText(MyInfoActivity.this, " Old password ", Toast.LENGTH_SHORT).show();
                   return;
               }
               if (newdpassowr.isEmpty()){
-                    Toast.makeText(MyInfoActivity.this, "নতুন  পাসওয়ার্ড লিখুন", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MyInfoActivity.this, "New password ", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 final String email = currentUser.getEmail();
@@ -548,18 +687,18 @@ public class MyInfoActivity extends AppCompatActivity implements EasyPermissions
                                 public void onComplete(@NonNull Task<Void> task) {
                                     if(!task.isSuccessful()){
                                         Snackbar snackbar_fail = Snackbar
-                                                .make(v, "কিছু ভুল হয়েছে. পরে আবার চেষ্টা করুন", Snackbar.LENGTH_LONG);
+                                                .make(v, "Try now ", Snackbar.LENGTH_LONG);
                                         snackbar_fail.show();
                                     }else {
                                         Snackbar snackbar_su = Snackbar
-                                                .make(v, "পাসওয়ার্ড সফলভাবে সংশোধিত হয়েছে", Snackbar.LENGTH_LONG);
+                                                .make(v, "Successful", Snackbar.LENGTH_LONG);
                                         snackbar_su.show();
                                     }
                                 }
                             });
                         }else {
                             Snackbar snackbar_su = Snackbar
-                                    .make(v, "প্রমাণীকরণ ব্যর্থ হয়েছে", Snackbar.LENGTH_LONG);
+                                    .make(v, "Fail", Snackbar.LENGTH_LONG);
                             snackbar_su.show();
                         }
                     }
@@ -631,14 +770,13 @@ public class MyInfoActivity extends AppCompatActivity implements EasyPermissions
             Intent intent = new Intent();
             intent.setType("image/*");
             intent.setAction(Intent.ACTION_GET_CONTENT);
-            startActivityForResult(Intent.createChooser(intent, "চিত্র নির্বাচন করুন"), PICK_IMAGE_REQUEST);
+            startActivityForResult(Intent.createChooser(intent, "Image empty"), PICK_IMAGE_REQUEST);
 
         } else {
           /*  EasyPermissions.requestPermissions(this, "আমাদের অনুমতি দরকার",
                     PICK_IMAGE_REQUEST , perms);*/
         }
     }
-
 
     private List<String> getPermissionList(){
         List<String> stringPermissionList=new ArrayList<>();
@@ -647,7 +785,6 @@ public class MyInfoActivity extends AppCompatActivity implements EasyPermissions
         stringPermissionList.add(Manifest.permission.WRITE_EXTERNAL_STORAGE);
         return  stringPermissionList;
     }
-
 
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
@@ -674,7 +811,6 @@ public class MyInfoActivity extends AppCompatActivity implements EasyPermissions
 
     }
 
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
@@ -684,19 +820,9 @@ public class MyInfoActivity extends AppCompatActivity implements EasyPermissions
                 mImageUri = data.getData();
                 Picasso.get().load(mImageUri).into(appCompatImageView);
             } else {
-                Toast.makeText(this, "কোনো ফাইল পছন্দ করা হইনি", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "No file selected", Toast.LENGTH_SHORT).show();
             }
         }}
-
-
-
-/*
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this);
-
-    }*/
 
     @Override
     public void onPermissionsGranted(int requestCode, @NonNull List<String> perms) {
@@ -710,7 +836,6 @@ public class MyInfoActivity extends AppCompatActivity implements EasyPermissions
             new AppSettingsDialog.Builder(this).build().show();
         }
     }
-
 
     public void  updateadtaall(){
 
@@ -750,7 +875,6 @@ public class MyInfoActivity extends AppCompatActivity implements EasyPermissions
             }
         });
     }
-
 
     private void uploadImageUri(Uri imageUri){
 
@@ -823,7 +947,7 @@ public class MyInfoActivity extends AppCompatActivity implements EasyPermissions
                                             setGlobleSoplistURL(false,user_id,id,dukanName1,downloadLink,dukanphon1,dukanAddres1);
 
                                             progressDialog.dismiss();
-                                            Toast.makeText(MyInfoActivity.this, " সফল ", Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(MyInfoActivity.this, " Success ", Toast.LENGTH_SHORT).show();
 
                                         }
                                     });
@@ -1040,7 +1164,6 @@ public class MyInfoActivity extends AppCompatActivity implements EasyPermissions
             });
         }
     }
-
     public void privecyupdateData(ArrayList list,String Privacy) {
 
 
@@ -1073,7 +1196,6 @@ public class MyInfoActivity extends AppCompatActivity implements EasyPermissions
         });
 
     }
-
 
 }
 

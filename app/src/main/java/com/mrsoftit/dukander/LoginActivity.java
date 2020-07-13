@@ -181,13 +181,13 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View v) {
                 progressDialog = new ProgressDialog(LoginActivity.this);
                 // Setting Message
-                progressDialog.setTitle("তথ্য প্রস্তুত হচ্ছে..."); // Setting Title
+                progressDialog.setMessage("Loading..."); // Setting Title
                 progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
                 progressDialog.show();
                 if(checkIntert()){
                     loginUserAccount();
                 }else {
-                    Toast.makeText(LoginActivity.this, "কোনও ইন্টারনেট সংযোগ নেই ", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LoginActivity.this, "No Internet", Toast.LENGTH_SHORT).show();
                 }
 
 
@@ -248,12 +248,12 @@ public class LoginActivity extends AppCompatActivity {
                 String email = forgetEmail.getText().toString();
 
                 if(TextUtils.isEmpty(email)){
-                    Toast.makeText(getApplicationContext(),"দয়া করে ইমেলটি পূরণ করুন",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(),"Inout Email ",Toast.LENGTH_SHORT).show();
                     return;
                 }
                 progressDialog = new ProgressDialog(LoginActivity.this);
                 // Setting Message
-                progressDialog.setTitle("তথ্য প্রস্তুত হচ্ছে..."); // Setting Title
+                progressDialog.setMessage("Loading..."); // Setting Title
                 progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
                 progressDialog.show();
 
@@ -262,10 +262,10 @@ public class LoginActivity extends AppCompatActivity {
                             @Override
                             public void onComplete(@NonNull Task<Void> task) {
                                 if(task.isSuccessful()){
-                                    Toast.makeText(getApplicationContext(),"পাসওয়ার্ড রিসেট লিঙ্কটি আপনার ইমেল ঠিকানা প্রেরণ করা হয়েছিল",Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(getApplicationContext(),"Reset Password send Your email address",Toast.LENGTH_SHORT).show();
                                 }
                                 else{
-                                    Toast.makeText(getApplicationContext(),"মেল প্রেরণে ত্রুটি",Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(getApplicationContext(),"Fail",Toast.LENGTH_SHORT).show();
                                 }
                             }
                         });
@@ -284,12 +284,12 @@ public class LoginActivity extends AppCompatActivity {
         password = passwordTV.getText().toString();
 
         if (TextUtils.isEmpty(email)) {
-            Toast.makeText(getApplicationContext(), "ইমেল প্রবেশ করুন...", Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), "Input email...", Toast.LENGTH_LONG).show();
             progressDialog.dismiss();
             return;
         }
         if (TextUtils.isEmpty(password)) {
-            Toast.makeText(getApplicationContext(), "পাসওয়ার্ড প্রবেশ করুন!", Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), "Input Password", Toast.LENGTH_LONG).show();
             progressDialog.dismiss();
             return;
         }
@@ -320,7 +320,7 @@ public class LoginActivity extends AppCompatActivity {
                                         if (cType!=null){
                                             progressDialog.dismiss();
                                             startActivity(new Intent(getApplicationContext(),GlobleProductListActivity.class));
-                                            Toast.makeText(getApplicationContext(), "সফল লগইন!", Toast.LENGTH_LONG).show();
+                                            Toast.makeText(getApplicationContext(), "Success", Toast.LENGTH_LONG).show();
 
                                             finish();
 
@@ -336,7 +336,7 @@ public class LoginActivity extends AppCompatActivity {
 
                         }
                         else {
-                            Toast.makeText(getApplicationContext(), "লগইন ব্যর্থ! পরে আবার চেষ্টা করুন", Toast.LENGTH_LONG).show();
+                            Toast.makeText(getApplicationContext(), "Fail.try again later", Toast.LENGTH_LONG).show();
                             progressDialog.dismiss();
 
                         }

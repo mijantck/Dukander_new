@@ -72,7 +72,7 @@ public class RegestationActivity extends AppCompatActivity {
 
 
                 if(!checkIntert()) {
-                    Toast.makeText(RegestationActivity.this, " কোনও ইন্টারনেট সংযোগ নেই ", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(RegestationActivity.this, "NO Intertnet ", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
@@ -81,18 +81,18 @@ public class RegestationActivity extends AppCompatActivity {
                 final String confimpassword = ConfirmTextPassword.getText().toString();
 
                 if(TextUtils.isEmpty(email)){
-                    Toast.makeText(getApplicationContext(),"দয়া করে ইমেলটি পূরণ করুন",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(),"Input Email",Toast.LENGTH_SHORT).show();
 
                     return;
                 }
                 if(TextUtils.isEmpty(password)){
-                    Toast.makeText(getApplicationContext(),"দয়া করে পাসওয়ার্ড পূরণ করুন",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(),"Input Password ",Toast.LENGTH_SHORT).show();
                     return;
                 }
 
                 if(password.length()<6){
 
-                    Toast.makeText(getApplicationContext(),"পাসওয়ার্ড কমপক্ষে ৬ টি অক্ষর হতে হবে",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(),"Minimum 6 digit ",Toast.LENGTH_SHORT).show();
                     return;
                 }
 
@@ -102,7 +102,7 @@ public class RegestationActivity extends AppCompatActivity {
                 }
                 progressDialog = new ProgressDialog(RegestationActivity.this);
                 // Setting Message
-                progressDialog.setTitle("তথ্য প্রস্তুত হচ্ছে..."); // Setting Title
+                progressDialog.setMessage("Loading..."); // Setting Title
                 progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
                 progressDialog.show();
                 //check email already exist or not.
@@ -130,7 +130,7 @@ public class RegestationActivity extends AppCompatActivity {
                 });
     } else {
         progressDialog.dismiss();
-        Toast.makeText(getApplicationContext(),email+" ইতিমধ্যে সাইন আপ ",Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(),email+" Already Signup  ",Toast.LENGTH_SHORT).show();
 
     }
 }catch (Exception e){

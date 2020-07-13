@@ -61,8 +61,10 @@ public class ConfirmOrderActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     String globlecutouser_id ;
 
-    private String proIdup,proNameup,proPriceup,proPriceupSingle,productCodeup,productPrivacyup,proImgeUrlup,ShopNameup,ShopPhoneup,ShopAddressup,ShopImageUrlup,
-            ShopIdup,UserIdup,productCategoryup,dateup,proQuaup,discuntup,commonPriceup,tokenup,size;
+    private String proIdup,proNameup,proPriceup,proPriceupSingle,productCodeup,productPrivacyup,
+            proImgeUrlup,ShopNameup,ShopPhoneup,ShopAddressup,ShopImageUrlup,
+            ShopIdup,UserIdup,productCategoryup,dateup,proQuaup,discuntup,commonPriceup,tokenup,size,
+            colorup,typeup;
 
 
     ProgressDialog progressDialog;
@@ -158,6 +160,16 @@ public class ConfirmOrderActivity extends AppCompatActivity {
                 commonPriceup = bundle.getString("commonPrice");
 
             }
+
+            if (bundle.getString("color")!=null){
+                colorup =bundle.getString("color");
+
+            }
+            if (bundle.getString("type")!=null){
+                typeup =bundle.getString("type");
+
+            }
+
 
             withDiscuntprice.setText(commonPriceup);
 
@@ -318,7 +330,8 @@ public class ConfirmOrderActivity extends AppCompatActivity {
 
                 customerForOrder.add(new OrderNote(ShippingName,ShippingPhone,ShippingAddress,globlecutouser_id,ShopNameup,ShopPhoneup,
                         ShopAddressup,ShopIdup,UserIdup,null,datereview,proNameup,proIdup,proImgeUrlup,productCodeup,
-                        TotalproductPrice,proQuaup,discuntup,"promocode",null,null,null,null,customertoken,size))
+                        TotalproductPrice,proQuaup,discuntup,"promocode",null,null,
+                        null,null,customertoken,size,colorup,typeup))
                         .addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
                             @Override
                             public void onComplete(@NonNull Task<DocumentReference> task) {
@@ -353,6 +366,8 @@ public class ConfirmOrderActivity extends AppCompatActivity {
                                             ConfirmOrder.put("deliveryBoyName",null);
                                             ConfirmOrder.put("deliveryBoyPhone",null);
                                             ConfirmOrder.put("customerToken",customertoken);
+                                            ConfirmOrder.put("color", colorup);
+                                            ConfirmOrder.put("type", typeup);
                                             ConfirmOrder.put("size",size);
 
                                             shopForOrder.document(orderID).set(ConfirmOrder).addOnCompleteListener(new OnCompleteListener<Void>() {

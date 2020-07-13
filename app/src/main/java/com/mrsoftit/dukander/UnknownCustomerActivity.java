@@ -135,7 +135,7 @@ public class UnknownCustomerActivity extends AppCompatActivity {
             public void onItemClick(final DocumentSnapshot documentSnapshot, final int position) {
 
                 android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(UnknownCustomerActivity.this);
-                String[] option = {"প্রোফাইল দেখুন","মুছে ফেলা"};
+                String[] option = {"View Profile","Delete"};
                 builder.setItems(option, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -183,8 +183,8 @@ public class UnknownCustomerActivity extends AppCompatActivity {
                             new AlertDialog.Builder(UnknownCustomerActivity.this)
                                     .setIcon(R.drawable.ic_delete)
                                     .setTitle(name)
-                                    .setMessage("আপনি কি নিশ্চিত মুছে ফেলেন?")
-                                    .setPositiveButton("হ্যাঁ",
+                                    .setMessage("Are You sure delete that?")
+                                    .setPositiveButton("Yes",
                                             new DialogInterface.OnClickListener() {
                                                 public void onClick(DialogInterface dialog, int which) {
 
@@ -192,7 +192,7 @@ public class UnknownCustomerActivity extends AppCompatActivity {
                                                     dialog.dismiss();
                                                 }
                                             })
-                                    .setNegativeButton("না", new DialogInterface.OnClickListener() {
+                                    .setNegativeButton("No", new DialogInterface.OnClickListener() {
                                         @Override
                                         public void onClick(DialogInterface dialog, int which) {
                                             // Do nothing
@@ -234,7 +234,7 @@ public class UnknownCustomerActivity extends AppCompatActivity {
             public void onItemClick(final DocumentSnapshot documentSnapshot, final int position) {
 
                 android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(UnknownCustomerActivity.this);
-                String[] option = {"প্রোফাইল দেখুন","মুছে ফেলা"};
+                String[] option = {"View Profile","Delete"};
                 builder.setItems(option, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -280,8 +280,8 @@ public class UnknownCustomerActivity extends AppCompatActivity {
                             new AlertDialog.Builder(UnknownCustomerActivity.this)
                                     .setIcon(R.drawable.ic_delete)
                                     .setTitle(name)
-                                    .setMessage("আপনি কি নিশ্চিত মুছে ফেলেন?")
-                                    .setPositiveButton("হ্যাঁ",
+                                    .setMessage("Are sure delete that?")
+                                    .setPositiveButton("Yes",
                                             new DialogInterface.OnClickListener() {
                                                 public void onClick(DialogInterface dialog, int which) {
 
@@ -289,7 +289,7 @@ public class UnknownCustomerActivity extends AppCompatActivity {
                                                     dialog.dismiss();
                                                 }
                                             })
-                                    .setNegativeButton("না", new DialogInterface.OnClickListener() {
+                                    .setNegativeButton("No", new DialogInterface.OnClickListener() {
                                         @Override
                                         public void onClick(DialogInterface dialog, int which) {
                                             // Do nothing

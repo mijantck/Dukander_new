@@ -113,6 +113,14 @@ public class ProductOrderAdapter extends FirestoreRecyclerAdapter<OrderNote, Pro
 
         }
 
+        if (model.getColor()!=null){
+            holder.corderProductColor.setText(model.getColor());
+
+        } if (model.getType()!=null){
+            holder.corderProductType.setText(model.getType());
+
+        }
+
 
 
 
@@ -134,7 +142,8 @@ public class ProductOrderAdapter extends FirestoreRecyclerAdapter<OrderNote, Pro
                 orderProductPrice,orderProductDate,orderProducCinfimeTexview,
               orderProductDeliveryBoyName,orderProductDeliveryBoyPhone,
                 orderCustomertName,orderCustomertPhone,orderCustomertAddress,
-                orderShopName,orderShopPhone,orderShopAddress,corderProductSize;
+                orderShopName,orderShopPhone,orderShopAddress,corderProductSize,
+                corderProductColor,corderProductType;
 
         TextView orderProductConfimeOrCancel;
                   Button corderProductConfimeOrCancel;
@@ -145,6 +154,10 @@ public class ProductOrderAdapter extends FirestoreRecyclerAdapter<OrderNote, Pro
             orderProductPicURL = itemView.findViewById(R.id.corderProductPicURL);
             orderProductName = itemView.findViewById(R.id.corderProductName);
             orderProductCode = itemView.findViewById(R.id.corderProductCode);
+
+            corderProductColor = itemView.findViewById(R.id.corderProductColor);
+            corderProductType = itemView.findViewById(R.id.corderProductType);
+
             orderProductQuantity = itemView.findViewById(R.id.corderProductQuantity);
             orderProductPrice = itemView.findViewById(R.id.corderProductPrice);
             orderProductDate = itemView.findViewById(R.id.corderProductDate);

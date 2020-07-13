@@ -3,6 +3,7 @@ package com.mrsoftit.dukander;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -15,6 +16,7 @@ import android.graphics.Paint;
 import android.icu.text.DecimalFormat;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -48,14 +50,17 @@ import com.google.firebase.dynamiclinks.DynamicLink;
 import com.google.firebase.dynamiclinks.FirebaseDynamicLinks;
 import com.google.firebase.dynamiclinks.ShortDynamicLink;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.InstanceIdResult;
+import com.mrsoftit.dukander.adapter.GlobleProductListAdapter6;
 import com.mrsoftit.dukander.adapter.ReviewAdapter;
 import com.mrsoftit.dukander.modle.GlobleCustomerNote;
+import com.mrsoftit.dukander.modle.GlobleProductNote6;
 import com.mrsoftit.dukander.modle.ReviewComentNote;
 import com.squareup.picasso.Picasso;
 
@@ -104,19 +109,29 @@ public class ProductFullViewOrderActivity extends AppCompatActivity {
 
     DecimalFormat df2 = new DecimalFormat("#.##");
 
+    GlobleProductListAdapter6 globleProductListAdapter6;
+
+    CollectionReference GlobleProduct = FirebaseFirestore.getInstance()
+            .collection("GlobleProduct");
+
+
+
     TextView reviewID;
 
     Double commonPrice;
     private String proIdup,fromURL, proNameup,proPriceup,productCodeup,productPrivacyup,proImgeUrlup,
-            ShopNameup,ShopPhoneup,ShopAddressup,ShopImageUrlup,ShopIdup,UserIdup,productCategoryup,dateup,proQuaup,discuntup,tokenup;
+            ShopNameup,ShopPhoneup,ShopAddressup,ShopImageUrlup,ShopIdup,UserIdup,productCategoryup,dateup,
+            proQuaup,discuntup,tokenup,descriptuionup,typeup,colorup;
 
 
 
     Button orderButton,ChartButton;
    private ImageView productImageDetail;
    private TextView ProductNameDetails,shareButton,inStockDetails,productPriceDetails,
-           shopDetailName,shopDetailPhone,shopDetailAddress,ProductCode;
-   private EditText productQuantidyfromCustomer,size;
+           shopDetailName,shopDetailPhone,shopDetailAddress,ProductCode,sellPrice,LigalPrice,
+           tetViewDiescunt,ProductDescriptionView,ProductcolorView,productType,ProductSizeView;
+
+   private EditText productQuantidyfromCustomer,size,colorForOrder,typeforeOrder;
 
     private  double proPrice,proQua;
     private  int date,pruductDiscount;
@@ -173,9 +188,22 @@ public class ProductFullViewOrderActivity extends AppCompatActivity {
         shareButton =findViewById(R.id.shareButton);
         reviewID =findViewById(R.id.reviewID);
         size =findViewById(R.id.size);
+
+        LigalPrice =findViewById(R.id.LigalPrice);
+        tetViewDiescunt =findViewById(R.id.tetViewDiescunt);
+        sellPrice =findViewById(R.id.sellPrice);
+        ProductDescriptionView =findViewById(R.id.ProductDescriptionView);
         ChartButton =findViewById(R.id.ChartButton);
         productQuantidyfromCustomer = findViewById(R.id.productQuantidyfromCustomer);
         orderButton =findViewById(R.id.orderButton);
+
+        ProductcolorView =findViewById(R.id.ProductcolorView);
+        productType =findViewById(R.id.productType);
+        ProductSizeView =findViewById(R.id.ProductSizeView);
+
+
+        colorForOrder =findViewById(R.id.colorForOrder);
+        typeforeOrder =findViewById(R.id.typeforeOrder);
 
         final Bundle bundle = getIntent().getExtras();
 
@@ -199,6 +227,7 @@ public class ProductFullViewOrderActivity extends AppCompatActivity {
                 proPriceup = bundle.getString("proPriceup");
                 proPrice = Double.parseDouble(proPriceup);
                 productPriceDetails.setText(proPriceup);
+                LigalPrice.setText(proPriceup+"");
             }
 
             if (bundle.getString("productCodeup")!=null){
@@ -254,8 +283,21 @@ public class ProductFullViewOrderActivity extends AppCompatActivity {
                     inStockDetails.setTextColor(Color.RED);
                 }else {
                     inStockDetails.setText("In stock");
-                    inStockDetails.setTextColor(Color.BLACK);
+                    inStockDetails.setTextColor(Color.GREEN);
                 }
+            }
+
+            if (bundle.getString("color")!=null){
+                colorup =bundle.getString("color");
+                ProductcolorView.setText(colorup);
+            }
+            if (bundle.getString("type")!=null){
+                typeup =bundle.getString("type");
+                productType.setText(typeup);
+            }
+            if (bundle.getString("descriptuion")!=null){
+                descriptuionup =bundle.getString("descriptuion");
+                ProductSizeView.setText(descriptuionup);
             }
             if (bundle.getString("discuntup")!=null){
                 discuntup = bundle.getString("discuntup");
@@ -263,9 +305,18 @@ public class ProductFullViewOrderActivity extends AppCompatActivity {
                 Double d2 =Double.valueOf(pruductDiscount);
                 commonPrice = calcuateDiscount(proPrice,d2);
                 productPriceDetails.setText(calcuateDiscount(proPrice,d2)+"");
+                sellPrice.setText(calcuateDiscount(proPrice,d2)+"");
+                tetViewDiescunt.setText(discuntup);
+
             }else {
                 commonPrice = proPrice;
                 productPriceDetails.setText(proPrice+"");
+                sellPrice.setText(proPrice+"");
+
+            }
+
+            if ( bundle.getString("descriptionup")!=null){
+                ProductDescriptionView.setText( bundle.getString("descriptionup"));
             }
         }
 
@@ -410,7 +461,9 @@ public class ProductFullViewOrderActivity extends AppCompatActivity {
                 if (!s1.isEmpty()){
                     double ProductQuantidy =Double.parseDouble(s1);
                     double sumPrice = ProductQuantidy*commonPrice;
-                    productPriceDetails.setText(df2.format( sumPrice)+"");
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                        productPriceDetails.setText(df2.format( sumPrice)+"");
+                    }
                 }else {
 
                     productPriceDetails.setText(commonPrice+"");
@@ -490,6 +543,8 @@ public class ProductFullViewOrderActivity extends AppCompatActivity {
                     intent.putExtra("discuntup",discuntup);
                     intent.putExtra("tokenup",tokenup);
                     intent.putExtra("size",size.getText().toString());
+                    intent.putExtra("color", colorForOrder.getText().toString());
+                    intent.putExtra("type", typeforeOrder.getText().toString());
                     startActivity(intent);
                 }else {
                     Toast.makeText(ProductFullViewOrderActivity.this, " please fill up quantity ", Toast.LENGTH_SHORT).show();
@@ -497,6 +552,8 @@ public class ProductFullViewOrderActivity extends AppCompatActivity {
             }
         });
 
+
+        reletedProduct(productCategoryup);
     }
 
 
@@ -572,5 +629,55 @@ public class ProductFullViewOrderActivity extends AppCompatActivity {
     }
 
 
+
+    public void  reletedProduct(String catagory){
+
+
+            Query query = GlobleProduct.whereEqualTo("productCategory",catagory).whereEqualTo("productPrivacy","Public");
+
+            FirestoreRecyclerOptions<GlobleProductNote6> options = new FirestoreRecyclerOptions.Builder<GlobleProductNote6>()
+                    .setQuery(query, GlobleProductNote6.class)
+                    .build();
+
+            globleProductListAdapter6 = new GlobleProductListAdapter6(options);
+
+
+            RecyclerView recyclerView = findViewById(R.id.fullProductViewReletetProuct);
+            recyclerView.setHasFixedSize(true);
+            LinearLayoutManager linearLayoutManager = new LinearLayoutManager(ProductFullViewOrderActivity.this,RecyclerView.HORIZONTAL,false);
+            recyclerView.setLayoutManager(linearLayoutManager);
+            recyclerView.setAdapter(globleProductListAdapter6);
+           globleProductListAdapter6.startListening();
+
+            globleProductListAdapter6.setOnItemClickListener(new GlobleProductListAdapter6.OnItemClickListener() {
+                @Override
+                public void onItemClick(DocumentSnapshot documentSnapshot, int position) {
+                    final GlobleProductNote6 globleProductNote = documentSnapshot.toObject(GlobleProductNote6.class);
+                    Intent intent = new Intent(ProductFullViewOrderActivity.this, ProductFullViewOrderActivity.class);
+                    intent.putExtra("proIdup",globleProductNote.getProId());
+                    intent.putExtra("proNameup",globleProductNote.getProName());
+                    intent.putExtra("proPriceup",globleProductNote.getProPrice()+"");
+                    intent.putExtra("productCodeup",globleProductNote.getProductCode());
+                    intent.putExtra("productPrivacyup",globleProductNote.getProductPrivacy());
+                    intent.putExtra("proImgeUrlup",globleProductNote.getProImgeUrl());
+                    intent.putExtra("ShopNameup",globleProductNote.getShopName());
+                    intent.putExtra("ShopPhoneup",globleProductNote.getShopPhone());
+                    intent.putExtra("ShopAddressup",globleProductNote.getShopAddress());
+                    intent.putExtra("ShopImageUrlup",globleProductNote.getShopImageUrl());
+                    intent.putExtra("ShopIdup",globleProductNote.getShopId());
+                    intent.putExtra("UserIdup",globleProductNote.getUserId());
+                    intent.putExtra("productCategoryup",globleProductNote.getProductCategory());
+                    intent.putExtra("dateup",globleProductNote.getDate()+"");
+                    intent.putExtra("proQuaup",globleProductNote.getProQua()+"");
+                    intent.putExtra("discuntup",globleProductNote.getPruductDiscount()+"");
+                    intent.putExtra("tokenup",globleProductNote.getToken());
+                    startActivity(intent);
+
+                }
+            });
+
+
+
+    }
 
 }

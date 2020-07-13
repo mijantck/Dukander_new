@@ -356,13 +356,13 @@ public class ConfirmUnerSaleActivity extends AppCompatActivity {
         new AlertDialog.Builder(ConfirmUnerSaleActivity.this)
                 .setIcon(R.drawable.ic_delete)
                 .setTitle(name)
-                .setMessage("আপনি কি নিশ্চিত মুছে ফেলেন?")
-                .setPositiveButton("হ্যাঁ",
+                .setMessage("Are You Delete this")
+                .setPositiveButton("Yes",
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
 
                                 progressDialog = new ProgressDialog(ConfirmUnerSaleActivity.this);
-                                progressDialog.setMessage("লোড করছে..."); // Setting Message
+                                progressDialog.setMessage("Loading..."); // Setting Message
                                 progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
                                 progressDialog.setCancelable(false);
                                 progressDialog.show();
@@ -512,7 +512,7 @@ public class ConfirmUnerSaleActivity extends AppCompatActivity {
                                 dialog.dismiss();
                             }
                         })
-                .setNegativeButton("না", new DialogInterface.OnClickListener() {
+                .setNegativeButton("NO", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         // Do nothing
@@ -570,13 +570,13 @@ public class ConfirmUnerSaleActivity extends AppCompatActivity {
                 new AlertDialog.Builder(ConfirmUnerSaleActivity.this)
                         .setIcon(R.drawable.ic_delete)
                         .setTitle(name)
-                        .setMessage("আপনি কি নিশ্চিত মুছে ফেলেন?")
-                        .setPositiveButton("হ্যাঁ",
+                        .setMessage("Are you sure delete this")
+                        .setPositiveButton("Yes",
                                 new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface dialog, int which) {
 
                                         progressDialog = new ProgressDialog(ConfirmUnerSaleActivity.this);
-                                        progressDialog.setMessage("লোড করছে..."); // Setting Message
+                                        progressDialog.setMessage("Loading..."); // Setting Message
                                         progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
                                         progressDialog.setCancelable(false);
                                         progressDialog.show();
@@ -726,7 +726,7 @@ public class ConfirmUnerSaleActivity extends AppCompatActivity {
                                         dialog.dismiss();
                                     }
                                 })
-                        .setNegativeButton("না", new DialogInterface.OnClickListener() {
+                        .setNegativeButton("No", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 // Do nothing

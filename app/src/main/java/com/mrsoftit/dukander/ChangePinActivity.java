@@ -120,11 +120,11 @@ public class ChangePinActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 if (oldpin == null || oldpin.isEmpty() ){
-                    Toast.makeText(ChangePinActivity.this, "পুরাতন পিন খালি", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ChangePinActivity.this, "Input Old Pin", Toast.LENGTH_SHORT).show();
                     return;
                 } if (newpin ==null ||newpin.isEmpty()){
 
-                    Toast.makeText(ChangePinActivity.this, "নতুন পিন খালি", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ChangePinActivity.this, "Input New Pin", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
@@ -133,7 +133,7 @@ public class ChangePinActivity extends AppCompatActivity {
                 }
                 if (oldpin.equals(pin)){
                     progressDialog = new ProgressDialog(ChangePinActivity.this);
-                    progressDialog.setTitle("তথ্য প্রস্তুত হচ্ছে..."); // Setting Title
+                    progressDialog.setMessage("Loading..."); // Setting Title
                     progressDialog.show();
 
                     myPin.document(idpin).update("pin",newpin).addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -147,7 +147,7 @@ public class ChangePinActivity extends AppCompatActivity {
                     });
 
                 }else {
-                    Toast.makeText(ChangePinActivity.this, "পুরানো পিন ভুল  ", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ChangePinActivity.this, "Old pin  ", Toast.LENGTH_SHORT).show();
                 }
 
             }

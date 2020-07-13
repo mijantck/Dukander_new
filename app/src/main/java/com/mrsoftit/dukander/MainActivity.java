@@ -124,7 +124,7 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
         mAuth = FirebaseAuth.getInstance();
         progressDialog = new ProgressDialog(MainActivity.this);
         // Setting Message
-        progressDialog.setTitle("Loading..."); // Setting Title
+        progressDialog.setMessage("Loading..."); // Setting Title
         progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         progressDialog.setCanceledOnTouchOutside(false);
 
@@ -200,8 +200,8 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
                         if (coin == 0){
 
                             new MaterialAlertDialogBuilder(MainActivity.this, R.style.CutShapeTheme)
-                                    .setTitle("কয়েন রিচার্জ")
-                                    .setMessage("আপনার কয়েন শেষ | অনুগ্রহ  করে রিচার্জ করুন")
+                                    .setTitle("Recharge Coin")
+                                    .setMessage("You have no coin | please Recharge coin")
                                     .setCancelable(false)
                                     .setPositiveButton("বুঝেছি ", new DialogInterface.OnClickListener() {
                                         @Override
@@ -692,8 +692,8 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
 
     public void dialogInformetionSet(){
         new AlertDialog.Builder(MainActivity.this)
-                .setMessage("আপনার দোকানের তথ্য পূরণ করুন")
-                .setPositiveButton("হ্যাঁ",
+                .setMessage("Please complete all information")
+                .setPositiveButton("Yes",
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
                                 Intent intent = new Intent(MainActivity.this, MyInfoActivity.class);
@@ -701,7 +701,7 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
                                 dialog.dismiss();
                             }
                         })
-                .setNegativeButton("না", new DialogInterface.OnClickListener() {
+                .setNegativeButton("No", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         // Do nothing

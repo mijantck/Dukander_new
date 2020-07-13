@@ -144,19 +144,19 @@ public class WitdrawActivity extends AppCompatActivity {
                 // Include dialog.xml file
                 dialoginvest.setContentView(R.layout.investment_withdrow_dialog);
                 // Set dialog title
-                dialoginvest.setTitle("বিল পরিশোধ ");
+                dialoginvest.setTitle("Pay Bill");
                 dialoginvest.show();
                 dialoginvest.setCanceledOnTouchOutside(false);
                 final Button okButton = dialoginvest.findViewById(R.id.addmoney);
                 final TextView Titel = dialoginvest.findViewById(R.id.TitleTExt);
-                Titel.setText("ক্যাশ আউট");
-                okButton.setText("ক্যাশ আউট");
+                Titel.setText("Cash out");
+                okButton.setText("Cash out");
                 Button cancelButton = dialoginvest.findViewById(R.id.cancelButton);
 
 
 
                 final ProgressDialog pd = new ProgressDialog(WitdrawActivity.this);
-                pd.setMessage("লোড করছে...");
+                pd.setMessage("Loading...");
 
                 payeditetext= dialoginvest.findViewById(R.id.moneyInvest_withdrow_Money);
                 moneyInvest_withdrow_ditails_editeTEaxt= dialoginvest.findViewById(R.id.moneyInvest_withdrow_ditails_editeTEaxt);
@@ -171,7 +171,7 @@ public class WitdrawActivity extends AppCompatActivity {
 
                         String investmenttaka=    payeditetext.getText().toString();
                         if (investmenttaka.isEmpty()){
-                            Toast.makeText(WitdrawActivity.this, "নগদ আউট ফিল্ড খালি ", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(WitdrawActivity.this, "Cash out empty ", Toast.LENGTH_SHORT).show();
                             return;
                         }
 
@@ -223,7 +223,7 @@ public class WitdrawActivity extends AppCompatActivity {
 
                         }else {
 
-                            Toast.makeText(WitdrawActivity.this, "আপনার কাছে পর্যাপ্ত টাকা নাই   ", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(WitdrawActivity.this, "You hve not available balance ", Toast.LENGTH_SHORT).show();
                             pd.dismiss();
                         }
 
@@ -300,15 +300,15 @@ public class WitdrawActivity extends AppCompatActivity {
                 new AlertDialog.Builder(WitdrawActivity.this)
                         .setIcon(R.drawable.ic_delete)
                         .setTitle(withdo+"")
-                        .setMessage("আপনি কি নিশ্চিত মুছে ফেলেন?")
-                        .setPositiveButton("হ্যাঁ",
+                        .setMessage("Are sure dlete that?")
+                        .setPositiveButton("Yes",
                                 new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface dialog, int which) {
 
                                         adapter.deleteItem(position);
                                     }
                                 })
-                        .setNegativeButton("না", new DialogInterface.OnClickListener() {
+                        .setNegativeButton("No", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 // Do nothing

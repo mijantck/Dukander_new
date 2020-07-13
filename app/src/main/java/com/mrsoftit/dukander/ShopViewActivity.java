@@ -126,7 +126,6 @@ public class ShopViewActivity extends AppCompatActivity {
                         for (QueryDocumentSnapshot document : Objects.requireNonNull(task.getResult())) {
                             Shop_list_note model = document.toObject(Shop_list_note.class);
 
-                            Toast.makeText(ShopViewActivity.this, " okkkkkkkkkkkkkkkkk", Toast.LENGTH_SHORT).show();
                             if (model.getShopImageURL()!=null) {
                                 String Url = model.getShopImageURL();
                                 Picasso.get().load(Url).into(shopImage);
@@ -215,7 +214,7 @@ public class ShopViewActivity extends AppCompatActivity {
         RecyclerView recyclerView = findViewById(R.id.selectetShopProductShow);
         recyclerView.setHasFixedSize(true);
         // LinearLayoutManager linearLayoutManager = new LinearLayoutManager(GlobleProductListActivity.this,RecyclerView.HORIZONTAL,false);
-        recyclerView.setLayoutManager(new GridLayoutManager(this, 3));
+        recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
         recyclerView.setAdapter(globleProductListAdapter6);
             globleProductListAdapter6.startListening();
             globleProductListAdapter6.setOnItemClickListener(new GlobleProductListAdapter6.OnItemClickListener() {
@@ -277,8 +276,6 @@ public class ShopViewActivity extends AppCompatActivity {
 
     private void allProductShow(String productName) {
 
-        if (user_id!=null) {
-
             CollectionReference ShopGlobleproduct = FirebaseFirestore.getInstance()
                     .collection("users").document(user_id).collection("Product");
 
@@ -295,7 +292,7 @@ public class ShopViewActivity extends AppCompatActivity {
             RecyclerView recyclerView = findViewById(R.id.selectetShopProductShow);
             recyclerView.setHasFixedSize(true);
             // LinearLayoutManager linearLayoutManager = new LinearLayoutManager(GlobleProductListActivity.this,RecyclerView.HORIZONTAL,false);
-            recyclerView.setLayoutManager(new GridLayoutManager(this, 3));
+            recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
             //  recyclerView.setLayoutManager(ne4 LinearLayoutManager(this));
             // recyclerView.setLayoutManager(linearLayoutManager);
             recyclerView.setAdapter(globleProductListAdapter6);
@@ -326,7 +323,7 @@ public class ShopViewActivity extends AppCompatActivity {
                 }
             });
 
-        }
+
 
     }
     @Override

@@ -279,7 +279,7 @@
                         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                         android:text="@string/shop_name"
                         android:fontFamily="@font/adamina"
-                        android:textSize="10sp"
+                        android:textSize="15sp"
                         android:layout_width="match_parent"
                         android:layout_height="40dp"
                         android:layout_marginLeft="5dp"
@@ -322,7 +322,7 @@
                     <TextView
                         android:gravity="center_vertical"
                         android:text="@string/shop_phone"
-                        android:textSize="10sp"
+                        android:textSize="15sp"
                         android:fontFamily="@font/adamina"
                         android:layout_width="match_parent"
                         android:layout_height="35dp"
@@ -365,7 +365,7 @@
                     <TextView
                         android:gravity="center_vertical"
                         android:text="@string/shop_addres"
-                        android:textSize="10sp"
+                        android:textSize="15sp"
                         android:fontFamily="@font/adamina"
                         android:layout_width="match_parent"
                         android:layout_height="35dp"
@@ -437,22 +437,54 @@
                 style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
                 android:layout_height="wrap_content"/>
         </LinearLayout>
+
+
+        <RelativeLayout
+            android:id="@+id/onlineOrOffLine"
+            android:layout_below="@+id/editeshopbuttton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:textColor="@color/colorPrimary"
+                android:padding="10dp"
+                android:gravity="center"
+                android:textStyle="bold"
+                android:textSize="15dp"
+                android:text="Your Shop is "
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/ShopOnlineButton"
+                android:gravity="center"
+                android:layout_width="wrap_content"
+                android:text="Online"
+                android:layout_marginRight="10sp"
+                android:layout_alignParentRight="true"
+                style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
+                android:layout_height="wrap_content"/>
+
+        </RelativeLayout>
         <LinearLayout
             android:id="@+id/chagepintextviewLiniarlayout"
-            android:layout_below="@+id/editeshopbuttton"
+            android:layout_below="@+id/onlineOrOffLine"
             android:gravity="center"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
             <TextView
+                android:background="@color/colorPrimary"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"/>
+            <TextView
                 android:id="@+id/chagepintextview"
                 android:textColor="@color/colorPrimary"
                 android:padding="10dp"
                 android:layout_marginTop="10dp"
-                android:gravity="center"
                 android:text="Security pin Change"
                 android:textStyle="bold"
-                android:textSize="20dp"
+                android:textSize="15dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
             <View
@@ -475,10 +507,9 @@
                 android:textColor="@color/colorPrimary"
                 android:padding="10dp"
                 android:layout_marginTop="10dp"
-                android:gravity="center"
                 android:textStyle="bold"
-                android:textSize="20dp"
-                android:text="password change"
+                android:textSize="15dp"
+                android:text="Password change"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
             <View
@@ -549,9 +580,8 @@
                 android:textColor="@color/colorPrimary"
                 android:padding="10dp"
                 android:layout_marginTop="10dp"
-                android:gravity="center"
                 android:textStyle="bold"
-                android:textSize="20dp"
+                android:textSize="15dp"
                 android:text="Change Approved change"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>

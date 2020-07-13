@@ -143,7 +143,7 @@ public class SealProductSelectAdapter extends RecyclerView.Adapter<SealProductSe
 
                 if (productNote.getProQua() < totalQantidy){
 
-                    Toast.makeText(v.getContext(), "আপনার দোকানে পর্যাপ্ত পণ্য নাই", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(v.getContext(), "Product not available", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
@@ -188,7 +188,7 @@ public class SealProductSelectAdapter extends RecyclerView.Adapter<SealProductSe
                 holder.calculatebutton.setVisibility(View.VISIBLE);
                 holder.cutomerAddButton.setVisibility(View.GONE);
                 progressDialog = new ProgressDialog(v.getContext());
-                progressDialog.setTitle("বিক্রি হচ্ছে...");
+                progressDialog.setMessage("Loading...");
                 progressDialog.setCancelable(false);
                 progressDialog.show();
 

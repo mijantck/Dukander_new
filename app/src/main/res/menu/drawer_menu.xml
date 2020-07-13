@@ -9,6 +9,10 @@
             android:icon="@drawable/ic_person"
             android:title="Shop Info" />
         <item
+            android:id="@+id/Market"
+            android:icon="@drawable/logout"
+            android:title="Go to Market "/>
+        <item
             android:id="@+id/OrderList"
             android:icon="@drawable/logout"
             android:title="Order List" />
@@ -39,7 +43,7 @@
         <item
             android:id="@+id/Profite"
             android:icon="@drawable/producthisstory"
-            android:title="Benefit" />
+            android:title="Profit" />
         <item
             android:id="@+id/recharge"
             android:icon="@drawable/producthisstory"
@@ -54,10 +58,7 @@
                 android:id="@+id/Contact_us"
                 android:icon="@drawable/logout"
                 android:title="Contact us " />
-            <item
-                android:id="@+id/Market"
-                android:icon="@drawable/logout"
-                android:title="Go to Market " />
+
             <item
                 android:id="@+id/nav_share"
                android:icon="@drawable/logout"

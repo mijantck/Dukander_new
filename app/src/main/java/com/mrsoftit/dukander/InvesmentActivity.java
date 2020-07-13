@@ -245,15 +245,15 @@ public class InvesmentActivity extends AppCompatActivity {
                 new AlertDialog.Builder(InvesmentActivity.this)
                         .setIcon(R.drawable.ic_delete)
                         .setTitle(invest+"")
-                        .setMessage("আপনি কি নিশ্চিত মুছে ফেলেন?")
-                        .setPositiveButton("হ্যাঁ",
+                        .setMessage("Are You sure delete this")
+                        .setPositiveButton("Yes",
                                 new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface dialog, int which) {
 
                                         adapter.deleteItem(position);
                                     }
                                 })
-                        .setNegativeButton("না", new DialogInterface.OnClickListener() {
+                        .setNegativeButton("No", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 // Do nothing

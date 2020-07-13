@@ -2,6 +2,7 @@ package com.mrsoftit.dukander;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -16,6 +17,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.icu.text.DecimalFormat;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.LayoutInflater;
@@ -51,6 +53,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
+@RequiresApi(api = Build.VERSION_CODES.N)
 public class TodaySaleActivity extends AppCompatActivity {
 
 
@@ -337,7 +340,9 @@ public class TodaySaleActivity extends AppCompatActivity {
                                 date = i;
                             }
                             double todayTotaldueCal = totalsum - totalpaybilint;
-                            todayTotaldue.setText(df2.format(todayTotaldueCal)+"");
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                                todayTotaldue.setText(df2.format(todayTotaldueCal)+"");
+                            }
                         }
 
                         if (datenew != date ) {
@@ -414,6 +419,7 @@ public class TodaySaleActivity extends AppCompatActivity {
                             if (document.get("firstTime")!=null){
                                 boolean firstTi = Boolean.valueOf(document.get("firstTime").toString());
                                 firstTimeComfirm = firstTi;
+
                             }
                             if (document.get("code")!=null){
                                 code = document.get("code").toString();

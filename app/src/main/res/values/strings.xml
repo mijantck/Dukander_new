@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Sellers Market</string>
+    <string name="app_name">a2z Loja</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
@@ -11,7 +11,7 @@
     <string name="StateChangeSample">State Change Sample</string>
     <string name="ProgressPaddingSample">Progress Padding Sample</string>
     <string name="CustomSelectorSample">Custom Selector Sample</string>
-    <string name="dukander">Sale Market</string>
+    <string name="dukander">a2z Loja</string>
     <string name="totalbalace">58924</string>
     <string name="todo">TODO</string>
     <string name="withdraw">Cash out</string>
@@ -20,7 +20,7 @@
     <string name="investment">Investment</string>
 
 
-    <string name="text_title_app"><font size='34'>Sellers Market</font></string>
+    <string name="text_title_app"><font size='34'>a2z Loja</font></string>
     <string name="text_subtitle_splash">Help you manage the store</string>
     <string name="text_subtitle_sign_in">Please SignIn to continue</string>
     <string name="text_hint_email">Email</string>

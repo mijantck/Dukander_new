@@ -134,7 +134,7 @@ public class SaleoOneActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 progressDialog = new ProgressDialog(SaleoOneActivity.this);
-                progressDialog.setMessage("তথ্য প্রস্তুত হচ্ছে...");
+                progressDialog.setMessage("Loading...");
                 progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
                 progressDialog.setCancelable(false);
                 progressDialog.show();

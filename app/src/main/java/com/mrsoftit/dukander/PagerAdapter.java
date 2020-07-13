@@ -9,7 +9,7 @@ import androidx.fragment.app.FragmentStatePagerAdapter;
 
 public class PagerAdapter extends FragmentPagerAdapter {
 
-    private String fragmnet[] = {"অফার ", "রিচার্জ "};
+    private String fragmnet[] = {"Offer ", "Recharge "};
 
     public PagerAdapter(@NonNull FragmentManager fm) {
         super(fm);

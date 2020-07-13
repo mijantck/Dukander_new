@@ -96,9 +96,9 @@ public class rechargeActivity extends AppCompatActivity {
 
 
                     if (doc.get("customerStatus")!=null){
-                       acticHeaderTextView.setText("আপনি আছেন  ");
+                       acticHeaderTextView.setText("You have ");
 
-                        activeCoine.setText("অগ্রিম");
+                        activeCoine.setText("Pro");
 
                     }else if (doc.get("coin") != null) {
 

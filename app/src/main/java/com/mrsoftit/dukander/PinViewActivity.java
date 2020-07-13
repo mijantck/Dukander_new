@@ -60,9 +60,9 @@ public class PinViewActivity extends AppCompatActivity {
         final PinEntryEditText pinNewPin = findViewById(R.id.txt_pin_entry_new);
 
         progressDialog = new ProgressDialog(PinViewActivity.this);
-        progressDialog.setTitle("তথ্য প্রস্তুত হচ্ছে...");
+        progressDialog.setMessage("Loading...");
         progressDialog.setCancelable(false);
-
+        progressDialog.setCanceledOnTouchOutside(false);
         pinNote = new PinNote();
 
 
@@ -87,6 +87,7 @@ public class PinViewActivity extends AppCompatActivity {
                             new MaterialAlertDialogBuilder(PinViewActivity.this)
                                     .setTitle("Set security code")
                                     .setMessage("set security code than safe your shop information.so places set security code")
+                                    .setCancelable(false)
                                     .setPositiveButton("GOT IT", new DialogInterface.OnClickListener() {
                                         @Override
                                         public void onClick(DialogInterface dialogInterface, int i) {
@@ -131,7 +132,7 @@ public class PinViewActivity extends AppCompatActivity {
                         finish();
                     } else {
                         pinEntry2.setError(true);
-                        Toast.makeText(PinViewActivity.this, "ভূল", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(PinViewActivity.this, "Wrong", Toast.LENGTH_SHORT).show();
 
                         pinEntry2.postDelayed(new Runnable() {
                             @Override

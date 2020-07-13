@@ -620,13 +620,13 @@ public class TotalSaleActivity extends AppCompatActivity {
                 new AlertDialog.Builder(TotalSaleActivity.this)
                         .setIcon(R.drawable.ic_delete)
                         .setTitle(name)
-                        .setMessage("আপনি কি নিশ্চিত মুছে ফেলেন?")
-                        .setPositiveButton("হ্যাঁ",
+                        .setMessage("Are you sure delete that?")
+                        .setPositiveButton("Yes",
                                 new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface dialog, int which) {
 
                                         progressDialog = new ProgressDialog(TotalSaleActivity.this);
-                                        progressDialog.setMessage("লোড করছে..."); // Setting Message
+                                        progressDialog.setMessage("Loading..."); // Setting Message
                                         progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
                                         progressDialog.setCancelable(false);
                                         progressDialog.show();
@@ -776,7 +776,7 @@ public class TotalSaleActivity extends AppCompatActivity {
                                         dialog.dismiss();
                                     }
                                 })
-                        .setNegativeButton("না", new DialogInterface.OnClickListener() {
+                        .setNegativeButton("No", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 // Do nothing

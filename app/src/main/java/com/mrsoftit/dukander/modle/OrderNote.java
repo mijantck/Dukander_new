@@ -26,6 +26,9 @@ public class OrderNote {
     private String deliveryBoyPhone;
     private String customerToken;
     private String size;
+    private String color;
+    private String type;
+
 
 
     public  OrderNote(){}
@@ -35,7 +38,8 @@ public class OrderNote {
                      String shopPhone, String shopAddress, String shopID, String userID, String orderID, int orderDate,
                      String productName, String productID, String productURL, String productCode, String productPrice,
                      String productQuantity, String offerForShop, String offerForcoupon, String confirmetionStatus,
-                     String orderStatus, String deliveryBoyName, String deliveryBoyPhone, String customerToken,String size) {
+                     String orderStatus, String deliveryBoyName, String deliveryBoyPhone, String customerToken,String size,String color,
+                     String type) {
         this.cutomerName = cutomerName;
         this.cutomerPhone = cutomerPhone;
         this.cutomerAddress = cutomerAddress;
@@ -61,6 +65,24 @@ public class OrderNote {
         this.deliveryBoyPhone = deliveryBoyPhone;
         this.customerToken = customerToken;
         this.size = size;
+        this.color = color;
+        this.type = type;
+    }
+
+    public String getColor() {
+        return color;
+    }
+
+    public void setColor(String color) {
+        this.color = color;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 
     public String getSize() {

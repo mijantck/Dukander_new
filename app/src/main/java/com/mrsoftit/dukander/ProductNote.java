@@ -20,6 +20,9 @@ public class ProductNote {
     private int date;
     private int pruductDiscount;
     private String comomCatagory;
+    private String color;
+    private String type;
+    private String description;
 
     public ProductNote(){}
 
@@ -59,6 +62,31 @@ public class ProductNote {
         this.search = search;
         this.pruductDiscount = pruductDiscount;
         this.comomCatagory = comomCatagory;
+    }
+
+
+    public String getColor() {
+        return color;
+    }
+
+    public void setColor(String color) {
+        this.color = color;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public void setUserID(String userID) {

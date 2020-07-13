@@ -95,8 +95,18 @@ public class ShopProductOrderAdapter extends FirestoreRecyclerAdapter<OrderNote,
         holder.orderShopName.setText(model.getShopName());
         holder.orderShopPhone.setText(model.getShopPhone());
         holder.orderShopAddress.setText(model.getShopAddress());
+
         if (model.getSize()!=null){
             holder.orderProductSize.setText(model.getSize());
+
+        }
+
+        if (model.getColor()!=null){
+            holder.orderProductColor.setText(model.getColor());
+
+        }
+        if (model.getType()!=null){
+            holder.orderProductType.setText(model.getType());
 
         }
 
@@ -118,7 +128,8 @@ public class ShopProductOrderAdapter extends FirestoreRecyclerAdapter<OrderNote,
         TextView orderProductName,orderProductCode,orderProductQuantity,orderProductPrice,orderProductDate,orderProducCinfimeTexview,
               orderProductDeliveryBoyName,orderProductDeliveryBoyPhone,
                 orderCustomertName,orderCustomertPhone,orderCustomertAddress,
-                orderShopName,orderShopPhone,orderShopAddress,orderProductSize;
+                orderShopName,orderShopPhone,orderShopAddress,orderProductSize,
+                orderProductColor,orderProductType;
 
         Button orderProductConfimeOrCancel,orderProductDeliveyBoySecelt;
         LinearLayout productWonerLayout,deliveryBoyLayout;
@@ -128,6 +139,9 @@ public class ShopProductOrderAdapter extends FirestoreRecyclerAdapter<OrderNote,
             orderProductPicURL = itemView.findViewById(R.id.orderProductPicURL);
             productWonerLayout = itemView.findViewById(R.id.productWonerLayout);
             deliveryBoyLayout = itemView.findViewById(R.id.deliveryBoyLayout);
+
+            orderProductColor = itemView.findViewById(R.id.orderProductColor);
+            orderProductType = itemView.findViewById(R.id.orderProductType);
             orderProductName = itemView.findViewById(R.id.orderProductName);
             orderProductCode = itemView.findViewById(R.id.orderProductCode);
             orderProductQuantity = itemView.findViewById(R.id.orderProductQuantity);

@@ -103,7 +103,8 @@ public class ProductAddActivity extends AppCompatActivity implements EasyPermiss
 
     ImageView pruductImage,barcodeIcon;
 
-    private TextInputEditText productName, productPrice,productQuantayn,pruductMin,pruductBuyPrice,pruductDiscount;
+    private TextInputEditText productName, productPrice,productQuantayn,pruductMin,pruductBuyPrice,pruductDiscount
+            ,pruductColor,pruductType,pruductDescription;
     EditText productBarcodeNumber;
     private MaterialButton addProduct;
 
@@ -112,7 +113,7 @@ public class ProductAddActivity extends AppCompatActivity implements EasyPermiss
     ProgressDialog progressDialog;
     FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
     String   proIdup, productNameup,pruductBuyPriceup, productPriceup,productQuantaynup,pruductMinup,addresup,
-            pruductImageup,barcodenumber,privecyup,catagoryup,dicountup;
+            pruductImageup,barcodenumber,privecyup,catagoryup,dicountup,descriptuionup,typeup,colorup;
 
     FloatingActionButton imageSeletprioduct;
 
@@ -127,9 +128,13 @@ public class ProductAddActivity extends AppCompatActivity implements EasyPermiss
     String[] CategoryspinnerList = { "Mobiles","Tablets","Used Mobile","Mobile accessories","Foods","jewellery","Motorcycle accessories","Cosmetics","Grocery",
     "Panjabi","Pajama","Shirts","Pant","T-Shirt","Polo","Lungi","Man Shoes","Man Accessories","Saree",
             "Shalwar Kameez", "Shawls","Girls Panjabi",
-            "Nightwear", "Scarves", "Dupatta", "Girls Shoes", "Girls Accessories"};
+            "Nightwear", "Scarves", "Dupatta", "Girls Shoes", "Girls Accessories",
+            "kids","medicine","sports", "computer accessories","home accessories","books","electronics","game"};
 
     String productCode;
+     String color;
+     String typ;
+    String descreption;
     int datenew;
     int pdicount;
 
@@ -197,6 +202,8 @@ public class ProductAddActivity extends AppCompatActivity implements EasyPermiss
         firebaseFirestore = FirebaseFirestore.getInstance();
         mStorageReferenceImage = FirebaseStorage.getInstance().getReference().child(user_id).child("ProdctImage");
 
+
+
         pruductImage = findViewById(R.id.pruductPic);
         productName = findViewById(R.id.productName);
         productBarcodeNumber = findViewById(R.id.productBarcodeNumber);
@@ -211,6 +218,11 @@ public class ProductAddActivity extends AppCompatActivity implements EasyPermiss
         privacyspinner = findViewById(R.id.privacyspinner);
         Categoryspinner = findViewById(R.id.Categoryspinner);
         pruductDiscount = findViewById(R.id.pruductDiscount);
+
+
+        pruductColor = findViewById(R.id.pruductColor);
+        pruductType = findViewById(R.id.pruductType);
+        pruductDescription = findViewById(R.id.pruductDescription);
 
 
 
@@ -237,18 +249,30 @@ public class ProductAddActivity extends AppCompatActivity implements EasyPermiss
                 dicountup =bundle.getString("dicount");
                 pruductDiscount.setText(dicountup);
             }
+            if (bundle.getString("color")!=null){
+                colorup =bundle.getString("color");
+                pruductColor.setText(colorup);
+            }
+            if (bundle.getString("type")!=null){
+                typeup =bundle.getString("type");
+                pruductType.setText(typeup);
+            }
+            if (bundle.getString("descriptuion")!=null){
+                descriptuionup =bundle.getString("descriptuion");
+                pruductDescription.setText(descriptuionup);
+            }
             id = proIdup;
-if (pruductImageup!=null){
-    Uri myUri = Uri.parse(pruductImageup);
-    mImageUri = myUri;
-    Picasso.get().load(myUri).into(pruductImage);
-}
+            if (pruductImageup!=null){
+              Uri myUri = Uri.parse(pruductImageup);
+              mImageUri = myUri;
+              Picasso.get().load(myUri).into(pruductImage);
+            }
 
             productName.setText(productNameup);
-if (barcodenumber!=null){
-    productBarcodeNumber.setText(barcodenumber);
+            if (barcodenumber!=null){
+             productBarcodeNumber.setText(barcodenumber);
 
-}
+                    }
             productPrice.setText(productPriceup);
             pruductBuyPrice.setText(pruductBuyPriceup);
             productQuantayn.setText(productQuantaynup);
@@ -262,9 +286,13 @@ if (barcodenumber!=null){
 
                 if (bundle!=null){
                     image = true;
-                    getIMEGE();
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                        getIMEGE();
+                    }
                 }else {
-                    getIMEGE();
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                        getIMEGE();
+                    }
                 }
             }
         });
@@ -334,6 +362,39 @@ if (barcodenumber!=null){
                 comonCatagory = "Girls";
             }
 
+            else if (catagoryupInt ==24){
+
+                comonCatagory = "kids";
+            }
+            else if (catagoryupInt ==25){
+
+                comonCatagory = "medicine";
+            }
+            else if (catagoryupInt ==26){
+
+                comonCatagory = "sports";
+            }
+            else if (catagoryupInt ==27){
+
+                comonCatagory = "computer accessories";
+            }
+            else if (catagoryupInt ==28){
+
+                comonCatagory = "home accessories";
+            }
+            else if (catagoryupInt ==29){
+
+                comonCatagory = "books";
+            }
+            else if (catagoryupInt ==30){
+
+                comonCatagory = "electronics";
+            }
+            else if (catagoryupInt ==31){
+
+                comonCatagory = "game";
+            }
+
         }
         privacyspinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -378,6 +439,38 @@ if (barcodenumber!=null){
                     comonCatagory = "Mans";
                 }else if (position >=18 && position <=23){
                     comonCatagory = "Girls";
+                }
+                else if (position ==24){
+
+                    comonCatagory = "kids";
+                }
+                else if (position ==25){
+
+                    comonCatagory = "medicine";
+                }
+                else if (position ==26){
+
+                    comonCatagory = "sports";
+                }
+                else if (position ==27){
+
+                    comonCatagory = "computer accessories";
+                }
+                else if (position ==28){
+
+                    comonCatagory = "home accessories";
+                }
+                else if (position ==29){
+
+                    comonCatagory = "books";
+                }
+                else if (position ==30){
+
+                    comonCatagory = "electronics";
+                }
+                else if (position ==31){
+
+                    comonCatagory = "game";
                 }
 
 
@@ -433,6 +526,10 @@ if (barcodenumber!=null){
                 String pBpq = pruductBuyPrice.getText().toString();
                 String pmq = pruductMin.getText().toString();
 
+              color = pruductColor.getText().toString();
+               typ = pruductType.getText().toString();
+               descreption = pruductDescription.getText().toString();
+
                 final String dicount = pruductDiscount.getText().toString();
 
 
@@ -475,7 +572,7 @@ if (barcodenumber!=null){
 
                 progressDialog = new ProgressDialog(ProductAddActivity.this);
                 progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-                progressDialog.setTitle("Loading...");
+                progressDialog.setMessage("Loading...");
                 progressDialog.show();
                 progressDialog.setCanceledOnTouchOutside(false);
 
@@ -520,12 +617,14 @@ if (barcodenumber!=null){
                             if (task.isSuccessful()) {
 
                                 final String id = task.getResult().getId();
-                                product.document(id).update("proId", id).addOnCompleteListener(new OnCompleteListener<Void>() {
+
+                                product.document(id).update("proId", id,"color",color,"type",typ,"description",descreption).addOnCompleteListener(new OnCompleteListener<Void>() {
                                     @Override
                                     public void onComplete(@NonNull Task<Void> task) {
 
 
-                                        setGlobleProduct(id,pnmae,pp,pq,productCode,privacyspinneritem,Categoryspinneritem,datenew,pdicount,comonCatagory);
+                                        setGlobleProduct(id,pnmae,pp,pq,productCode,privacyspinneritem,Categoryspinneritem,datenew,
+                                                pdicount,comonCatagory,color,typ,descreption);
 
                                         Toast.makeText(ProductAddActivity.this, " Successful", Toast.LENGTH_SHORT).show();
 
@@ -546,12 +645,14 @@ if (barcodenumber!=null){
                 if (bundle!=null && image == false) {
 
                     product.document(id).update("proId", id, "proName", pnmae, "proPrice", pp,"proBuyPrice",pBp, "proQua", pq, "proMin", pm, "proImgeUrl",
-                            pruductImageup,"barCode",pbarCode,"productPrivacy",privacyspinneritem,"productCategory",Categoryspinneritem,"search",pnmae.toLowerCase(),"comomCatagory",comonCatagory)
+                            pruductImageup,"barCode",pbarCode,"productPrivacy",privacyspinneritem,"productCategory",Categoryspinneritem,"search",pnmae.toLowerCase(),"comomCatagory",comonCatagory
+                    ,"color",color,"type",typ,"description",descreption)
                             .addOnCompleteListener(new OnCompleteListener<Void>() {
                                 @Override
                                 public void onComplete(@NonNull Task<Void> task) {
 
-                                    setGlobleProductupdate(id,pnmae,pp,pq,productCode,privacyspinneritem,Categoryspinneritem,datenew,pdicount,comonCatagory);
+                                    setGlobleProductupdate(id,pnmae,pp,pq,productCode,privacyspinneritem,Categoryspinneritem,
+                                            datenew,pdicount,comonCatagory,color,typ,descreption);
                                     Intent intent = new Intent(ProductAddActivity.this, ProductListActivity.class);
                                     startActivity(intent);
                                     finish();
@@ -770,11 +871,14 @@ if (barcodenumber!=null){
 
                     if (image != false) {
 
-                        product.document(id).update("proId", id, "proName", pnmae, "proPrice", pp,"proBuyPrice", pBp, "proQua", pq, "proMin", pm, "proImgeUrl",downloadLink,"barCode",barCode,"search",pnmae.toLowerCase(),"comomCatagory",comonCatagory)
+                        product.document(id).update("proId", id, "proName", pnmae, "proPrice",
+                                pp,"proBuyPrice", pBp, "proQua", pq, "proMin", pm, "proImgeUrl",downloadLink,"barCode",
+                                barCode,"search",pnmae.toLowerCase(),"comomCatagory",comonCatagory,"color",color,"type",typ,"description",descreption)
                                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                                     @Override
                                     public void onComplete(@NonNull Task<Void> task) {
-                                        setGlobleProductupdate(id,pnmae,pp,pq,productCode,privacyspinneritem,Categoryspinneritem,datenew,downloadLink,pdicount,comonCatagory);
+                                        setGlobleProductupdate(id,pnmae,pp,pq,productCode,privacyspinneritem,Categoryspinneritem,datenew,
+                                                downloadLink,pdicount,comonCatagory,color,typ,descreption);
 
                                         progressDialog.dismiss();
                                     }
@@ -800,14 +904,15 @@ if (barcodenumber!=null){
                                     final String id = task.getResult().getId();
 
 
-                                    product.document(id).update("proId", id).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                    product.document(id).update("proId", id,"color",color,"type",typ,"description",descreption).addOnCompleteListener(new OnCompleteListener<Void>() {
                                         @Override
                                         public void onComplete(@NonNull Task<Void> task) {
 
 
-                                            setGlobleProduct(id,pnmae,pp,pq,productCode,privacyspinneritem,Categoryspinneritem,datenew,downloadLink,pdicount,comonCatagory);
+                                            setGlobleProduct(id,pnmae,pp,pq,productCode,privacyspinneritem,Categoryspinneritem,
+                                                    datenew,downloadLink,pdicount,comonCatagory,color,typ,descreption);
 
-                                            Toast.makeText(ProductAddActivity.this, " সফলভাবে সম্পন্ন ", Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(ProductAddActivity.this, " successful ", Toast.LENGTH_SHORT).show();
 
                                         }
                                     });
@@ -1079,7 +1184,11 @@ if (barcodenumber!=null){
     }
 
 
-    public void setGlobleProduct(final String productId, final String productName, final double productPrice, final double productQuantidy, final String productCode, final String privecy, final String Catagury, final int date, final int pdicount, final String comomCatagory) {
+    public void setGlobleProduct(final String productId, final String productName, final double productPrice,
+                                 final double productQuantidy, final String productCode, final String privecy,
+                                 final String Catagury, final int date, final int pdicount, final String comomCatagory,
+
+    final  String color1,final String typ,final String description) {
 
         myInfo.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
@@ -1131,6 +1240,9 @@ if (barcodenumber!=null){
                     GlobaleProductObject.put("proQua", productQuantidy);
                     GlobaleProductObject.put("UserId", user_id);
                     GlobaleProductObject.put("token", token);
+                    GlobaleProductObject.put("color", color1);
+                    GlobaleProductObject.put("type", typ);
+                    GlobaleProductObject.put("description", description);
 
                     GlobleProduct.document(productId).set(GlobaleProductObject).addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
@@ -1144,7 +1256,10 @@ if (barcodenumber!=null){
 
 
     }
-    public void setGlobleProduct(final String productId, final String productName, final double productPrice, final double productQuantidy, final String productCode, final String privecy, final String Catagury, final int date, final String ImageUrl, final int pdicount, final String comomCatagory){
+    public void setGlobleProduct(final String productId, final String productName, final double productPrice,
+                                 final double productQuantidy, final String productCode, final String privecy,
+                                 final String Catagury, final int date, final String ImageUrl, final int pdicount,
+                                 final String comomCatagory,final  String color1,final String typ,final String description){
 
         myInfo.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
@@ -1196,6 +1311,10 @@ if (barcodenumber!=null){
                     GlobaleProductObject.put("proQua", productQuantidy);
                     GlobaleProductObject.put("UserId", user_id);
                     GlobaleProductObject.put("token", token);
+                    GlobaleProductObject.put("color", color1);
+                    GlobaleProductObject.put("type", typ);
+                    GlobaleProductObject.put("description", description);
+
 
                     GlobleProduct.document(productId).set(GlobaleProductObject).addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
@@ -1209,7 +1328,10 @@ if (barcodenumber!=null){
 
 
     }
-    public void setGlobleProductupdate(final String productId, final String productName, final double productPrice, final double productQuantidy, final String productCode, final String privecy, final String Catagury, final int date, final String ImageUrl, final int pdicount, final String comomCatagory){
+    public void setGlobleProductupdate(final String productId, final String productName, final double productPrice,
+                                       final double productQuantidy, final String productCode, final String privecy,
+                                       final String Catagury, final int date, final String ImageUrl, final int pdicount,
+                                       final String comomCatagory,final  String color1,final String typ,final String description){
 
         myInfo.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
@@ -1260,6 +1382,9 @@ if (barcodenumber!=null){
                     GlobaleProductObject.put("proQua", productQuantidy);
                     GlobaleProductObject.put("UserId", user_id);
                     GlobaleProductObject.put("token", token);
+                    GlobaleProductObject.put("color", color1);
+                    GlobaleProductObject.put("type", typ);
+                    GlobaleProductObject.put("description", description);
 
                     GlobleProduct.document(productId).set(GlobaleProductObject).addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
@@ -1273,7 +1398,10 @@ if (barcodenumber!=null){
 
 
     }
-    public void setGlobleProductupdate(final String productId, final String productName, final double productPrice, final double productQuantidy, final String productCode, final String privecy, final String Catagury, final int date, final int pdicount, final String comomCatagory){
+    public void setGlobleProductupdate(final String productId, final String productName, final double productPrice,
+                                       final double productQuantidy, final String productCode, final String privecy,
+                                       final String Catagury, final int date, final int pdicount, final String comomCatagory
+    ,final  String color1,final String typ,final String description){
 
         myInfo.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
@@ -1323,6 +1451,9 @@ if (barcodenumber!=null){
                     GlobaleProductObject.put("proQua", productQuantidy);
                     GlobaleProductObject.put("UserId", user_id);
                     GlobaleProductObject.put("token", token);
+                    GlobaleProductObject.put("color", color1);
+                    GlobaleProductObject.put("type", typ);
+                    GlobaleProductObject.put("description", description);
 
                     GlobleProduct.document(productId).update(GlobaleProductObject).addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override

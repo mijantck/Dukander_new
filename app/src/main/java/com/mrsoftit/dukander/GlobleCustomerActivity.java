@@ -243,8 +243,7 @@ public class GlobleCustomerActivity extends AppCompatActivity implements EasyPer
                                             "-" + globlecutouser_id +
                                             "-" + id +
                                             "&st=" + name  +
-                                            "&sd=" + " An online shopping mall where hundreds, thousands " +
-                                            "of physical and online shop can offer their price. Sellers Market  will ensure delivery! " +
+                                            "&sd=" + " can offer their price. Sellers Market  will ensure delivery! " +
                                             "- You can pick the shop you trust from your past buyings - " +
                                             "First ever product search engine including everything means every thing! " +
                                             "- Delivery time could be even 10 min and must be faster than any delivery service.\""+

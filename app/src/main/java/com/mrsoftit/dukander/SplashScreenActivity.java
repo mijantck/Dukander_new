@@ -60,7 +60,7 @@ public class SplashScreenActivity extends AppCompatActivity {
                 .withFullScreen()
                 .withSplashTimeOut(3000)
                 .withBackgroundColor(Color.WHITE)
-                .withFooterText("দোকানদার অ্যাপ্লিকেশনে স্বাগতম")
+                .withFooterText("Wellcome to a2z loja")
                 .withLogo(R.mipmap.ic_launcher_foreground);
 
 

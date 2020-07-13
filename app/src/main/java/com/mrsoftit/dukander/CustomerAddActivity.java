@@ -192,7 +192,7 @@ public class CustomerAddActivity extends AppCompatActivity implements EasyPermis
 
 
                 if(!checkIntert()) {
-                    Toast.makeText(CustomerAddActivity.this, " কোনও ইন্টারনেট সংযোগ নেই ", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(CustomerAddActivity.this, " No internet ", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
@@ -202,23 +202,23 @@ public class CustomerAddActivity extends AppCompatActivity implements EasyPermis
                 final String addreschack = CustomerAddress.getText().toString();
 
                 if (TextUtils.isEmpty(name1)) {
-                    Toast.makeText(getApplicationContext(), "কাস্টমার নাম লিখুন ", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "Customer Name ", Toast.LENGTH_LONG).show();
                     return;
                 }
                 if (TextUtils.isEmpty(phone1)) {
-                    Toast.makeText(getApplicationContext(), "গ্রাহক ফোন নাম্বার লিখুন", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "Customer Phone", Toast.LENGTH_LONG).show();
                     return;
                 } if (TextUtils.isEmpty(takaChake)) {
-                    Toast.makeText(getApplicationContext(), "গ্রাহক টাকার পরিমান লিখুন", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "Customer Due", Toast.LENGTH_LONG).show();
                     return;
                 } if (TextUtils.isEmpty(addreschack)) {
-                    Toast.makeText(getApplicationContext(), "গ্রাহক ঠিকানা  লিখুন", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "Customer Address", Toast.LENGTH_LONG).show();
                     return;
                 }
 
                 if (bundle!=null){
                     progressDialog = new ProgressDialog(CustomerAddActivity.this);
-                    progressDialog.setMessage("লোড করছে..."); // Setting Message
+                    progressDialog.setMessage("Loading..."); // Setting Message
                     progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
                     progressDialog.setCancelable(false);
                     progressDialog.show();
@@ -242,7 +242,7 @@ public class CustomerAddActivity extends AppCompatActivity implements EasyPermis
                             public void onComplete(@NonNull Task<Void> task) {
 
                                 progressDialog.dismiss();
-                                Toast.makeText(CustomerAddActivity.this, " সফল ", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(CustomerAddActivity.this, " Success ", Toast.LENGTH_SHORT).show();
                                 Intent intent = new Intent(CustomerAddActivity.this, CustumarActivity.class);
                                 startActivity(intent);
                                 finish();
@@ -254,7 +254,7 @@ public class CustomerAddActivity extends AppCompatActivity implements EasyPermis
 
 
                 if (mImageUri == null) { progressDialog = new ProgressDialog(CustomerAddActivity.this);
-                    progressDialog.setMessage("লোড করছে..."); // Setting Message
+                    progressDialog.setMessage("Loading..."); // Setting Message
                     progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
                     progressDialog.setCancelable(false);
                     progressDialog.show();
@@ -282,7 +282,7 @@ public class CustomerAddActivity extends AppCompatActivity implements EasyPermis
 
                                         progressDialog.dismiss();
 
-                                        Toast.makeText(CustomerAddActivity.this, " সফল ", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(CustomerAddActivity.this, " Success ", Toast.LENGTH_SHORT).show();
                                         Intent intent = new Intent(CustomerAddActivity.this,CustumarActivity.class);
                                         startActivity(intent);
                                         finish();

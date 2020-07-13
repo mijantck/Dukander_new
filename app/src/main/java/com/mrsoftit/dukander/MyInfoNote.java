@@ -19,6 +19,7 @@ public class MyInfoNote {
     private String productname;
     private double product;
     private String token;
+    private String shopOnline;
 
     public MyInfoNote() {
     }
@@ -70,6 +71,14 @@ public class MyInfoNote {
         this.withdrowDeleils = withdrowDeleils;
     }
 
+
+    public String getShopOnline() {
+        return shopOnline;
+    }
+
+    public void setShopOnline(String shopOnline) {
+        this.shopOnline = shopOnline;
+    }
 
     public String getMyid() {
         return myid;

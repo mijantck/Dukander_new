@@ -27,7 +27,7 @@
             android:gravity="center"
             android:id="@+id/product_profile_pic"
             android:layout_width="match_parent"
-            android:layout_height="80dp"
+            android:layout_height="76dp"
             android:src="@drawable/textimage"
           />
 
@@ -60,8 +60,7 @@
             <TextView
                 android:layout_marginBottom="2dp"
                 android:layout_marginTop="2dp"
-                android:padding="4dp"
-                android:paddingLeft="8dp"
+                android:paddingLeft="5dp"
                 android:textColor="@color/colorPrimary"
                 android:fontFamily="@font/adamina"
                 android:textSize="10dp"
@@ -128,11 +127,11 @@
 
 
         </LinearLayout>
+
         <LinearLayout
             android:weightSum="6"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -169,15 +168,56 @@
         </LinearLayout>
 
 
-        <TextView
-            android:paddingLeft="5dp"
-            android:fontFamily="@font/adamina"
-            android:id="@+id/product_quantedy_textview"
-            android:textColor="#696969"
-            android:textSize="10dp"
-            android:text="100"
+        <LinearLayout
+            android:weightSum="6"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_weight="4"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content">
+
+
+                <TextView
+                    android:paddingLeft="5dp"
+                    android:fontFamily="@font/adamina"
+                    android:id="@+id/product_quantedy_textview"
+                    android:textColor="#696969"
+                    android:textSize="10dp"
+                    android:text="100"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_weight="2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content">
+
+
+                <TextView
+                    android:paddingLeft="5dp"
+                    android:fontFamily="@font/adamina"
+                    android:id="@+id/product_shear_textview"
+                    android:textSize="10dp"
+                    android:textColor="#2196F3"
+                    android:text="Share"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+                <ImageView
+                    android:layout_marginLeft="5dp"
+                    android:src="@drawable/ic_share"
+                    android:layout_width="20dp"
+                    android:layout_height="17dp"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+
 
         <TextView
             android:paddingLeft="5dp"

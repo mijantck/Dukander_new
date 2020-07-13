@@ -148,7 +148,7 @@ public class SelecedCatagoryActivity extends AppCompatActivity {
 
             RecyclerView recyclerView = findViewById(R.id.selectedCatagory);
             recyclerView.setHasFixedSize(true);
-            recyclerView.setLayoutManager(new GridLayoutManager(this, 3));
+            recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
             recyclerView.setAdapter(globleProductListAdapter6);
 
             globleProductListAdapter6.setOnItemClickListener(new GlobleProductListAdapter6.OnItemClickListener() {
@@ -225,7 +225,7 @@ public class SelecedCatagoryActivity extends AppCompatActivity {
     });
 
 
-}
+            }
     }
 
 
@@ -279,7 +279,7 @@ public class SelecedCatagoryActivity extends AppCompatActivity {
         RecyclerView recyclerView = findViewById(R.id.selectedCatagory);
         recyclerView.setHasFixedSize(true);
         // LinearLayoutManager linearLayoutManager = new LinearLayoutManager(GlobleProductListActivity.this,RecyclerView.HORIZONTAL,false);
-        recyclerView.setLayoutManager(new GridLayoutManager(this, 3));
+        recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
         //  recyclerView.setLayoutManager(ne4 LinearLayoutManager(this));
         // recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(globleProductListAdapter6);
@@ -326,7 +326,7 @@ public class SelecedCatagoryActivity extends AppCompatActivity {
         RecyclerView recyclerView = findViewById(R.id.selectedCatagory);
         recyclerView.setHasFixedSize(true);
         // LinearLayoutManager linearLayoutManager = new LinearLayoutManager(GlobleProductListActivity.this,RecyclerView.HORIZONTAL,false);
-        recyclerView.setLayoutManager(new GridLayoutManager(this, 3));
+        recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
         //  recyclerView.setLayoutManager(ne4 LinearLayoutManager(this));
         // recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(globleProductListAdapter6);

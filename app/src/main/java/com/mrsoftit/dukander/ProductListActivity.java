@@ -127,7 +127,7 @@ public class ProductListActivity extends AppCompatActivity {
                 // Include dialog.xml file
                 barDialog.setContentView(R.layout.bar_code_dialog_view);
                 // Set dialog title
-                barDialog.setTitle("বিল পরিশোধ");
+                barDialog.setTitle("Pay Bill");
                 barDialog.show();
                 barDialog.setCanceledOnTouchOutside(false);
 
@@ -205,14 +205,14 @@ public class ProductListActivity extends AppCompatActivity {
         recyclerView.setVisibility(View.VISIBLE);
 
 
-        adapter.setOnItemClickListener(new ProductAdapter.OnItemClickListener(){
+        adapter.setOnItemClickListener(new ProductAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(final DocumentSnapshot documentSnapshot, final int position) {
 
 
 
                 android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(ProductListActivity.this);
-                String[] option = {"প্রোডাক্ট এডিট ","মুছে ফেলা"};
+                String[] option = {"Product Edit ","Delete"};
                 builder.setItems(option, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -224,6 +224,9 @@ public class ProductListActivity extends AppCompatActivity {
                             String id = documentSnapshot.getId();
                             String imageurl = productNote.getProImgeUrl();
                             String name = productNote.getProName();
+                            String color = productNote.getColor();
+                            String type = productNote.getType();
+                            String description = productNote.getDescription();
                             String privecy = productNote.getProductPrivacy();
                             String catagory = productNote.getProductCategory();
                             String barcode = productNote.getBarCode();
@@ -240,14 +243,15 @@ public class ProductListActivity extends AppCompatActivity {
                             pdfIntent.putExtra("name", name);
                             pdfIntent.putExtra("code", barcode);
                             pdfIntent.putExtra("pprice", pp);
-
                             pdfIntent.putExtra("pBprice", pBp);
-
                             pdfIntent.putExtra("pQuan", pq);
-
                             pdfIntent.putExtra("pmini", pm);
                             pdfIntent.putExtra("privecy", privecy);
                             pdfIntent.putExtra("catagory", catagory);
+
+                            pdfIntent.putExtra("color", color);
+                            pdfIntent.putExtra("type", type);
+                            pdfIntent.putExtra("descriptuion", description);
                             if (!discount.isEmpty())
                             {
                                 pdfIntent.putExtra("dicount", discount);
@@ -260,15 +264,16 @@ public class ProductListActivity extends AppCompatActivity {
 
                         }
                         if(which == 1){
-                            new AlertDialog.Builder(ProductListActivity.this).setTitle("নিশ্চিত বাতিল?")
-                                    .setMessage("তুমি কি নিশ্চিত?")
-                                    .setPositiveButton("হ্যাঁ",
+                            new AlertDialog.Builder(ProductListActivity.this)
+                                    .setTitle("Confirm Delete")
+                                    .setMessage("Are You sure?")
+                                    .setPositiveButton("yes",
                                             new DialogInterface.OnClickListener() {
                                                 public void onClick(final DialogInterface dialog, int which) {
 
                                                     progressDialog = new ProgressDialog(ProductListActivity.this);
                                                     progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-                                                    progressDialog.setTitle("আপলোড হচ্ছে...");
+                                                    progressDialog.setMessage("Loading...");
                                                     progressDialog.show();
 
                                                     CollectionReference GlobleProduct = FirebaseFirestore.getInstance()
@@ -289,7 +294,7 @@ public class ProductListActivity extends AppCompatActivity {
 
                                                 }
                                             })
-                                    .setNegativeButton("না", new DialogInterface.OnClickListener() {
+                                    .setNegativeButton("NO", new DialogInterface.OnClickListener() {
                                         @Override
                                         public void onClick(DialogInterface dialog, int which) {
                                             // Do nothing
@@ -303,9 +308,10 @@ public class ProductListActivity extends AppCompatActivity {
                 }).create().show();
 
 
+            }
 
-
-
+            @Override
+            public void onShearClick(DocumentSnapshot documentSnapshot, int position) {
 
             }
         });
@@ -331,14 +337,14 @@ public class ProductListActivity extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
 
 
-        adapter.setOnItemClickListener(new ProductAdapter.OnItemClickListener(){
+        adapter.setOnItemClickListener(new ProductAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(final DocumentSnapshot documentSnapshot, final int position) {
 
 
 
                 android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(ProductListActivity.this);
-                String[] option = {"প্রোডাক্ট এডিট ","মুছে ফেলা"};
+                String[] option = {"Product Edit ","Delete"};
                 builder.setItems(option, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -350,6 +356,9 @@ public class ProductListActivity extends AppCompatActivity {
                             String id = documentSnapshot.getId();
                             String imageurl = productNote.getProImgeUrl();
                             String name = productNote.getProName();
+                            String color = productNote.getColor();
+                            String type = productNote.getType();
+                            String description = productNote.getDescription();
                             String barcode = productNote.getBarCode();
                             String pp = String.valueOf(productNote.getProPrice());
                             String pBp = String.valueOf(productNote.getProBuyPrice());
@@ -370,6 +379,9 @@ public class ProductListActivity extends AppCompatActivity {
 
                             pdfIntent.putExtra("pQuan", pq);
                             pdfIntent.putExtra("pmini", pm);
+                            pdfIntent.putExtra("color", color);
+                            pdfIntent.putExtra("type", type);
+                            pdfIntent.putExtra("descriptuion", description);
                             if (!discount.isEmpty())
                             {
                                 pdfIntent.putExtra("dicount", discount);
@@ -380,9 +392,10 @@ public class ProductListActivity extends AppCompatActivity {
 
                         }
                         if(which == 1){
-                            new AlertDialog.Builder(ProductListActivity.this).setTitle("নিশ্চিত বাতিল?")
-                                    .setMessage("তুমি কি নিশ্চিত?")
-                                    .setPositiveButton("হ্যাঁ",
+                            new AlertDialog.Builder(ProductListActivity.this)
+                                    .setTitle("Confirm Delete?")
+                                    .setMessage("Are you sure?")
+                                    .setPositiveButton("Yes",
                                             new DialogInterface.OnClickListener() {
                                                 public void onClick(final DialogInterface dialog, int which) {
                                                     CollectionReference GlobleProduct = FirebaseFirestore.getInstance()
@@ -390,7 +403,7 @@ public class ProductListActivity extends AppCompatActivity {
 
                                                     progressDialog = new ProgressDialog(ProductListActivity.this);
                                                     progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-                                                    progressDialog.setTitle("আপলোড হচ্ছে...");
+                                                    progressDialog.setMessage("Loading...");
                                                     progressDialog.show();
 
                                                     String id = documentSnapshot.getId();
@@ -407,7 +420,7 @@ public class ProductListActivity extends AppCompatActivity {
                                                     });
                                                 }
                                             })
-                                    .setNegativeButton("না", new DialogInterface.OnClickListener() {
+                                    .setNegativeButton("NO", new DialogInterface.OnClickListener() {
                                         @Override
                                         public void onClick(DialogInterface dialog, int which) {
                                             // Do nothing
@@ -419,6 +432,10 @@ public class ProductListActivity extends AppCompatActivity {
                         }
                     }
                 }).create().show();
+            }
+
+            @Override
+            public void onShearClick(DocumentSnapshot documentSnapshot, int position) {
 
             }
         });
@@ -569,14 +586,14 @@ public class ProductListActivity extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
 
 
-        adapter.setOnItemClickListener(new ProductAdapter.OnItemClickListener(){
+        adapter.setOnItemClickListener(new ProductAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(final DocumentSnapshot documentSnapshot, final int position) {
 
 
 
                 android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(ProductListActivity.this);
-                String[] option = {"প্রোডাক্ট এডিট ","মুছে ফেলা"};
+                String[] option = {"Product Edit ","Delete"};
                 builder.setItems(option, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -588,6 +605,9 @@ public class ProductListActivity extends AppCompatActivity {
                             String id = documentSnapshot.getId();
                             String imageurl = productNote.getProImgeUrl();
                             String name = productNote.getProName();
+                            String color = productNote.getColor();
+                            String type = productNote.getType();
+                            String description = productNote.getDescription();
                             String barcode = productNote.getBarCode();
                             String pp = String.valueOf(productNote.getProPrice());
                             String pBp = String.valueOf(productNote.getProBuyPrice());
@@ -610,6 +630,9 @@ public class ProductListActivity extends AppCompatActivity {
 
                             pdfIntent.putExtra("pQuan", pq);
                             pdfIntent.putExtra("pmini", pm);
+                            pdfIntent.putExtra("color", color);
+                            pdfIntent.putExtra("type", type);
+                            pdfIntent.putExtra("descriptuion", description);
                             if (!discount.isEmpty())
                             {
                                 pdfIntent.putExtra("dicount", discount);
@@ -619,15 +642,15 @@ public class ProductListActivity extends AppCompatActivity {
 
                         }
                         if(which == 1){
-                            new AlertDialog.Builder(ProductListActivity.this).setTitle("নিশ্চিত বাতিল?")
-                                    .setMessage("তুমি কি নিশ্চিত?")
-                                    .setPositiveButton("হ্যাঁ",
+                            new AlertDialog.Builder(ProductListActivity.this).setTitle("Confirm Delete?")
+                                    .setMessage("Are you sure?")
+                                    .setPositiveButton("Yes",
                                             new DialogInterface.OnClickListener() {
                                                 public void onClick(final DialogInterface dialog, int which) {
 
                                                     progressDialog = new ProgressDialog(ProductListActivity.this);
                                                     progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-                                                    progressDialog.setTitle("আপলোড হচ্ছে...");
+                                                    progressDialog.setTitle("Loading...");
                                                     progressDialog.show();
 
                                                     CollectionReference GlobleProduct = FirebaseFirestore.getInstance()
@@ -647,7 +670,7 @@ public class ProductListActivity extends AppCompatActivity {
                                                     });
                                                 }
                                             })
-                                    .setNegativeButton("না", new DialogInterface.OnClickListener() {
+                                    .setNegativeButton("NO", new DialogInterface.OnClickListener() {
                                         @Override
                                         public void onClick(DialogInterface dialog, int which) {
                                             // Do nothing
@@ -661,9 +684,19 @@ public class ProductListActivity extends AppCompatActivity {
                 }).create().show();
 
             }
-        });
 
+            @Override
+            public void onShearClick(DocumentSnapshot documentSnapshot, int position) {
+
+
+            }
+        });
         adapter.startListening();
 
     }
+
+
+
+
 }
+
