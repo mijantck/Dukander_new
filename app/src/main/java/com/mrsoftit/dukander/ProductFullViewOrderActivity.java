@@ -94,16 +94,6 @@ public class ProductFullViewOrderActivity extends AppCompatActivity {
     String globlecutouser_id ;
     private FirebaseAuth mAuth;
 
-
-    final private String FCM_API = "https://fcm.googleapis.com/fcm/send";
-    final private String serverKey = "key=" + "AAAAttd1svE:APA91bFocWSMpJ4WTI-CI_plcvO9Cj31dB3ENhHybDmR4t2Do9yZZC4jEvylhxPfz-7RoTiWzUT3zZYUSb8pYy0-R4SUMhY5BmzXzZ9pYfrJljKvJgjFPyEw_mV_Z8xpzclcM6phwTkN";
-    final private String contentType = "application/json";
-    final String TAG = "NOTIFICATION TAG";
-
-    String NOTIFICATION_TITLE;
-    String NOTIFICATION_MESSAGE;
-    String TOPIC;
-
     private Uri dynamicLink1 = null;
 
 
@@ -121,7 +111,7 @@ public class ProductFullViewOrderActivity extends AppCompatActivity {
     Double commonPrice;
     private String proIdup,fromURL, proNameup,proPriceup,productCodeup,productPrivacyup,proImgeUrlup,
             ShopNameup,ShopPhoneup,ShopAddressup,ShopImageUrlup,ShopIdup,UserIdup,productCategoryup,dateup,
-            proQuaup,discuntup,tokenup,descriptuionup,typeup,colorup;
+            proQuaup,discuntup,tokenup,sizeup,descriptuionup,typeup,colorup;
 
 
 
@@ -295,9 +285,13 @@ public class ProductFullViewOrderActivity extends AppCompatActivity {
                 typeup =bundle.getString("type");
                 productType.setText(typeup);
             }
+            if (bundle.getString("size")!=null){
+                sizeup=bundle.getString("size");
+                ProductSizeView.setText(sizeup);
+            }
             if (bundle.getString("descriptuion")!=null){
                 descriptuionup =bundle.getString("descriptuion");
-                ProductSizeView.setText(descriptuionup);
+                ProductDescriptionView.setText(descriptuionup);
             }
             if (bundle.getString("discuntup")!=null){
                 discuntup = bundle.getString("discuntup");
@@ -307,6 +301,7 @@ public class ProductFullViewOrderActivity extends AppCompatActivity {
                 productPriceDetails.setText(calcuateDiscount(proPrice,d2)+"");
                 sellPrice.setText(calcuateDiscount(proPrice,d2)+"");
                 tetViewDiescunt.setText(discuntup);
+                LigalPrice.setPaintFlags(LigalPrice.getPaintFlags()| Paint.STRIKE_THRU_TEXT_FLAG);
 
             }else {
                 commonPrice = proPrice;
@@ -397,6 +392,7 @@ public class ProductFullViewOrderActivity extends AppCompatActivity {
                 intent.putExtra("proNameup",proNameup);
                 intent.putExtra("ShopImageUrlup",proImgeUrlup);
                 intent.putExtra("UserIdup",UserIdup);
+                intent.putExtra("productTokenup",tokenup);
                 startActivity(intent);
 
             }
@@ -406,8 +402,8 @@ public class ProductFullViewOrderActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Toast.makeText(ProductFullViewOrderActivity.this, "click ", Toast.LENGTH_SHORT).show();
 
-                String sharelinktext  = "https://sellersmarkets.page.link/?"+
-                        "link=https://sellersmarkets.page.link/c2Sd?"+
+                String sharelinktext  =  "https://a2zloja.page.link/?"+
+                        "link=https://a2zloja.page.link/jdF1?"+
                         "proID="+"-"+"product"+
                         "-"+proIdup+
                         "-"+proIdup+
@@ -542,7 +538,7 @@ public class ProductFullViewOrderActivity extends AppCompatActivity {
                     intent.putExtra("proQuaup",productQuantidyfromCustomer.getText().toString());
                     intent.putExtra("discuntup",discuntup);
                     intent.putExtra("tokenup",tokenup);
-                    intent.putExtra("size",size.getText().toString());
+                    intent.putExtra("Size",size.getText().toString());
                     intent.putExtra("color", colorForOrder.getText().toString());
                     intent.putExtra("type", typeforeOrder.getText().toString());
                     startActivity(intent);
@@ -569,64 +565,6 @@ public class ProductFullViewOrderActivity extends AppCompatActivity {
 
     }
 
-
-
-    public  void  notificationSend( String Token){
-
-        TOPIC = "new sms "; //topic must match with what the receiver subscribed to
-
-        String news_feed = "NewsFeeed.getText().toString()";
-        NOTIFICATION_TITLE = TOPIC;
-        NOTIFICATION_MESSAGE = news_feed;
-
-        JSONObject notification = new JSONObject();
-        JSONObject notifcationBody = new JSONObject();
-        try {
-            notifcationBody.put("title", NOTIFICATION_TITLE);
-            notifcationBody.put("message", NOTIFICATION_MESSAGE);
-
-            notification.put("to", Token);
-
-            notification.put("data", notifcationBody);
-        } catch (JSONException e) {
-            // Log.e(TAG, "onCreate: " + e.getMessage() );
-        }
-        sendNotification(notification);
-    }
-
-    private void sendNotification(JSONObject notification) {
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(FCM_API, notification,
-                new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                           Log.i(TAG, "onResponse: " + response.toString());
-                        Toast.makeText(ProductFullViewOrderActivity.this, response.toString()+"  ", Toast.LENGTH_LONG).show();
-
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(ProductFullViewOrderActivity.this, "Request error", Toast.LENGTH_LONG).show();
-
-                    }
-                }){
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                Map<String, String> params = new HashMap<>();
-                params.put("Authorization", serverKey);
-                params.put("Content-Type", contentType);
-                return params;
-            }
-        };
-
-        RequestQueue requestQueue = Volley.newRequestQueue(this);
-        int socketTimeout = 1000 * 60;// 60 seconds
-        RetryPolicy policy = new DefaultRetryPolicy(socketTimeout, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
-        jsonObjectRequest.setRetryPolicy(policy);
-        requestQueue.add(jsonObjectRequest);
-
-    }
 
 
 
@@ -671,6 +609,11 @@ public class ProductFullViewOrderActivity extends AppCompatActivity {
                     intent.putExtra("proQuaup",globleProductNote.getProQua()+"");
                     intent.putExtra("discuntup",globleProductNote.getPruductDiscount()+"");
                     intent.putExtra("tokenup",globleProductNote.getToken());
+                    intent.putExtra("size",globleProductNote.getSize());
+                    intent.putExtra("color",globleProductNote.getColor());
+                    intent.putExtra("type", globleProductNote.getType());
+                    intent.putExtra("descriptuion", globleProductNote.getDescription());
+
                     startActivity(intent);
 
                 }

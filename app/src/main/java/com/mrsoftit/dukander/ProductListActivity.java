@@ -225,6 +225,7 @@ public class ProductListActivity extends AppCompatActivity {
                             String imageurl = productNote.getProImgeUrl();
                             String name = productNote.getProName();
                             String color = productNote.getColor();
+                            String Size = productNote.getSize();
                             String type = productNote.getType();
                             String description = productNote.getDescription();
                             String privecy = productNote.getProductPrivacy();
@@ -250,6 +251,7 @@ public class ProductListActivity extends AppCompatActivity {
                             pdfIntent.putExtra("catagory", catagory);
 
                             pdfIntent.putExtra("color", color);
+                            pdfIntent.putExtra("Size", Size);
                             pdfIntent.putExtra("type", type);
                             pdfIntent.putExtra("descriptuion", description);
                             if (!discount.isEmpty())
@@ -357,6 +359,7 @@ public class ProductListActivity extends AppCompatActivity {
                             String imageurl = productNote.getProImgeUrl();
                             String name = productNote.getProName();
                             String color = productNote.getColor();
+                            String Size = productNote.getSize();
                             String type = productNote.getType();
                             String description = productNote.getDescription();
                             String barcode = productNote.getBarCode();
@@ -380,6 +383,7 @@ public class ProductListActivity extends AppCompatActivity {
                             pdfIntent.putExtra("pQuan", pq);
                             pdfIntent.putExtra("pmini", pm);
                             pdfIntent.putExtra("color", color);
+                            pdfIntent.putExtra("Size", Size);
                             pdfIntent.putExtra("type", type);
                             pdfIntent.putExtra("descriptuion", description);
                             if (!discount.isEmpty())
@@ -605,6 +609,7 @@ public class ProductListActivity extends AppCompatActivity {
                             String id = documentSnapshot.getId();
                             String imageurl = productNote.getProImgeUrl();
                             String name = productNote.getProName();
+                            String Size = productNote.getSize();
                             String color = productNote.getColor();
                             String type = productNote.getType();
                             String description = productNote.getDescription();
@@ -631,6 +636,7 @@ public class ProductListActivity extends AppCompatActivity {
                             pdfIntent.putExtra("pQuan", pq);
                             pdfIntent.putExtra("pmini", pm);
                             pdfIntent.putExtra("color", color);
+                            pdfIntent.putExtra("Size", Size);
                             pdfIntent.putExtra("type", type);
                             pdfIntent.putExtra("descriptuion", description);
                             if (!discount.isEmpty())

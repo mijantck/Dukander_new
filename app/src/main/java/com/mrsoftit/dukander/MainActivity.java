@@ -413,7 +413,7 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
                 startActivity(orderIntnt);
                 break;
             case R.id.Notification:
-                Intent notificationIntnt =new Intent(MainActivity.this,CustumarActivity.class);
+                Intent notificationIntnt =new Intent(MainActivity.this,NotificationActivity.class);
                 startActivity(notificationIntnt);
                 break;
             case R.id.Unknown_customer:
@@ -449,7 +449,6 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
                 startActivity(MarketInte);
                 break;
             case R.id.nav_share:
-
                 signOut();
                 revokeAccess();
                Intent resultIntnt1 =new Intent(MainActivity.this,LoginActivity.class);
@@ -522,40 +521,44 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
 
                         }
 
-                        if (!token.equals(tokenjustTime)){
-                            progressDialog.show();
+                        if (token !=null) {
 
-                            final CollectionReference globleProductUpdateToken = FirebaseFirestore.getInstance()
-                                    .collection("users").document(user_id).collection("Product");
+                            if (!token.equals(tokenjustTime)) {
+                                progressDialog.show();
 
-                            final CollectionReference myInfo = FirebaseFirestore.getInstance()
-                                    .collection("users").document(user_id).collection("DukanInfo");
+                                final CollectionReference globleProductUpdateToken = FirebaseFirestore.getInstance()
+                                        .collection("users").document(user_id).collection("Product");
+
+                                final CollectionReference myInfo = FirebaseFirestore.getInstance()
+                                        .collection("users").document(user_id).collection("DukanInfo");
 
 
+                                Query query = globleProductUpdateToken;
 
-                            Query query = globleProductUpdateToken;
+                                query.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                        if (task.isSuccessful()) {
 
-                            query.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                                @Override
-                                public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                                    if (task.isSuccessful()) {
+                                            List<String> list = new ArrayList<>();
+                                            for (QueryDocumentSnapshot document : Objects.requireNonNull(task.getResult())) {
+                                                list.add(document.getId());
+                                            }
 
-                                        List<String> list = new ArrayList<>();
-                                        for (QueryDocumentSnapshot document : Objects.requireNonNull(task.getResult())) {
-                                            list.add(document.getId());
+                                            totalupdateData((ArrayList) list);
+
+                                            myInfo.document(id).update("token", tokenjustTime);
                                         }
 
-                                        totalupdateData((ArrayList) list);
-
-                                        myInfo.document(id).update("token",tokenjustTime);
                                     }
 
-                                }
 
+                                });
+                            }
+                        }else {
+                            startActivity(new Intent(MainActivity.this,MyInfoActivity.class));
 
-                            });
                         }
-
 
                     }
                 }

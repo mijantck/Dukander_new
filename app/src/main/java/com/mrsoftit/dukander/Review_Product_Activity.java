@@ -11,11 +11,20 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.RetryPolicy;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -32,6 +41,9 @@ import com.mrsoftit.dukander.modle.GlobleCustomerNote;
 import com.mrsoftit.dukander.modle.ReviewComentNote;
 import com.squareup.picasso.Picasso;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -44,6 +56,18 @@ import java.util.Objects;
 
 public class Review_Product_Activity extends AppCompatActivity {
 
+
+
+
+
+    final private String FCM_API = "https://fcm.googleapis.com/fcm/send";
+    final private String serverKey = "key=" + "AAAAttd1svE:APA91bFocWSMpJ4WTI-CI_plcvO9Cj31dB3ENhHybDmR4t2Do9yZZC4jEvylhxPfz-7RoTiWzUT3zZYUSb8pYy0-R4SUMhY5BmzXzZ9pYfrJljKvJgjFPyEw_mV_Z8xpzclcM6phwTkN";
+    final private String contentType = "application/json";
+    final String TAG = "NOTIFICATION TAG";
+
+    String NOTIFICATION_TITLE;
+    String NOTIFICATION_MESSAGE;
+    String TOPIC;
 
 
     private   ReviewAdapter reviewAdapter;
@@ -62,7 +86,7 @@ public class Review_Product_Activity extends AppCompatActivity {
     String globalCustomerImageURL;
 
     private String proIdup,fromURL, proNameup,proPriceup,productCodeup,productPrivacyup,proImgeUrlup,
-            ShopNameup,ShopPhoneup,ShopAddressup,ShopImageUrlup,ShopIdup,UserIdup,productCategoryup,dateup,proQuaup,discuntup;
+            ShopNameup,ShopPhoneup,ShopAddressup,ShopImageUrlup,ShopIdup,UserIdup,productCategoryup,dateup,proQuaup,discuntup,productTokenup;
 
 
 
@@ -119,6 +143,10 @@ public class Review_Product_Activity extends AppCompatActivity {
 
             if (bundle.getString("proPriceup")!=null){
                 proPriceup = bundle.getString("proPriceup");
+
+            }
+            if (bundle.getString("productTokenup")!=null){
+                productTokenup = bundle.getString("productTokenup");
 
             }
 
@@ -403,10 +431,13 @@ public class Review_Product_Activity extends AppCompatActivity {
                                                                         @Override
                                                                         public void onClick(DialogInterface dialogInterface, int i) {
                                                                             dialogInterface.dismiss();
+
                                                                         }
                                                                     })
                                                                     .show();
 
+
+                                                            notificationSend( productTokenup,custumerName);
                                                         }
                                                     });
 
@@ -479,6 +510,63 @@ public class Review_Product_Activity extends AppCompatActivity {
 
     }
 
+
+
+    public  void  notificationSend( String Token , String name ){
+
+        TOPIC = "Product Review"; //topic must match with what the receiver subscribed to
+
+        String news_feed = "Review fom "+ name+" Product Name "+proNameup;;
+        NOTIFICATION_TITLE = TOPIC;
+        NOTIFICATION_MESSAGE = news_feed;
+
+        JSONObject notification = new JSONObject();
+        JSONObject notifcationBody = new JSONObject();
+        try {
+            notifcationBody.put("title", NOTIFICATION_TITLE);
+            notifcationBody.put("message", NOTIFICATION_MESSAGE);
+
+            notification.put("to", Token);
+
+            notification.put("data", notifcationBody);
+        } catch (JSONException e) {
+            // Log.e(TAG, "onCreate: " + e.getMessage() );
+        }
+        sendNotification(notification);
+    }
+
+    private void sendNotification(JSONObject notification) {
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(FCM_API, notification,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        Log.i(TAG, "onResponse: " + response.toString());
+
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(Review_Product_Activity.this, "Request error", Toast.LENGTH_LONG).show();
+
+                    }
+                }){
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("Authorization", serverKey);
+                params.put("Content-Type", contentType);
+                return params;
+            }
+        };
+
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        int socketTimeout = 1000 * 60;// 60 seconds
+        RetryPolicy policy = new DefaultRetryPolicy(socketTimeout, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
+        jsonObjectRequest.setRetryPolicy(policy);
+        requestQueue.add(jsonObjectRequest);
+
+    }
 
 
 }

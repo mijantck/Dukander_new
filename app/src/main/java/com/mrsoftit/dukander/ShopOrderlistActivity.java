@@ -16,6 +16,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -129,7 +130,6 @@ public class ShopOrderlistActivity extends AppCompatActivity {
             public void onItemClick(DocumentSnapshot documentSnapshot, int position) {
                 OrderNote orderNote = documentSnapshot.toObject(OrderNote.class);
                 String order =  orderNote.getOrderID();
-                Toast.makeText(ShopOrderlistActivity.this, order+" Its click Item", Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -151,66 +151,99 @@ public class ShopOrderlistActivity extends AppCompatActivity {
                         .collection("GlobleOrderList");
 
 
-                new MaterialAlertDialogBuilder(ShopOrderlistActivity.this)
-                        .setTitle("Your Order confirmation ")
-                        .setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
+                final Dialog dialog = new Dialog(ShopOrderlistActivity.this);
+                // Include dialogpayment.xml file
+                dialog.setContentView(R.layout.product_confirmetion_choos_dialoge);
+                // Set dialogpayment title
+                dialog.setTitle("Choose your option");
+                dialog.show();
+
+                TextView orderConfirm = dialog.findViewById(R.id.confirm_order);
+                TextView diliveyComplet = dialog.findViewById(R.id.Delivery_Complet);
+                TextView cancel = dialog.findViewById(R.id.Order_cancel);
+
+                orderConfirm.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+
+                        shopForOrder.document(productID).update("confirmetionStatus","Confirm from Shop ").addOnCompleteListener(new OnCompleteListener<Void>() {
                             @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-
-
-                                Toast.makeText(ShopOrderlistActivity.this, orderNote+"  ", Toast.LENGTH_SHORT).show();
-
-                                shopForOrder.document(productID).update("confirmetionStatus","Confirm from Shop ").addOnCompleteListener(new OnCompleteListener<Void>() {
+                            public void onComplete(@NonNull Task<Void> task) {
+                                customerForOrder.document(productID).update("confirmetionStatus","Confirm from Shop ").addOnCompleteListener(new OnCompleteListener<Void>() {
                                     @Override
                                     public void onComplete(@NonNull Task<Void> task) {
-                                        customerForOrder.document(productID).update("confirmetionStatus","Confirm from Shop ").addOnCompleteListener(new OnCompleteListener<Void>() {
+                                        globleForOrder.document(productID).update("confirmetionStatus","Confirm from Shop ").addOnCompleteListener(new OnCompleteListener<Void>() {
                                             @Override
                                             public void onComplete(@NonNull Task<Void> task) {
-                                                globleForOrder.document(productID).update("confirmetionStatus","Confirm from Shop ").addOnCompleteListener(new OnCompleteListener<Void>() {
-                                                    @Override
-                                                    public void onComplete(@NonNull Task<Void> task) {
 
-                                                        notificationSend(customerToken);
-
-                                                    }
-                                                })  ;
+                                                notificationSend(customerToken);
 
                                             }
-                                        });
+                                        })  ;
 
                                     }
                                 });
-                                dialogInterface.dismiss();
 
                             }
-                        })
-                        .setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
+                        });
+
+                    }
+                });
+                diliveyComplet.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        shopForOrder.document(productID).update("confirmetionStatus","Confirm from Shop ").addOnCompleteListener(new OnCompleteListener<Void>() {
                             @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                shopForOrder.document(productID).update("confirmetionStatus","Cancel from Shop ").addOnCompleteListener(new OnCompleteListener<Void>() {
+                            public void onComplete(@NonNull Task<Void> task) {
+                                customerForOrder.document(productID).update("confirmetionStatus","Confirm from Shop ").addOnCompleteListener(new OnCompleteListener<Void>() {
                                     @Override
                                     public void onComplete(@NonNull Task<Void> task) {
-                                        customerForOrder.document(productID).update("confirmetionStatus","Cancel from Shop ").addOnCompleteListener(new OnCompleteListener<Void>() {
+                                        globleForOrder.document(productID).update("confirmetionStatus","Delivery DONE. Thanks And welcome ").addOnCompleteListener(new OnCompleteListener<Void>() {
                                             @Override
                                             public void onComplete(@NonNull Task<Void> task) {
-                                                globleForOrder.document(productID).update("confirmetionStatus","Cancel from Shop ").addOnCompleteListener(new OnCompleteListener<Void>() {
-                                                    @Override
-                                                    public void onComplete(@NonNull Task<Void> task) {
 
-                                                        notificationSend(customerToken);
-
-                                                    }
-                                                })  ;
+                                                notificationSend(customerToken);
 
                                             }
-                                        });
+                                        })  ;
 
                                     }
                                 });
-                                dialogInterface.dismiss();
+
                             }
-                        })
-                        .show();
+                        });
+
+                    }
+                });
+                cancel.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        shopForOrder.document(productID).update("confirmetionStatus","Cancel from Shop ").addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                customerForOrder.document(productID).update("confirmetionStatus","Cancel from Shop ").addOnCompleteListener(new OnCompleteListener<Void>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<Void> task) {
+                                        globleForOrder.document(productID).update("confirmetionStatus","Cancel from Shop ").addOnCompleteListener(new OnCompleteListener<Void>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<Void> task) {
+
+                                                notificationSend(customerToken);
+
+                                            }
+                                        })  ;
+
+                                    }
+                                });
+
+                            }
+                        });
+
+                    }
+                });
 
 
             }

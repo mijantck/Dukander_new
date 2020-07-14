@@ -173,6 +173,10 @@ public class SelecedCatagoryActivity extends AppCompatActivity {
                     intent.putExtra("proQuaup",globleProductNote.getProQua()+"");
                     intent.putExtra("discuntup",globleProductNote.getPruductDiscount()+"");
                     intent.putExtra("tokenup",globleProductNote.getToken());
+                    intent.putExtra("size",globleProductNote.getSize());
+                    intent.putExtra("color",globleProductNote.getColor());
+                    intent.putExtra("type", globleProductNote.getType());
+                    intent.putExtra("descriptuion", globleProductNote.getDescription());
                     startActivity(intent);
                 }
             });
@@ -219,6 +223,10 @@ public class SelecedCatagoryActivity extends AppCompatActivity {
             intent.putExtra("proQuaup",globleProductNote.getProQua()+"");
             intent.putExtra("discuntup",globleProductNote.getPruductDiscount()+"");
             intent.putExtra("tokenup",globleProductNote.getToken());
+            intent.putExtra("size",globleProductNote.getSize());
+            intent.putExtra("color",globleProductNote.getColor());
+            intent.putExtra("type", globleProductNote.getType());
+            intent.putExtra("descriptuion", globleProductNote.getDescription());
             startActivity(intent);
 
         }
@@ -308,6 +316,10 @@ public class SelecedCatagoryActivity extends AppCompatActivity {
                 intent.putExtra("proQuaup",globleProductNote.getProQua()+"");
                 intent.putExtra("discuntup",globleProductNote.getPruductDiscount()+"");
                 intent.putExtra("tokenup",globleProductNote.getToken());
+                intent.putExtra("size",globleProductNote.getSize());
+                intent.putExtra("color",globleProductNote.getColor());
+                intent.putExtra("type", globleProductNote.getType());
+                intent.putExtra("descriptuion", globleProductNote.getDescription());
                 startActivity(intent);
             }
         });
@@ -355,6 +367,10 @@ public class SelecedCatagoryActivity extends AppCompatActivity {
                 intent.putExtra("proQuaup",globleProductNote.getProQua()+"");
                 intent.putExtra("discuntup",globleProductNote.getPruductDiscount()+"");
                 intent.putExtra("tokenup",globleProductNote.getToken());
+                intent.putExtra("size",globleProductNote.getSize());
+                intent.putExtra("color",globleProductNote.getColor());
+                intent.putExtra("type", globleProductNote.getType());
+                intent.putExtra("descriptuion", globleProductNote.getDescription());
                 startActivity(intent);
             }
         });

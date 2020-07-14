@@ -1,6 +1,7 @@
 package com.mrsoftit.dukander;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -18,10 +19,12 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -49,6 +52,8 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.dynamiclinks.FirebaseDynamicLinks;
+import com.google.firebase.dynamiclinks.ShortDynamicLink;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -292,7 +297,9 @@ public class GlobleProductListActivity extends AppCompatActivity implements Navi
 
 
         allProductShow("");
-        allProductShowMobiles();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            allProductShowMobiles();
+        }
         allProductShowMobilesteeshairt();
         allProductShowMobilesshirt();
         allProductShowManAccessoris();
@@ -505,6 +512,56 @@ public class GlobleProductListActivity extends AppCompatActivity implements Navi
                 intentGirls_Accessories.putExtra("catagory","Girls Accessories");
                 startActivity(intentGirls_Accessories);
                 break;
+
+            case R.id.kids:
+                Intent kids = new Intent(GlobleProductListActivity.this,SelecedCatagoryActivity.class);
+                kids.putExtra("catagory","kids");
+                startActivity(kids);
+                break;
+            case R.id.Medicine:
+                Intent Medicine = new Intent(GlobleProductListActivity.this,SelecedCatagoryActivity.class);
+                Medicine.putExtra("catagory","Medicine");
+                startActivity(Medicine);
+                break;
+            case R.id.Sports:
+                Intent Sports = new Intent(GlobleProductListActivity.this,SelecedCatagoryActivity.class);
+                Sports.putExtra("catagory","Sports");
+                startActivity(Sports);
+                break;
+            case R.id.Computer_accessories:
+                Intent Computer_accessories = new Intent(GlobleProductListActivity.this,SelecedCatagoryActivity.class);
+                Computer_accessories.putExtra("catagory","Computer accessories");
+                startActivity(Computer_accessories);
+                break;
+            case R.id.Home_accessories:
+                Intent Home_accessories = new Intent(GlobleProductListActivity.this,SelecedCatagoryActivity.class);
+                Home_accessories.putExtra("catagory","Home accessories");
+                startActivity(Home_accessories);
+                break;
+            case R.id.Books:
+                Intent Books = new Intent(GlobleProductListActivity.this,SelecedCatagoryActivity.class);
+                Books.putExtra("catagory","Books");
+                startActivity(Books);
+                break;
+            case R.id.Electronics:
+                Intent Electronics = new Intent(GlobleProductListActivity.this,SelecedCatagoryActivity.class);
+                Electronics.putExtra("catagory","Electronics");
+                startActivity(Electronics);
+                break;
+
+            case R.id.Game:
+                Intent Game = new Intent(GlobleProductListActivity.this,SelecedCatagoryActivity.class);
+                Game.putExtra("catagory","Game");
+                startActivity(Game);
+                break;
+                case R.id.InviteAndEarn:
+
+                    Invaite();
+                break;
+
+
+
+
             case R.id.Contact_us:
 
                 break;
@@ -581,6 +638,84 @@ public class GlobleProductListActivity extends AppCompatActivity implements Navi
         return true;
     }
 
+    private void Invaite() {
+
+        if (currentUser != null){
+
+            final CollectionReference MyInfo = FirebaseFirestore.getInstance()
+                    .collection("Globlecustomers").document(globlecutouser_id).collection("info");
+
+            MyInfo.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<QuerySnapshot> task) {
+
+                    if (task.isSuccessful()){
+
+
+                        String name =null;
+                        String id =null;
+                        for (QueryDocumentSnapshot document : Objects.requireNonNull(task.getResult())) {
+                            final GlobleCustomerNote myglobleCustomerNote = document.toObject(GlobleCustomerNote.class);
+                            name = myglobleCustomerNote.getName();
+                            id = myglobleCustomerNote.getId();
+                        }
+
+                        if (name !=null) {
+
+                            String sharelinktext =  "https://a2zloja.page.link/?"+
+                                    "link=https://a2zloja.page.link/jdF1?"+
+                                    "proID=" + "-" + "refer" +
+                                    "-" + globlecutouser_id +
+                                    "-" + id +
+                                    "&st=" + name  +
+                                    "&sd=" + " you can offer their price. a2zLOJA  will ensure delivery! " +
+                                    "- You can pick the shop you trust from your past buyings - " +
+                                    "First ever product search engine including everything means every thing! " +
+                                    " must be faster than any delivery service."+
+                                    "&si=" + "https://www.linkpicture.com/q/logo_2.jpg" +
+                                    "&apn=" + getPackageName();
+
+
+                            Task<ShortDynamicLink> shortLinkTask = FirebaseDynamicLinks.getInstance().createDynamicLink()
+                                    // .setLongLink(dynamicLink.getUri())
+                                    .setLongLink(Uri.parse(sharelinktext))// manually
+                                    .buildShortDynamicLink()
+                                    .addOnCompleteListener(GlobleProductListActivity.this, new OnCompleteListener<ShortDynamicLink>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<ShortDynamicLink> task) {
+                                            if (task.isSuccessful()) {
+                                                // Short link created
+                                                Uri shortLink = task.getResult().getShortLink();
+                                                Uri flowchartLink = task.getResult().getPreviewLink();
+                                                Log.e("main ", "short link " + shortLink.toString());
+                                                // share app dialog
+                                                Intent intent = new Intent();
+                                                intent.setAction(Intent.ACTION_SEND);
+                                                intent.putExtra(Intent.EXTRA_TEXT, shortLink.toString());
+                                                intent.setType("text/plain");
+                                                startActivity(intent);
+
+
+                                            } else {
+                                                // Error
+                                                // ...
+                                                Log.e("main", " error " + task.getException());
+
+                                            }
+                                        }
+                                    });
+
+                        }
+                    }
+                }
+            });
+
+        }else {
+
+            Toast.makeText(GlobleProductListActivity.this, " Signup please", Toast.LENGTH_SHORT).show();
+        }
+    }
+
 
     @Override
     public void onBackPressed() {
@@ -614,6 +749,7 @@ public class GlobleProductListActivity extends AppCompatActivity implements Navi
     }
 
     //NprmulAdapter
+    @RequiresApi(api = Build.VERSION_CODES.N)
     private void allProductShowMobiles() {
 
         Query query = GlobleProduct.whereEqualTo("productPrivacy","Public").whereEqualTo("productCategory","Mobiles");
@@ -655,6 +791,10 @@ public class GlobleProductListActivity extends AppCompatActivity implements Navi
                 intent.putExtra("proQuaup",globleProductNote.getProQua()+"");
                 intent.putExtra("discuntup",globleProductNote.getPruductDiscount()+"");
                 intent.putExtra("tokenup",globleProductNote.getToken());
+                intent.putExtra("size",globleProductNote.getSize());
+                intent.putExtra("color",globleProductNote.getColor());
+                intent.putExtra("type", globleProductNote.getType());
+                intent.putExtra("descriptuion", globleProductNote.getDescription());
                 startActivity(intent);
 
             }
@@ -704,6 +844,10 @@ public class GlobleProductListActivity extends AppCompatActivity implements Navi
                 intent.putExtra("proQuaup",globleProductNote.getProQua()+"");
                 intent.putExtra("discuntup",globleProductNote.getPruductDiscount()+"");
                 intent.putExtra("tokenup",globleProductNote.getToken());
+                intent.putExtra("size",globleProductNote.getSize());
+                intent.putExtra("color",globleProductNote.getColor());
+                intent.putExtra("type", globleProductNote.getType());
+                intent.putExtra("descriptuion", globleProductNote.getDescription());
                 startActivity(intent);
 
             }
@@ -753,6 +897,10 @@ public class GlobleProductListActivity extends AppCompatActivity implements Navi
                 intent.putExtra("proQuaup",globleProductNote.getProQua()+"");
                 intent.putExtra("discuntup",globleProductNote.getPruductDiscount()+"");
                 intent.putExtra("tokenup",globleProductNote.getToken());
+                intent.putExtra("size",globleProductNote.getSize());
+                intent.putExtra("color",globleProductNote.getColor());
+                intent.putExtra("type", globleProductNote.getType());
+                intent.putExtra("descriptuion", globleProductNote.getDescription());
                 startActivity(intent);
 
             }
@@ -802,6 +950,10 @@ public class GlobleProductListActivity extends AppCompatActivity implements Navi
                 intent.putExtra("proQuaup",globleProductNote.getProQua()+"");
                 intent.putExtra("discuntup",globleProductNote.getPruductDiscount()+"");
                 intent.putExtra("tokenup",globleProductNote.getToken());
+                intent.putExtra("size",globleProductNote.getSize());
+                intent.putExtra("color",globleProductNote.getColor());
+                intent.putExtra("type", globleProductNote.getType());
+                intent.putExtra("descriptuion", globleProductNote.getDescription());
                 startActivity(intent);
 
             }
@@ -851,6 +1003,10 @@ public class GlobleProductListActivity extends AppCompatActivity implements Navi
                 intent.putExtra("proQuaup",globleProductNote.getProQua()+"");
                 intent.putExtra("discuntup",globleProductNote.getPruductDiscount()+"");
                 intent.putExtra("tokenup",globleProductNote.getToken());
+                intent.putExtra("size",globleProductNote.getSize());
+                intent.putExtra("color",globleProductNote.getColor());
+                intent.putExtra("type", globleProductNote.getType());
+                intent.putExtra("descriptuion", globleProductNote.getDescription());
                 startActivity(intent);
 
             }
@@ -899,6 +1055,10 @@ public class GlobleProductListActivity extends AppCompatActivity implements Navi
                 intent.putExtra("proQuaup",globleProductNote.getProQua()+"");
                 intent.putExtra("discuntup",globleProductNote.getPruductDiscount()+"");
                 intent.putExtra("tokenup",globleProductNote.getToken());
+                intent.putExtra("size",globleProductNote.getSize());
+                intent.putExtra("color",globleProductNote.getColor());
+                intent.putExtra("type", globleProductNote.getType());
+                intent.putExtra("descriptuion", globleProductNote.getDescription());
                 startActivity(intent);
 
             }
@@ -945,6 +1105,10 @@ public class GlobleProductListActivity extends AppCompatActivity implements Navi
                 intent.putExtra("proQuaup",globleProductNote.getProQua()+"");
                 intent.putExtra("discuntup",globleProductNote.getPruductDiscount()+"");
                 intent.putExtra("tokenup",globleProductNote.getToken());
+                intent.putExtra("size",globleProductNote.getSize());
+                intent.putExtra("color",globleProductNote.getColor());
+                intent.putExtra("type", globleProductNote.getType());
+                intent.putExtra("descriptuion", globleProductNote.getDescription());
                 startActivity(intent);
             }
         });

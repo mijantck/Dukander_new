@@ -168,6 +168,8 @@ public class ConfirmOrderActivity extends AppCompatActivity {
             if (bundle.getString("type")!=null){
                 typeup =bundle.getString("type");
 
+            }if (bundle.getString("Size")!=null){
+                size =bundle.getString("Size");
             }
 
 
@@ -543,7 +545,6 @@ public class ConfirmOrderActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(JSONObject response) {
                         Log.i(TAG, "onResponse: " + response.toString());
-                        Toast.makeText(ConfirmOrderActivity.this, response.toString()+"  ", Toast.LENGTH_LONG).show();
 
                     }
                 },

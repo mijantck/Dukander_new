@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -19,6 +20,7 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
@@ -27,10 +29,13 @@ import com.google.firebase.auth.SignInMethodQueryResult;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.mrsoftit.dukander.modle.GlobleCustomerNote;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Random;
 
 public class CustomerLoginActivity extends AppCompatActivity {
@@ -41,6 +46,9 @@ public class CustomerLoginActivity extends AppCompatActivity {
     TextInputEditText input_name_customer,input_email_cutomer,input_password_customer,
             confirm_input_password,input_phoneNumber_customer,input_Address_customer,
             input_Code_phoneNumber_customer,input_ZipCode_customer;
+
+
+    String UserIdUp,idUP,fromURLUp;
 
     ProgressDialog progressDialog;
     Button customer_singup_button;
@@ -64,6 +72,19 @@ public class CustomerLoginActivity extends AppCompatActivity {
         input_Code_phoneNumber_customer = findViewById(R.id.input_Code_phoneNumber_customer);
         input_ZipCode_customer = findViewById(R.id.input_ZipCode_customer);
         customer_singup_button = findViewById(R.id.customer_singup_button);
+
+
+
+
+        Bundle bundle = getIntent().getExtras();
+
+        if (bundle !=null){
+
+            UserIdUp = bundle.getString("UserID");
+            idUP = bundle.getString("id");
+            fromURLUp = bundle.getString("refer");
+
+        }
 
         customer_singup_button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -176,6 +197,11 @@ public class CustomerLoginActivity extends AppCompatActivity {
                                                                                            @Override
                                                                                            public void onComplete(@NonNull Task<Void> task) {
 
+                                                                                               if (UserIdUp !=null && idUP !=null  ){
+                                                                                                   refer(UserIdUp, idUP, user_id);
+
+                                                                                               }
+
                                                                                                progressDialog.dismiss();
                                                                                                startActivity(new Intent(getApplicationContext(),GlobleProductListActivity.class));
                                                                                                finish();
@@ -240,5 +266,81 @@ public class CustomerLoginActivity extends AppCompatActivity {
             res.append(aToZ.charAt(randIndex));
         }
         return res.toString();
+    }
+
+    public  void  refer(String userIdUp, String id, final String currentUserID){
+
+        final CollectionReference Info = FirebaseFirestore.getInstance()
+                .collection("Globlecustomers").document(userIdUp).collection("info");
+
+        Info.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()){
+                    int friendCoin = 0;
+                    String referFrindID = null;
+                    for (QueryDocumentSnapshot document : Objects.requireNonNull(task.getResult())) {
+                        final GlobleCustomerNote globleCustomerNote = document.toObject(GlobleCustomerNote.class);
+
+                        friendCoin = globleCustomerNote.getCoine();
+                        referFrindID = globleCustomerNote.getId();
+                    }
+
+                    friendCoin = friendCoin +100;
+
+                    Info.document(referFrindID).update("coine",friendCoin).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull final Task<Void> task) {
+
+                            final CollectionReference MyInfo1 = FirebaseFirestore.getInstance()
+                                    .collection("Globlecustomers").document(currentUserID).collection("info");
+
+                            MyInfo1.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                @Override
+                                public void onComplete(@NonNull Task<QuerySnapshot> task) {
+
+                                    if (task.isSuccessful()){
+                                        int myfriendCoin = 0;
+                                        String id = null;
+                                        for (QueryDocumentSnapshot document : Objects.requireNonNull(task.getResult())) {
+                                            final GlobleCustomerNote myglobleCustomerNote = document.toObject(GlobleCustomerNote.class);
+
+                                            myfriendCoin = myglobleCustomerNote.getCoine();
+                                            id = myglobleCustomerNote.getId();
+                                        }
+                                        myfriendCoin = myfriendCoin +100;
+
+
+                                        MyInfo1.document(id).update("coine",myfriendCoin,"firstTimeRafer",true).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<Void> task) {
+                                                if(task.isSuccessful()){
+                                                    progressDialog.dismiss();
+                                                    new MaterialAlertDialogBuilder(CustomerLoginActivity.this)
+                                                            .setTitle(" Congratulation")
+                                                            .setMessage(" You win 100 coin  ")
+                                                            .setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
+                                                                @Override
+                                                                public void onClick(DialogInterface dialogInterface, int i) {
+
+                                                                    dialogInterface.dismiss();
+                                                                }
+                                                            })
+                                                            .show();
+                                                }
+                                            }
+                                        });
+                                    }
+                                }
+
+                            });
+
+                        }
+                    });
+                }
+            }
+        });
+
+
     }
 }

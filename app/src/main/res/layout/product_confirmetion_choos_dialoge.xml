@@ -19,18 +19,30 @@
         android:layout_height="match_parent">
 
     <TextView
-        android:id="@+id/customer_signup"
+        android:id="@+id/confirm_order"
         android:padding="8dp"
         android:gravity="center"
-
-        android:text="Customer"
+        android:text="Confirm"
         android:textColor="@color/white"
         android:textStyle="bold"
         android:background="@drawable/text_round"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
+
+        <TextView
+            android:id="@+id/Delivery_Complet"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/text_round"
+            android:padding="8dp"
+            android:layout_marginBottom="4dp"
+            android:gravity="center"
+            android:text="Delivery Complet"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
     <TextView
-        android:id="@+id/shopkeper_signup"
+        android:id="@+id/Order_cancel"
         android:textColor="@color/white"
         android:textStyle="bold"
         android:layout_marginTop="8dp"
@@ -38,7 +50,7 @@
         android:padding="8dp"
         android:layout_marginBottom="4dp"
         android:gravity="center"
-        android:text="Shopkeeper"
+        android:text="Order cancel"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 

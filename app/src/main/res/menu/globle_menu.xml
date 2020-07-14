@@ -18,6 +18,10 @@
                 app:itemTextAppearance="@style/Style_TextView"
                 android:id="@+id/orderHistory"
                 android:title="My Orders" />
+            <item
+                app:itemTextAppearance="@style/Style_TextView"
+                android:id="@+id/InviteAndEarn"
+                android:title="Invite &amp; Earn" />
         </menu>
     </item>
     <item android:title="Shop list">
@@ -26,6 +30,14 @@
                 app:itemTextAppearance="@style/Style_TextView"
                 android:id="@+id/shoplist"
                 android:title="Shop Find " />
+        </menu>
+    </item>
+    <item android:title="Medicine ">
+        <menu>
+            <item
+                android:id="@+id/Medicine"
+                app:itemTextAppearance="@style/Style_TextView"
+                android:title="Medicine" />
         </menu>
     </item>
     <item android:title="Phones">
@@ -56,7 +68,14 @@
                 app:itemTextAppearance="@style/Style_TextView"
                 android:id="@+id/foods"
                 android:title="Food " />
-
+        </menu>
+    </item>
+    <item android:title="Game Zone">
+        <menu>
+            <item
+                app:itemTextAppearance="@style/Style_TextView"
+                android:id="@+id/Game"
+                android:title="Game " />
         </menu>
     </item>
     <item android:title="Mans Collection">
@@ -184,8 +203,56 @@
                 android:id="@+id/Cosmetics"
                 app:itemTextAppearance="@style/Style_TextView"
                 android:title="Cosmetics" />
+        </menu>
+    </item>
+    <item android:title="Kids ">
+        <menu>
+            <item
+                android:id="@+id/kids"
+                app:itemTextAppearance="@style/Style_TextView"
+                android:title="Kids" />
+        </menu>
+    </item>
 
+    <item android:title="Computer accessories ">
+        <menu>
+            <item
+                android:id="@+id/Computer_accessories"
+                app:itemTextAppearance="@style/Style_TextView"
+                android:title="Computer accessories" />
+        </menu>
+    </item>
+    <item android:title="Home accessories ">
+        <menu>
+            <item
+                android:id="@+id/Home_accessories"
+                app:itemTextAppearance="@style/Style_TextView"
+                android:title="Home accessories" />
+        </menu>
+    </item>
+    <item android:title="Books">
+        <menu>
+            <item
+                android:id="@+id/Books"
+                app:itemTextAppearance="@style/Style_TextView"
+                android:title="Books" />
+        </menu>
+    </item>
+    <item android:title="Electronics">
+        <menu>
+            <item
+                android:id="@+id/Electronics"
+                app:itemTextAppearance="@style/Style_TextView"
+                android:title="Electronics" />
+        </menu>
+    </item>
 
+    <item android:title="Sports ">
+        <menu>
+            <item
+                android:id="@+id/Sports"
+                app:itemTextAppearance="@style/Style_TextView"
+                android:title="Sports" />
         </menu>
     </item>
     <item android:title="Grocery">

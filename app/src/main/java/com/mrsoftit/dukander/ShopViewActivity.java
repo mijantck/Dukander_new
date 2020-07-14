@@ -157,8 +157,8 @@ public class ShopViewActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Toast.makeText(ShopViewActivity.this, "click ", Toast.LENGTH_SHORT).show();
-                String sharelinktext  = "https://sellersmarkets.page.link/?"+
-                        "link=https://sellersmarkets.page.link/c2Sd?"+
+                String sharelinktext  = "https://a2zloja.page.link/?"+
+                        "link=https://a2zloja.page.link/jdF1?"+
                         "proID="+"-"+"shop"+
                         "-"+shop_id+
                         "-"+user_id+
@@ -202,7 +202,6 @@ public class ShopViewActivity extends AppCompatActivity {
         if (user_id !=null && shop_id!=null){
             CollectionReference ShopGlobleproduct = FirebaseFirestore.getInstance()
                     .collection("GlobleProduct");
-
             Query query = ShopGlobleproduct.whereEqualTo("productPrivacy","Public").whereEqualTo("UserId",user_id);
 
         FirestoreRecyclerOptions<GlobleProductNote6> options = new FirestoreRecyclerOptions.Builder<GlobleProductNote6>()
@@ -240,6 +239,12 @@ public class ShopViewActivity extends AppCompatActivity {
                 intent.putExtra("proQuaup",globleProductNote.getProQua()+"");
                 intent.putExtra("tokenup",globleProductNote.getToken());
                 intent.putExtra("discuntup",globleProductNote.getPruductDiscount()+"");
+
+                intent.putExtra("size",globleProductNote.getSize());
+                intent.putExtra("color",globleProductNote.getColor());
+                intent.putExtra("type", globleProductNote.getType());
+                intent.putExtra("descriptuion", globleProductNote.getDescription());
+
                 startActivity(intent);
 
             }
@@ -318,6 +323,11 @@ public class ShopViewActivity extends AppCompatActivity {
                     intent.putExtra("dateup",globleProductNote.getDate()+"");
                     intent.putExtra("proQuaup",globleProductNote.getProQua()+"");
                     intent.putExtra("discuntup",globleProductNote.getPruductDiscount()+"");
+
+                    intent.putExtra("size",globleProductNote.getSize());
+                    intent.putExtra("color",globleProductNote.getColor());
+                    intent.putExtra("type", globleProductNote.getType());
+                    intent.putExtra("descriptuion", globleProductNote.getDescription());
                     startActivity(intent);
 
                 }

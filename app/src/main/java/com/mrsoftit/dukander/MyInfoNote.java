@@ -20,11 +20,15 @@ public class MyInfoNote {
     private double product;
     private String token;
     private String shopOnline;
+    private String approved;
+
 
     public MyInfoNote() {
     }
 
-    public MyInfoNote(String myid, String dukanName, String dukanphone, String dukanaddress, String dukanaddpicurl, boolean firsttime, String picName, double invesment, double activeBalance, double totalpaybil, int date, String token) {
+    public MyInfoNote(String myid, String dukanName, String dukanphone, String dukanaddress, String dukanaddpicurl,
+                      boolean firsttime, String picName, double invesment, double activeBalance, double totalpaybil,
+                      int date, String token, String approved) {
         this.myid = myid;
         this.dukanName = dukanName;
         this.dukanphone = dukanphone;
@@ -37,10 +41,12 @@ public class MyInfoNote {
         this.totalpaybil = totalpaybil;
         this.date = date;
         this.token = token;
+        this.approved = approved;
 
     }
 
-    public MyInfoNote(String myid, String dukanName, String dukanphone, String dukanaddress, boolean firsttime, String picName, double invesment, double activeBalance, double totalpaybil, int date, String token) {
+    public MyInfoNote(String myid, String dukanName, String dukanphone, String dukanaddress, boolean firsttime, String picName,
+                      double invesment, double activeBalance, double totalpaybil, int date, String token,String approved) {
         this.myid = myid;
         this.dukanName = dukanName;
         this.dukanphone = dukanphone;
@@ -52,6 +58,7 @@ public class MyInfoNote {
         this.totalpaybil = totalpaybil;
         this.date = date;
         this.token = token;
+        this.approved = approved;
     }
 
     public MyInfoNote(String productname, double product, String myid, Double invesment, int date, String investmentDeleils) {
@@ -71,6 +78,14 @@ public class MyInfoNote {
         this.withdrowDeleils = withdrowDeleils;
     }
 
+
+    public String getApproved() {
+        return approved;
+    }
+
+    public void setApproved(String approved) {
+        this.approved = approved;
+    }
 
     public String getShopOnline() {
         return shopOnline;

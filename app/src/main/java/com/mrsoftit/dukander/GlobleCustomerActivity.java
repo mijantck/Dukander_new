@@ -237,16 +237,16 @@ public class GlobleCustomerActivity extends AppCompatActivity implements EasyPer
 
                                 if (name !=null) {
 
-                                    String sharelinktext = "https://sellersmarkets.page.link/?" +
-                                            "link=https://sellersmarkets.page.link/c2Sd?" +
+                                    String sharelinktext =  "https://a2zloja.page.link/?"+
+                                            "link=https://a2zloja.page.link/jdF1?"+
                                             "proID=" + "-" + "refer" +
                                             "-" + globlecutouser_id +
                                             "-" + id +
                                             "&st=" + name  +
                                             "&sd=" + " can offer their price. Sellers Market  will ensure delivery! " +
-                                            "- You can pick the shop you trust from your past buyings - " +
-                                            "First ever product search engine including everything means every thing! " +
-                                            "- Delivery time could be even 10 min and must be faster than any delivery service.\""+
+                                            "- You can pick the shop you trust from your past buyings " +
+                                            "First ever product search engine including everything means every thing!" +
+                                            " must be faster than any delivery service."+
                                             "&si=" + "https://www.linkpicture.com/q/logo_2.jpg" +
                                             "&apn=" + getPackageName();
 
@@ -659,8 +659,6 @@ public class GlobleCustomerActivity extends AppCompatActivity implements EasyPer
                                                                                     })
                                                                                     .show();
                                                                         }
-
-
                                                                     }
                                                                 });
                                                             }

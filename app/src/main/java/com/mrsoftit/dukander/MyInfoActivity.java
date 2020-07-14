@@ -26,6 +26,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -121,7 +122,8 @@ public class MyInfoActivity extends AppCompatActivity implements EasyPermissions
 
     String token;
 
-    private LinearLayout shopediteView,shopdelaisView,passChange,PinLayout,ApprovedLayout;
+    private LinearLayout shopediteView,shopdelaisView,passChange,PinLayout,ApprovedLayout,approdPassLayout;
+    private RelativeLayout onlineOrOffLine;
     private MaterialButton etideButton,ShopOnlineButton;
     private boolean vigivity =true;
     private ImageView appCompatImageView,shopeImageView;
@@ -143,6 +145,9 @@ public class MyInfoActivity extends AppCompatActivity implements EasyPermissions
 
     CollectionReference GlobleSoplist = FirebaseFirestore.getInstance()
             .collection("GlobleSoplist");
+
+    CollectionReference confirmSoplist = FirebaseFirestore.getInstance()
+            .collection("confirmSoplist");
 
     @Override
     public void onStart() {
@@ -187,6 +192,8 @@ public class MyInfoActivity extends AppCompatActivity implements EasyPermissions
                         shopdelaisView.setVisibility(View.GONE);
                         etideButton.setVisibility(View.GONE);
                         shopediteView.setVisibility(View.VISIBLE);
+                        approdPassLayout.setVisibility(View.GONE);
+                        onlineOrOffLine.setVisibility(View.GONE);
                     }
                 }
 
@@ -271,6 +278,9 @@ public class MyInfoActivity extends AppCompatActivity implements EasyPermissions
         changeApprovedPintextview = findViewById(R.id.changeApprovedPintextview);
         ShopOnlineButton = findViewById(R.id.ShopOnlineButton);
         newApprovedButton = findViewById(R.id.newApprovedButton);
+
+        onlineOrOffLine = findViewById(R.id.onlineOrOffLine);
+        approdPassLayout = findViewById(R.id.approdPassLayout);
 
 
 
@@ -392,6 +402,9 @@ public class MyInfoActivity extends AppCompatActivity implements EasyPermissions
                     vigivity=false;
                     etideButton.setVisibility(View.GONE);
                     HomeId.setVisibility(View.GONE);
+                    approdPassLayout.setVisibility(View.GONE);
+                    onlineOrOffLine.setVisibility(View.GONE);
+
 
                 }else if (vigivity == false){
                     chagepasswordtextview.setVisibility(View.VISIBLE);
@@ -399,6 +412,8 @@ public class MyInfoActivity extends AppCompatActivity implements EasyPermissions
                     shopdelaisView.setVisibility(View.VISIBLE);
                     shopediteView.setVisibility(View.GONE);
                     shopdelaisView.setVisibility(View.VISIBLE);
+                    approdPassLayout.setVisibility(View.VISIBLE);
+                    onlineOrOffLine.setVisibility(View.VISIBLE);
 
                     vigivity=true;
                 }
@@ -460,7 +475,7 @@ public class MyInfoActivity extends AppCompatActivity implements EasyPermissions
 
                     progressDialog = new ProgressDialog(MyInfoActivity.this);
                     progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-                    progressDialog.setMessage(" Loading...");
+                    progressDialog.setMessage("Loading...");
                     progressDialog.show();
                     progressDialog.setCanceledOnTouchOutside(false);
 
@@ -470,7 +485,9 @@ public class MyInfoActivity extends AppCompatActivity implements EasyPermissions
 
 
 
-                    myInfo.document(id).update( "dukanName", dukanName1, "dukanphone", dukanphon1, "dukanaddress", dukanAddres1,"token",token)
+                    myInfo.document(id).update( "dukanName", dukanName1, "dukanphone",
+
+                            dukanphon1, "dukanaddress", dukanAddres1,"token",token)
                             .addOnCompleteListener(new OnCompleteListener<Void>() {
                                 @Override
                                 public void onComplete(@NonNull Task<Void> task) {
@@ -481,7 +498,7 @@ public class MyInfoActivity extends AppCompatActivity implements EasyPermissions
 
                                     updateadtaall();
 
-                                    setGlobleSoplist(true,user_id,id,dukanName1,dukanphon1,dukanAddres1);
+                                    setGlobleSoplist(true,user_id,id,dukanName1,dukanphon1,dukanAddres1,"pending");
 
 
                                 }
@@ -511,7 +528,8 @@ public class MyInfoActivity extends AppCompatActivity implements EasyPermissions
 
                     Random rand = new Random();
                     String picname = String.format("%05d", rand.nextInt(10000));
-                    myInfo.add(new MyInfoNote(null, dukanName1, dukanphon1, dukanAddres1,true,picname,0.0,0.0,0.0,0,token)).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
+                    myInfo.add(new MyInfoNote(null, dukanName1, dukanphon1, dukanAddres1,true,picname,0.0,
+                            0.0,0.0,0,token,"pending")).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
                         @Override
                         public void onComplete(@NonNull Task<DocumentReference> task) {
                             if (task.isSuccessful()) {
@@ -519,7 +537,7 @@ public class MyInfoActivity extends AppCompatActivity implements EasyPermissions
                                 final String id = task.getResult().getId();
 
 
-                                myInfo.document(id).update("myid", id).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                myInfo.document(id).update("myid", id,"").addOnCompleteListener(new OnCompleteListener<Void>() {
                                     @Override
                                     public void onComplete(@NonNull Task<Void> task) {
                                         shopdelaisView.setVisibility(View.VISIBLE);
@@ -528,7 +546,7 @@ public class MyInfoActivity extends AppCompatActivity implements EasyPermissions
                                         HomeId.setVisibility(View.VISIBLE);
                                         updateadtaall();
 
-                                        setGlobleSoplist(false,user_id,id,dukanName1,dukanphon1,dukanAddres1);
+                                        setGlobleSoplist(false,user_id,id,dukanName1,dukanphon1,dukanAddres1,"pending");
 
                                         Toast.makeText(MyInfoActivity.this, " Successful ", Toast.LENGTH_SHORT).show();
 
@@ -550,7 +568,7 @@ public class MyInfoActivity extends AppCompatActivity implements EasyPermissions
                                 @Override
                                 public void onComplete(@NonNull Task<Void> task) {
 
-                                    setGlobleSoplist(true,user_id,id,dukanName1,dukanphon1,dukanAddres1);
+                                    setGlobleSoplist(true,user_id,id,dukanName1,dukanphon1,dukanAddres1,"pending");
 
                                     shopdelaisView.setVisibility(View.VISIBLE);
                                     shopediteView.setVisibility(View.GONE);
@@ -908,7 +926,7 @@ public class MyInfoActivity extends AppCompatActivity implements EasyPermissions
                                     @Override
                                     public void onComplete(@NonNull Task<Void> task) {
 
-                                        setGlobleSoplistURL(true,user_id,id,dukanName1,downloadLink,dukanphon1,dukanAddres1);
+                                        setGlobleSoplistURL(true,user_id,id,dukanName1,downloadLink,dukanphon1,dukanAddres1,"pending");
 
                                         shopdelaisView.setVisibility(View.VISIBLE);
                                         shopediteView.setVisibility(View.GONE);
@@ -926,7 +944,8 @@ public class MyInfoActivity extends AppCompatActivity implements EasyPermissions
 
                         Random rand = new Random();
                         String picname = String.format("%05d", rand.nextInt(10000));
-                        myInfo.add(new MyInfoNote(null, dukanName1, dukanphon1, dukanAddres1, downloadLink,true,picname,0.0,0.0,0.0,0,token)).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
+                        myInfo.add(new MyInfoNote(null, dukanName1, dukanphon1, dukanAddres1, downloadLink,true,
+                                picname,0.0,0.0,0.0,0,token,"pending")).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
                             @Override
                             public void onComplete(@NonNull Task<DocumentReference> task) {
 
@@ -944,7 +963,7 @@ public class MyInfoActivity extends AppCompatActivity implements EasyPermissions
                                             shopediteView.setVisibility(View.GONE);
                                             etideButton.setVisibility(View.GONE);
                                             updateadtaall();
-                                            setGlobleSoplistURL(false,user_id,id,dukanName1,downloadLink,dukanphon1,dukanAddres1);
+                                            setGlobleSoplistURL(false,user_id,id,dukanName1,downloadLink,dukanphon1,dukanAddres1,"pending");
 
                                             progressDialog.dismiss();
                                             Toast.makeText(MyInfoActivity.this, " Success ", Toast.LENGTH_SHORT).show();
@@ -1100,10 +1119,10 @@ public class MyInfoActivity extends AppCompatActivity implements EasyPermissions
         }
     }
 
-    public void setGlobleSoplist(boolean update,String shopUserId,String shoId,String shopName,String shopPhone,String shopAddress){
+    public void setGlobleSoplist(boolean update, final String shopUserId, final String shoId, String shopName, String shopPhone, String shopAddress, String approved){
 
 
-        Map<String, Object> GlobaleShopList = new HashMap<>();
+        final Map<String, Object> GlobaleShopList = new HashMap<>();
         GlobaleShopList.put("shopUserId", shopUserId);
         GlobaleShopList.put("shopId", shoId);
         GlobaleShopList.put("ShopName", shopName);
@@ -1111,13 +1130,19 @@ public class MyInfoActivity extends AppCompatActivity implements EasyPermissions
         GlobaleShopList.put("ShopPhone", shopPhone);
         GlobaleShopList.put("ShopAddress", shopAddress);
         GlobaleShopList.put("token", token);
+        GlobaleShopList.put("approved", approved);
 
         if (update == false) {
             GlobleSoplist.document(shoId).set(GlobaleShopList).addOnCompleteListener(new OnCompleteListener<Void>() {
                 @Override
                 public void onComplete(@NonNull Task<Void> task) {
 
-                    progressDialog.dismiss();
+                    confirmSoplist.document(shoId).set(GlobaleShopList).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            progressDialog.dismiss();
+                        }
+                    });
                 }
             });
         }else if (update == true){
@@ -1125,15 +1150,21 @@ public class MyInfoActivity extends AppCompatActivity implements EasyPermissions
                 @Override
                 public void onComplete(@NonNull Task<Void> task) {
 
-                    progressDialog.dismiss();
+                    confirmSoplist.document(shopUserId).update(GlobaleShopList).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            progressDialog.dismiss();
+                        }
+                    });
                 }
             });
         }
     }
-    public void setGlobleSoplistURL(boolean update,String shopUserId,String shoId,String shopName,String shopImageURL,String shopPhone,String shopAddress){
+    public void setGlobleSoplistURL(boolean update, final String shopUserId, final String shoId, String shopName, String shopImageURL,
+                                    String shopPhone, String shopAddress, String approved){
 
 
-        Map<String, Object> GlobaleShopList = new HashMap<>();
+        final Map<String, Object> GlobaleShopList = new HashMap<>();
 
         GlobaleShopList.put("shopUserId", shopUserId);
         GlobaleShopList.put("shopId", shoId);
@@ -1143,14 +1174,20 @@ public class MyInfoActivity extends AppCompatActivity implements EasyPermissions
         GlobaleShopList.put("ShopPhone", shopPhone);
         GlobaleShopList.put("ShopAddress", shopAddress);
         GlobaleShopList.put("token", token);
+        GlobaleShopList.put("approved", approved);
 
         if (update == false) {
             GlobleSoplist.document(shoId).set(GlobaleShopList).addOnCompleteListener(new OnCompleteListener<Void>() {
                 @Override
                 public void onComplete(@NonNull Task<Void> task) {
+                    confirmSoplist.document(shopUserId).set(GlobaleShopList).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
 
-                    Toast.makeText(MyInfoActivity.this, " globale added", Toast.LENGTH_SHORT).show();
-                    progressDialog.dismiss();
+                            progressDialog.dismiss();
+
+                        }
+                    });
                 }
             });
         }
@@ -1159,7 +1196,13 @@ public class MyInfoActivity extends AppCompatActivity implements EasyPermissions
                 @Override
                 public void onComplete(@NonNull Task<Void> task) {
 
-                    progressDialog.dismiss();
+                    confirmSoplist.document(shoId).update(GlobaleShopList).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+
+                            progressDialog.dismiss();
+                        }
+                    });
                 }
             });
         }

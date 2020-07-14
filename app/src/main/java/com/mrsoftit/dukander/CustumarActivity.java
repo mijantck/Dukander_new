@@ -154,7 +154,7 @@ public class CustumarActivity extends AppCompatActivity {
             public void onItemClick(final DocumentSnapshot documentSnapshot, final int position) {
 
                 android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(CustumarActivity.this);
-                String[] option = {"প্রোফাইল এডিট ", "প্রোফাইল দেখুন","মুছে ফেলা"};
+                String[] option = {"Profile Edit", "Profile View","Delete"};
                 builder.setItems(option, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {

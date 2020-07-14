@@ -152,7 +152,7 @@
                             android:scrollbars="horizontal"
                             android:textColor="@color/listview_group_text_color_after"
                             android:fontFamily="@font/nunito_sans_bold"
-                            android:text="Color :"
+                            android:text="Color:"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"/>
                         <TextView
@@ -170,14 +170,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"/>
 
-                        <TextView
-                            android:maxLines="1"
-                            android:scrollbars="horizontal"
-                            android:textColor="@color/listview_group_text_color_after"
-                            android:fontFamily="@font/nunito_sans_bold"
-                            android:text=""
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"/>
+
 
                     </LinearLayout>
                     <LinearLayout
@@ -211,14 +204,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"/>
 
-                        <TextView
-                            android:maxLines="1"
-                            android:scrollbars="horizontal"
-                            android:textColor="@color/listview_group_text_color_after"
-                            android:fontFamily="@font/nunito_sans_bold"
-                            android:text=""
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"/>
+
                     </LinearLayout>
                 </LinearLayout>
 

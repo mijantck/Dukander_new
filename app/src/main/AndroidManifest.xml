@@ -23,7 +23,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".DeliveryBoyListActivity"></activity>
+        <activity android:name=".wishListActivity"></activity>
+        <activity android:name=".NotificationActivity" />
+        <activity android:name=".DeliveryBoyListActivity" />
         <activity android:name=".Review_Product_Activity" />
         <activity android:name=".ShopOrderlistActivity" />
         <activity android:name=".OrderListActivity" />

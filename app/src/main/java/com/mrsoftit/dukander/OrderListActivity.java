@@ -76,7 +76,7 @@ public class OrderListActivity extends AppCompatActivity {
             recyclear();
         }else {
             new MaterialAlertDialogBuilder(OrderListActivity.this)
-                    .setTitle("you have not signup")
+                    .setMessage("you have not signup")
                     .setPositiveButton("GOT IT", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {

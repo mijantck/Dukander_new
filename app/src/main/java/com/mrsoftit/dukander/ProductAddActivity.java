@@ -12,6 +12,7 @@ import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -50,6 +51,7 @@ import com.google.android.gms.vision.Detector;
 import com.google.android.gms.vision.barcode.Barcode;
 import com.google.android.gms.vision.barcode.BarcodeDetector;
 import com.google.android.material.button.MaterialButton;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
@@ -104,7 +106,7 @@ public class ProductAddActivity extends AppCompatActivity implements EasyPermiss
     ImageView pruductImage,barcodeIcon;
 
     private TextInputEditText productName, productPrice,productQuantayn,pruductMin,pruductBuyPrice,pruductDiscount
-            ,pruductColor,pruductType,pruductDescription;
+            ,pruductColor,pruductType,pruductDescription,pruductSize;
     EditText productBarcodeNumber;
     private MaterialButton addProduct;
 
@@ -113,7 +115,7 @@ public class ProductAddActivity extends AppCompatActivity implements EasyPermiss
     ProgressDialog progressDialog;
     FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
     String   proIdup, productNameup,pruductBuyPriceup, productPriceup,productQuantaynup,pruductMinup,addresup,
-            pruductImageup,barcodenumber,privecyup,catagoryup,dicountup,descriptuionup,typeup,colorup;
+            pruductImageup,barcodenumber,privecyup,catagoryup,dicountup,descriptuionup,typeup,colorup,sizeup;
 
     FloatingActionButton imageSeletprioduct;
 
@@ -129,12 +131,13 @@ public class ProductAddActivity extends AppCompatActivity implements EasyPermiss
     "Panjabi","Pajama","Shirts","Pant","T-Shirt","Polo","Lungi","Man Shoes","Man Accessories","Saree",
             "Shalwar Kameez", "Shawls","Girls Panjabi",
             "Nightwear", "Scarves", "Dupatta", "Girls Shoes", "Girls Accessories",
-            "kids","medicine","sports", "computer accessories","home accessories","books","electronics","game"};
+            "kids","Medicine","Sports", "Computer accessories","Home accessories","Books","Electronics","Game"};
 
     String productCode;
      String color;
      String typ;
     String descreption;
+    String Size;
     int datenew;
     int pdicount;
 
@@ -174,6 +177,56 @@ public class ProductAddActivity extends AppCompatActivity implements EasyPermiss
 
     CollectionReference GlobleProduct = FirebaseFirestore.getInstance()
             .collection("GlobleProduct");
+
+    CollectionReference confirmSoplist = FirebaseFirestore.getInstance()
+            .collection("confirmSoplist");
+
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        confirmSoplist.whereEqualTo("shopUserId",user_id)
+                .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()){
+
+                    String Approved = null;
+                    for (QueryDocumentSnapshot document : task.getResult()) {
+                        MyInfoNote myInfoNote = document.toObject(MyInfoNote.class);
+                        Approved = myInfoNote.getApproved();
+                    }
+
+                    if (Approved.equals("pending")){
+                        new MaterialAlertDialogBuilder(ProductAddActivity.this)
+                                .setMessage("Please! Approved from A2ZLOJA. Contact us")
+                                .setCancelable(false)
+                                .setPositiveButton("GOT IT", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialogInterface, int i) {
+                                        startActivity(new Intent(ProductAddActivity.this,ContactUsActivity.class));
+
+                                    }
+                                })
+                                .setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialogInterface, int i) {
+                                        startActivity(new Intent(ProductAddActivity.this,ProductListActivity.class));
+                                        finish();
+
+                                    }
+                                })
+                                .show();
+
+                    }
+
+                }
+
+
+            }
+        });
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -223,6 +276,7 @@ public class ProductAddActivity extends AppCompatActivity implements EasyPermiss
         pruductColor = findViewById(R.id.pruductColor);
         pruductType = findViewById(R.id.pruductType);
         pruductDescription = findViewById(R.id.pruductDescription);
+        pruductSize = findViewById(R.id.pruductSize);
 
 
 
@@ -257,6 +311,10 @@ public class ProductAddActivity extends AppCompatActivity implements EasyPermiss
                 typeup =bundle.getString("type");
                 pruductType.setText(typeup);
             }
+            if (bundle.getString("Size")!=null){
+                sizeup =bundle.getString("Size");
+                pruductSize.setText(sizeup);
+            }
             if (bundle.getString("descriptuion")!=null){
                 descriptuionup =bundle.getString("descriptuion");
                 pruductDescription.setText(descriptuionup);
@@ -279,6 +337,9 @@ public class ProductAddActivity extends AppCompatActivity implements EasyPermiss
             pruductMin.setText(pruductMinup);
 
         }
+
+
+
 
         imageSeletprioduct.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -493,6 +554,11 @@ public class ProductAddActivity extends AppCompatActivity implements EasyPermiss
                     return;
                 }
 
+
+
+
+
+
                 Random r = new Random();
                 int randomNumber = r.nextInt(1000);
 
@@ -529,6 +595,7 @@ public class ProductAddActivity extends AppCompatActivity implements EasyPermiss
               color = pruductColor.getText().toString();
                typ = pruductType.getText().toString();
                descreption = pruductDescription.getText().toString();
+                Size = pruductSize.getText().toString();
 
                 final String dicount = pruductDiscount.getText().toString();
 
@@ -618,13 +685,13 @@ public class ProductAddActivity extends AppCompatActivity implements EasyPermiss
 
                                 final String id = task.getResult().getId();
 
-                                product.document(id).update("proId", id,"color",color,"type",typ,"description",descreption).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                product.document(id).update("proId", id,"Size",Size,"color",color,"type",typ,"description",descreption).addOnCompleteListener(new OnCompleteListener<Void>() {
                                     @Override
                                     public void onComplete(@NonNull Task<Void> task) {
 
 
                                         setGlobleProduct(id,pnmae,pp,pq,productCode,privacyspinneritem,Categoryspinneritem,datenew,
-                                                pdicount,comonCatagory,color,typ,descreption);
+                                                pdicount,comonCatagory,Size,color,typ,descreption);
 
                                         Toast.makeText(ProductAddActivity.this, " Successful", Toast.LENGTH_SHORT).show();
 
@@ -645,14 +712,14 @@ public class ProductAddActivity extends AppCompatActivity implements EasyPermiss
                 if (bundle!=null && image == false) {
 
                     product.document(id).update("proId", id, "proName", pnmae, "proPrice", pp,"proBuyPrice",pBp, "proQua", pq, "proMin", pm, "proImgeUrl",
-                            pruductImageup,"barCode",pbarCode,"productPrivacy",privacyspinneritem,"productCategory",Categoryspinneritem,"search",pnmae.toLowerCase(),"comomCatagory",comonCatagory
-                    ,"color",color,"type",typ,"description",descreption)
+                            pruductImageup,"barCode",pbarCode,"productPrivacy",privacyspinneritem,"productCategory",Categoryspinneritem,"search",pnmae.toLowerCase(),"comomCatagory",comonCatagory,
+                            "Size",Size,"color",color,"type",typ,"description",descreption)
                             .addOnCompleteListener(new OnCompleteListener<Void>() {
                                 @Override
                                 public void onComplete(@NonNull Task<Void> task) {
 
                                     setGlobleProductupdate(id,pnmae,pp,pq,productCode,privacyspinneritem,Categoryspinneritem,
-                                            datenew,pdicount,comonCatagory,color,typ,descreption);
+                                            datenew,pdicount,comonCatagory,Size,color,typ,descreption);
                                     Intent intent = new Intent(ProductAddActivity.this, ProductListActivity.class);
                                     startActivity(intent);
                                     finish();
@@ -873,12 +940,13 @@ public class ProductAddActivity extends AppCompatActivity implements EasyPermiss
 
                         product.document(id).update("proId", id, "proName", pnmae, "proPrice",
                                 pp,"proBuyPrice", pBp, "proQua", pq, "proMin", pm, "proImgeUrl",downloadLink,"barCode",
-                                barCode,"search",pnmae.toLowerCase(),"comomCatagory",comonCatagory,"color",color,"type",typ,"description",descreption)
+                                barCode,"search",pnmae.toLowerCase(),"comomCatagory",comonCatagory,"color",color,"type",
+                                "Size",Size,typ,"description",descreption)
                                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                                     @Override
                                     public void onComplete(@NonNull Task<Void> task) {
                                         setGlobleProductupdate(id,pnmae,pp,pq,productCode,privacyspinneritem,Categoryspinneritem,datenew,
-                                                downloadLink,pdicount,comonCatagory,color,typ,descreption);
+                                                downloadLink,pdicount,comonCatagory,Size,color,typ,descreption);
 
                                         progressDialog.dismiss();
                                     }
@@ -904,13 +972,13 @@ public class ProductAddActivity extends AppCompatActivity implements EasyPermiss
                                     final String id = task.getResult().getId();
 
 
-                                    product.document(id).update("proId", id,"color",color,"type",typ,"description",descreption).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                    product.document(id).update("proId", id,"color","Size",Size,color,"type",typ,"description",descreption).addOnCompleteListener(new OnCompleteListener<Void>() {
                                         @Override
                                         public void onComplete(@NonNull Task<Void> task) {
 
 
                                             setGlobleProduct(id,pnmae,pp,pq,productCode,privacyspinneritem,Categoryspinneritem,
-                                                    datenew,downloadLink,pdicount,comonCatagory,color,typ,descreption);
+                                                    datenew,downloadLink,pdicount,comonCatagory,Size,color,typ,descreption);
 
                                             Toast.makeText(ProductAddActivity.this, " successful ", Toast.LENGTH_SHORT).show();
 
@@ -1187,8 +1255,7 @@ public class ProductAddActivity extends AppCompatActivity implements EasyPermiss
     public void setGlobleProduct(final String productId, final String productName, final double productPrice,
                                  final double productQuantidy, final String productCode, final String privecy,
                                  final String Catagury, final int date, final int pdicount, final String comomCatagory,
-
-    final  String color1,final String typ,final String description) {
+                                 final String size1, final  String color1,final String typ,final String description) {
 
         myInfo.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
@@ -1240,6 +1307,7 @@ public class ProductAddActivity extends AppCompatActivity implements EasyPermiss
                     GlobaleProductObject.put("proQua", productQuantidy);
                     GlobaleProductObject.put("UserId", user_id);
                     GlobaleProductObject.put("token", token);
+                    GlobaleProductObject.put("Size", size1);
                     GlobaleProductObject.put("color", color1);
                     GlobaleProductObject.put("type", typ);
                     GlobaleProductObject.put("description", description);
@@ -1259,7 +1327,7 @@ public class ProductAddActivity extends AppCompatActivity implements EasyPermiss
     public void setGlobleProduct(final String productId, final String productName, final double productPrice,
                                  final double productQuantidy, final String productCode, final String privecy,
                                  final String Catagury, final int date, final String ImageUrl, final int pdicount,
-                                 final String comomCatagory,final  String color1,final String typ,final String description){
+                                 final String comomCatagory,final String size1, final  String color1,final String typ,final String description){
 
         myInfo.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
@@ -1311,6 +1379,7 @@ public class ProductAddActivity extends AppCompatActivity implements EasyPermiss
                     GlobaleProductObject.put("proQua", productQuantidy);
                     GlobaleProductObject.put("UserId", user_id);
                     GlobaleProductObject.put("token", token);
+                    GlobaleProductObject.put("Size", size1);
                     GlobaleProductObject.put("color", color1);
                     GlobaleProductObject.put("type", typ);
                     GlobaleProductObject.put("description", description);
@@ -1331,7 +1400,7 @@ public class ProductAddActivity extends AppCompatActivity implements EasyPermiss
     public void setGlobleProductupdate(final String productId, final String productName, final double productPrice,
                                        final double productQuantidy, final String productCode, final String privecy,
                                        final String Catagury, final int date, final String ImageUrl, final int pdicount,
-                                       final String comomCatagory,final  String color1,final String typ,final String description){
+                                       final String comomCatagory,final String size1, final  String color1,final String typ,final String description){
 
         myInfo.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
@@ -1382,6 +1451,7 @@ public class ProductAddActivity extends AppCompatActivity implements EasyPermiss
                     GlobaleProductObject.put("proQua", productQuantidy);
                     GlobaleProductObject.put("UserId", user_id);
                     GlobaleProductObject.put("token", token);
+                    GlobaleProductObject.put("Size", size1);
                     GlobaleProductObject.put("color", color1);
                     GlobaleProductObject.put("type", typ);
                     GlobaleProductObject.put("description", description);
@@ -1400,8 +1470,8 @@ public class ProductAddActivity extends AppCompatActivity implements EasyPermiss
     }
     public void setGlobleProductupdate(final String productId, final String productName, final double productPrice,
                                        final double productQuantidy, final String productCode, final String privecy,
-                                       final String Catagury, final int date, final int pdicount, final String comomCatagory
-    ,final  String color1,final String typ,final String description){
+                                       final String Catagury, final int date, final int pdicount, final String comomCatagory,
+                                       final String size1,final  String color1,final String typ,final String description){
 
         myInfo.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
@@ -1451,6 +1521,7 @@ public class ProductAddActivity extends AppCompatActivity implements EasyPermiss
                     GlobaleProductObject.put("proQua", productQuantidy);
                     GlobaleProductObject.put("UserId", user_id);
                     GlobaleProductObject.put("token", token);
+                    GlobaleProductObject.put("Size", size1);
                     GlobaleProductObject.put("color", color1);
                     GlobaleProductObject.put("type", typ);
                     GlobaleProductObject.put("description", description);

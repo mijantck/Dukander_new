@@ -63,7 +63,7 @@ public class ShopListActivity extends AppCompatActivity {
 
 
 
-        Query query = GlobleSoplist;
+        Query query = GlobleSoplist.whereEqualTo("approved","certify");
 
         FirestoreRecyclerOptions<Shop_list_note> options = new FirestoreRecyclerOptions.Builder<Shop_list_note>()
                 .setQuery(query, Shop_list_note.class)

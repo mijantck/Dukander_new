@@ -87,7 +87,6 @@ public class SplashScreenActivity extends AppCompatActivity {
                                 list.add(retval);
                             }
 
-
                             String productCategoryup = list.get(1);
                             String productID = list.get(2);
                             String userID = list.get(3);
@@ -106,6 +105,16 @@ public class SplashScreenActivity extends AppCompatActivity {
                                 intent.putExtra("proIdURL", productID);
                                 intent.putExtra("user_IdURL", userID);
                                 intent.putExtra("fromURL", "shop");
+
+                                startActivity(intent);
+                                finish();
+                            }
+                            if (productCategoryup.contains("refer")) {
+                                enterMainActivity = false;
+                                Intent intent = new Intent(SplashScreenActivity.this, CustomerLoginActivity.class);
+                                intent.putExtra("UserID", productID);
+                                intent.putExtra("id", userID);
+                                intent.putExtra("fromURL", "refer");
 
                                 startActivity(intent);
                                 finish();

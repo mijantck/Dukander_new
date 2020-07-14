@@ -21,6 +21,7 @@ public class ProductNote {
     private int pruductDiscount;
     private String comomCatagory;
     private String color;
+    private String Size;
     private String type;
     private String description;
 
@@ -64,6 +65,14 @@ public class ProductNote {
         this.comomCatagory = comomCatagory;
     }
 
+
+    public String getSize() {
+        return Size;
+    }
+
+    public void setSize(String size) {
+        Size = size;
+    }
 
     public String getColor() {
         return color;
