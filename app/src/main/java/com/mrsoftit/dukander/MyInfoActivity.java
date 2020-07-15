@@ -537,7 +537,7 @@ public class MyInfoActivity extends AppCompatActivity implements EasyPermissions
                                 final String id = task.getResult().getId();
 
 
-                                myInfo.document(id).update("myid", id,"").addOnCompleteListener(new OnCompleteListener<Void>() {
+                                myInfo.document(id).update("myid", id).addOnCompleteListener(new OnCompleteListener<Void>() {
                                     @Override
                                     public void onComplete(@NonNull Task<Void> task) {
                                         shopdelaisView.setVisibility(View.VISIBLE);
