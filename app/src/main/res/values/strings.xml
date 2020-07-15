@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">a2z Loja</string>
+    <string name="app_name">a2zLoja</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
@@ -11,7 +11,7 @@
     <string name="StateChangeSample">State Change Sample</string>
     <string name="ProgressPaddingSample">Progress Padding Sample</string>
     <string name="CustomSelectorSample">Custom Selector Sample</string>
-    <string name="dukander">a2z Loja</string>
+    <string name="dukander">a2zLoja</string>
     <string name="totalbalace">58924</string>
     <string name="todo">TODO</string>
     <string name="withdraw">Cash out</string>

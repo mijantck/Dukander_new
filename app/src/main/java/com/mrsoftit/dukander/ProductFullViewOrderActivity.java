@@ -42,6 +42,7 @@ import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.button.MaterialButton;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -104,6 +105,7 @@ public class ProductFullViewOrderActivity extends AppCompatActivity {
     CollectionReference GlobleProduct = FirebaseFirestore.getInstance()
             .collection("GlobleProduct");
 
+   MaterialButton favorite,add_shopping;
 
 
     TextView reviewID;
@@ -113,6 +115,7 @@ public class ProductFullViewOrderActivity extends AppCompatActivity {
             ShopNameup,ShopPhoneup,ShopAddressup,ShopImageUrlup,ShopIdup,UserIdup,productCategoryup,dateup,
             proQuaup,discuntup,tokenup,sizeup,descriptuionup,typeup,colorup;
 
+    ProgressDialog progressDialog;
 
 
     Button orderButton,ChartButton;
@@ -150,6 +153,12 @@ public class ProductFullViewOrderActivity extends AppCompatActivity {
             globlecutouser_id = currentUser.getUid();
         }
 
+        progressDialog = new ProgressDialog(ProductFullViewOrderActivity.this);
+        // Setting Message
+        progressDialog.setMessage("Loading..."); // Setting Title
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progressDialog.setCanceledOnTouchOutside(false);
+
         androidx.appcompat.widget.Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_support);
 
         setSupportActionBar(toolbar);
@@ -172,7 +181,12 @@ public class ProductFullViewOrderActivity extends AppCompatActivity {
         productPriceDetails = findViewById(R.id.productPriceDetails);
         shopDetailName = findViewById(R.id.shopDetailName);
         shopDetailPhone = findViewById(R.id.shopDetailPhone);
-        ChartButton = findViewById(R.id.ChartButton);
+
+
+
+        favorite = findViewById(R.id.favorite);
+        add_shopping = findViewById(R.id.add_shopping);
+
         shopDetailAddress = findViewById(R.id.shopDetailAddress);
         ProductCode =findViewById(R.id.ProductCode);
         shareButton =findViewById(R.id.shareButton);
@@ -183,7 +197,7 @@ public class ProductFullViewOrderActivity extends AppCompatActivity {
         tetViewDiescunt =findViewById(R.id.tetViewDiescunt);
         sellPrice =findViewById(R.id.sellPrice);
         ProductDescriptionView =findViewById(R.id.ProductDescriptionView);
-        ChartButton =findViewById(R.id.ChartButton);
+
         productQuantidyfromCustomer = findViewById(R.id.productQuantidyfromCustomer);
         orderButton =findViewById(R.id.orderButton);
 
@@ -400,6 +414,7 @@ public class ProductFullViewOrderActivity extends AppCompatActivity {
         shareButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                progressDialog.show();
                 Toast.makeText(ProductFullViewOrderActivity.this, "click ", Toast.LENGTH_SHORT).show();
 
                 String sharelinktext  =  "https://a2zloja.page.link/?"+
@@ -434,6 +449,7 @@ public class ProductFullViewOrderActivity extends AppCompatActivity {
                                     startActivity(intent);
 
 
+                                    progressDialog.dismiss();
                                 } else {
                                     // Error
                                     // ...
@@ -472,19 +488,27 @@ public class ProductFullViewOrderActivity extends AppCompatActivity {
         });
 
 
-        ChartButton.setOnClickListener(new View.OnClickListener() {
+        favorite.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new MaterialAlertDialogBuilder(ProductFullViewOrderActivity.this)
-                        .setTitle("Sorry... its working now")
-                        .setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
 
-                                dialogInterface.dismiss();
-                            }
-                        })
-                        .show();
+
+                ProductaddInCustomer("f",ShopNameup,ShopPhoneup,ShopAddressup,ShopIdup,UserIdup,tokenup,proIdup,
+                        proNameup,proPriceup,proQuaup,productCodeup,productPrivacyup,productCategoryup,dateup,proImgeUrlup,
+                        discuntup,sizeup,colorup,typeup,descriptuionup);
+
+
+            }
+        });
+        add_shopping.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+
+                ProductaddInCustomer("chat",ShopNameup,ShopPhoneup,ShopAddressup,ShopIdup,UserIdup,tokenup,proIdup,
+                        proNameup,proPriceup,proQuaup,productCodeup,productPrivacyup,productCategoryup,dateup,proImgeUrlup,
+                        discuntup,sizeup,colorup,typeup,descriptuionup);
+
             }
         });
         orderButton.setOnClickListener(new View.OnClickListener() {
@@ -623,4 +647,106 @@ public class ProductFullViewOrderActivity extends AppCompatActivity {
 
     }
 
+
+    public void ProductaddInCustomer(String wishOrFavert, String DukanName,  String dukanderPhone,  String dukanderAddress,
+                                       String dukanderid,  String user_id,  String token,  final String productId,
+                                       final String productName, final String productPrice,
+                                       final String productQuantidy, final String productCode, final String privecy,
+                                       final String Catagury, final String date, final String ImageUrl, final String pdicount,
+                                       final String size1, final  String color1,final String typ,
+                                       final String description){
+
+
+        double productPriceD = Double.parseDouble(productPrice);
+        double productQuantidyD = Double.parseDouble(productQuantidy);
+        int dateI =Integer.parseInt(date);
+        int pdicountI =Integer.parseInt(pdicount);
+
+
+        Map<String, Object> GlobaleProductObject = new HashMap<>();
+        GlobaleProductObject.put("proId", productId);
+        GlobaleProductObject.put("proName", productName);
+        GlobaleProductObject.put("search", productName.toLowerCase());
+        GlobaleProductObject.put("proPrice", productPriceD);
+        GlobaleProductObject.put("pruductDiscount", pdicountI);
+        GlobaleProductObject.put("proImgeUrl",ImageUrl);
+        GlobaleProductObject.put("productPrivacy", privecy);
+        GlobaleProductObject.put("ShopName", DukanName);
+        GlobaleProductObject.put("ShopPhone", dukanderPhone);
+        GlobaleProductObject.put("productCode", productCode);
+        GlobaleProductObject.put("ShopAddress", dukanderAddress);
+        GlobaleProductObject.put("ShopId", dukanderid);
+        GlobaleProductObject.put("productCategory", Catagury);
+        GlobaleProductObject.put("date", dateI);
+        GlobaleProductObject.put("proQua", productQuantidyD);
+        GlobaleProductObject.put("UserId", user_id);
+        GlobaleProductObject.put("token", token);
+        GlobaleProductObject.put("Size", size1);
+        GlobaleProductObject.put("color", color1);
+        GlobaleProductObject.put("type", typ);
+        GlobaleProductObject.put("description", description);
+
+
+        CollectionReference customerForFeverite = FirebaseFirestore.getInstance()
+                .collection("Globlecustomers").document(globlecutouser_id).collection("fevertList");
+
+        CollectionReference customerForAddCrat = FirebaseFirestore.getInstance()
+                .collection("Globlecustomers").document(globlecutouser_id).collection("AdddedCart");
+
+        if (wishOrFavert.equals("f"))
+
+
+        customerForFeverite.document(productId).set(GlobaleProductObject).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+
+
+                new MaterialAlertDialogBuilder(ProductFullViewOrderActivity.this)
+                        .setMessage("Product add in your fevered list")
+                        .setPositiveButton("GOT IT", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+
+                                startActivity(new Intent(ProductFullViewOrderActivity.this,FeveretActivity.class));
+                                finish();
+                            }
+                        })
+                        .setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+
+                                dialogInterface.dismiss();
+                            }
+                        })
+                        .show();
+            }
+        });
+        if (wishOrFavert.equals("chat"))
+            customerForAddCrat.document(productId).set(GlobaleProductObject).addOnCompleteListener(new OnCompleteListener<Void>() {
+                @Override
+                public void onComplete(@NonNull Task<Void> task) {
+
+                    new MaterialAlertDialogBuilder(ProductFullViewOrderActivity.this)
+                            .setMessage("Product add in your wish list")
+                            .setPositiveButton("GOT IT", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+
+                                    startActivity(new Intent(ProductFullViewOrderActivity.this,wishListActivity.class));
+                                    finish();
+
+                                }
+                            })
+                            .setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+
+                                    dialogInterface.dismiss();
+                                }
+                            })
+                            .show();
+                }
+            });
+
+    }
 }

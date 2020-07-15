@@ -9,8 +9,8 @@ android {
         applicationId "com.mrsoftit.dukander"
         minSdkVersion 21
         targetSdkVersion 29
-        versionCode 1
-        versionName "1.0"
+        versionCode 2
+        versionName "20.007.153"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -83,6 +83,9 @@ dependencies {
 
     implementation 'com.squareup.okhttp3:okhttp:3.11.0'
 
+
+    implementation 'com.nex3z:notification-badge:0.1.0'
+
     implementation 'com.github.clans:fab:1.6.4'
     implementation 'br.com.simplepass:loading-button-android:1.14.0'
     implementation 'com.google.firebase:firebase-firestore:21.4.1'
@@ -93,5 +96,6 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+
 }
 apply plugin: 'com.google.gms.google-services'

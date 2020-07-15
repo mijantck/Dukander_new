@@ -375,6 +375,7 @@ public class SelecedCatagoryActivity extends AppCompatActivity {
             }
         });
     }
+
     @Override
     protected void onStart() {
         super.onStart();

@@ -20,7 +20,7 @@ import com.mrsoftit.dukander.adapter.GlobleProductListAdapter6;
 import com.mrsoftit.dukander.adapter.ProductOrderAdapter;
 import com.mrsoftit.dukander.modle.GlobleProductNote6;
 
-public class wishListActivity extends AppCompatActivity {
+public class FeveretActivity extends AppCompatActivity {
 
 
     GlobleProductListAdapter6 globleProductListAdapter6;
@@ -29,24 +29,26 @@ public class wishListActivity extends AppCompatActivity {
     ProductOrderAdapter productOrderAdapter ;
     String  user_id;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_wish_list);
+        setContentView(R.layout.activity_feveret);
 
-        currentUser  = FirebaseAuth.getInstance().getCurrentUser();
-        if (currentUser!=null){
-            user_id =currentUser.getUid();
+
+        currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        if (currentUser != null) {
+            user_id = currentUser.getUid();
 
             comomCatagoryProductShow();
-        }else {
-            new MaterialAlertDialogBuilder(wishListActivity.this)
+        } else {
+            new MaterialAlertDialogBuilder(FeveretActivity.this)
                     .setMessage("you have not signup")
                     .setPositiveButton("GOT IT", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
 
-                            startActivity(new Intent(wishListActivity.this,CustomerLoginActivity.class));
+                            startActivity(new Intent(FeveretActivity.this, CustomerLoginActivity.class));
                             finish();
                         }
                     })
@@ -59,7 +61,6 @@ public class wishListActivity extends AppCompatActivity {
                     })
                     .show();
         }
-
 
 
     }
@@ -78,7 +79,7 @@ public class wishListActivity extends AppCompatActivity {
 
         globleProductListAdapter6 = new GlobleProductListAdapter6(options);
 
-        RecyclerView recyclerView = findViewById(R.id.addcart);
+        RecyclerView recyclerView = findViewById(R.id.wishList);
         recyclerView.setHasFixedSize(true);
         // LinearLayoutManager linearLayoutManager = new LinearLayoutManager(GlobleProductListActivity.this,RecyclerView.HORIZONTAL,false);
         recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
@@ -92,26 +93,26 @@ public class wishListActivity extends AppCompatActivity {
             public void onItemClick(DocumentSnapshot documentSnapshot, int position) {
                 final GlobleProductNote6 globleProductNote = documentSnapshot.toObject(GlobleProductNote6.class);
 
-                Intent intent = new Intent(wishListActivity.this, ProductFullViewOrderActivity.class);
-                intent.putExtra("proIdup",globleProductNote.getProId());
-                intent.putExtra("proNameup",globleProductNote.getProName());
-                intent.putExtra("proPriceup",globleProductNote.getProPrice()+"");
-                intent.putExtra("productCodeup",globleProductNote.getProductCode());
-                intent.putExtra("productPrivacyup",globleProductNote.getProductPrivacy());
-                intent.putExtra("proImgeUrlup",globleProductNote.getProImgeUrl());
-                intent.putExtra("ShopNameup",globleProductNote.getShopName());
-                intent.putExtra("ShopPhoneup",globleProductNote.getShopPhone());
-                intent.putExtra("ShopAddressup",globleProductNote.getShopAddress());
-                intent.putExtra("ShopImageUrlup",globleProductNote.getShopImageUrl());
-                intent.putExtra("ShopIdup",globleProductNote.getShopId());
-                intent.putExtra("UserIdup",globleProductNote.getUserId());
-                intent.putExtra("productCategoryup",globleProductNote.getProductCategory());
-                intent.putExtra("dateup",globleProductNote.getDate()+"");
-                intent.putExtra("proQuaup",globleProductNote.getProQua()+"");
-                intent.putExtra("discuntup",globleProductNote.getPruductDiscount()+"");
-                intent.putExtra("tokenup",globleProductNote.getToken());
-                intent.putExtra("size",globleProductNote.getSize());
-                intent.putExtra("color",globleProductNote.getColor());
+                Intent intent = new Intent(FeveretActivity.this, ProductFullViewOrderActivity.class);
+                intent.putExtra("proIdup", globleProductNote.getProId());
+                intent.putExtra("proNameup", globleProductNote.getProName());
+                intent.putExtra("proPriceup", globleProductNote.getProPrice() + "");
+                intent.putExtra("productCodeup", globleProductNote.getProductCode());
+                intent.putExtra("productPrivacyup", globleProductNote.getProductPrivacy());
+                intent.putExtra("proImgeUrlup", globleProductNote.getProImgeUrl());
+                intent.putExtra("ShopNameup", globleProductNote.getShopName());
+                intent.putExtra("ShopPhoneup", globleProductNote.getShopPhone());
+                intent.putExtra("ShopAddressup", globleProductNote.getShopAddress());
+                intent.putExtra("ShopImageUrlup", globleProductNote.getShopImageUrl());
+                intent.putExtra("ShopIdup", globleProductNote.getShopId());
+                intent.putExtra("UserIdup", globleProductNote.getUserId());
+                intent.putExtra("productCategoryup", globleProductNote.getProductCategory());
+                intent.putExtra("dateup", globleProductNote.getDate() + "");
+                intent.putExtra("proQuaup", globleProductNote.getProQua() + "");
+                intent.putExtra("discuntup", globleProductNote.getPruductDiscount() + "");
+                intent.putExtra("tokenup", globleProductNote.getToken());
+                intent.putExtra("size", globleProductNote.getSize());
+                intent.putExtra("color", globleProductNote.getColor());
                 intent.putExtra("type", globleProductNote.getType());
                 intent.putExtra("descriptuion", globleProductNote.getDescription());
                 startActivity(intent);

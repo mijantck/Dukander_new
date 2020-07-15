@@ -65,9 +65,12 @@ import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
+import de.hdodenhof.circleimageview.CircleImageView;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
@@ -94,9 +97,20 @@ public class GlobleCustomerActivity extends AppCompatActivity implements EasyPer
     CollectionReference globleRefercode = FirebaseFirestore.getInstance()
             .collection("Gift");
 
+    String cutomername;
+    String cutomerphone;
+    String cutomerAddress;
+    String cutomerEmail;
+    String cutomerproductNmae;
+    String cutomerproductCoin;
+    int  coin ;
+   int coinprice ;
+   String intGiftProname;
+
     private TextInputEditText globleCutomerNameEdite, globleCutomerPhoneEdite,globleCutomerAddressEdite,globleCutomerZipCodeEdite;
     EditText referCode;
-    ImageView referButton,profileEditebutton,globle_customer_profile_pic;
+    ImageView referButton,profileEditebutton;
+    CircleImageView globle_customer_profile_pic;
     Button updateMyinfo,globle_customer_refer_link_send;
     TextView globle_customer_name_textView,globle_customer_phone_textView,globle_customer_address_textView
             ,globle_customer_referCode_textView,globle_customer_coin_textView,globle_customer_zipCode_textView;
@@ -217,6 +231,7 @@ public class GlobleCustomerActivity extends AppCompatActivity implements EasyPer
 
                 if (currentUser != null){
 
+                    progressDialog.show();
                     final CollectionReference MyInfo = FirebaseFirestore.getInstance()
                             .collection("Globlecustomers").document(globlecutouser_id).collection("info");
 
@@ -247,7 +262,7 @@ public class GlobleCustomerActivity extends AppCompatActivity implements EasyPer
                                             "- You can pick the shop you trust from your past buyings " +
                                             "First ever product search engine including everything means every thing!" +
                                             " must be faster than any delivery service."+
-                                            "&si=" + "https://www.linkpicture.com/q/logo_2.jpg" +
+                                            "&si=" + "https://www.linkpicture.com/q/logomain.jpg" +
                                             "&apn=" + getPackageName();
 
 
@@ -270,6 +285,7 @@ public class GlobleCustomerActivity extends AppCompatActivity implements EasyPer
                                                         intent.setType("text/plain");
                                                         startActivity(intent);
 
+                                                        progressDialog.dismiss();
 
                                                     } else {
                                                         // Error
@@ -708,14 +724,157 @@ public class GlobleCustomerActivity extends AppCompatActivity implements EasyPer
         recyclerView.setLayoutManager(new GridLayoutManager(this, 3));
        // recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(giftAdapter);
+        giftAdapter.setOnItemClickListener(new GiftAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(DocumentSnapshot documentSnapshot, int position) {
+
+            }
+
+            @Override
+            public void onCoinClick(DocumentSnapshot documentSnapshot, int position) {
+                progressDialog.show();
+                GiftNote giftNote = documentSnapshot.toObject(GiftNote.class);
+              coinprice = giftNote.getGiftCoin();
+                intGiftProname = giftNote.getGiftName();
+                if (currentUser !=null){
+                    final CollectionReference MyInfo = FirebaseFirestore.getInstance()
+                            .collection("Globlecustomers").document(globlecutouser_id).collection("info");
+
+                    MyInfo.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+
+
+
+                            if (task.isSuccessful()){
+                                for (QueryDocumentSnapshot document : Objects.requireNonNull(task.getResult())) {
+                                    final GlobleCustomerNote myglobleCustomerNote = document.toObject(GlobleCustomerNote.class);
+                                    coin = myglobleCustomerNote.getCoine();
+                                    cutomername = myglobleCustomerNote.getName();
+                                    cutomerphone = myglobleCustomerNote.getPhoneNumber();
+                                    cutomerAddress = myglobleCustomerNote.getAddress();
+                                    cutomerEmail = myglobleCustomerNote.getEmail();
+                                }
+
+
+                                if (coin <coinprice){
+                                    new MaterialAlertDialogBuilder(GlobleCustomerActivity.this)
+                                            .setTitle(" Opp..Sorry ")
+                                            .setMessage(" You earn get more ")
+                                            .setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
+                                                @Override
+                                                public void onClick(DialogInterface dialogInterface, int i) {
+                                                    dialogInterface.dismiss();
+                                                }
+                                            })
+                                            .show();
+                                    progressDialog.dismiss();
+                                }
+                            }
+                        }
+                    });
+                }else {
+
+
+                    new MaterialAlertDialogBuilder(GlobleCustomerActivity.this)
+                            .setMessage("Are you sure ")
+                            .setPositiveButton("ok", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+
+                                    Map<String, Object> GiftOder = new HashMap<>();
+                                    GiftOder.put("customerName",cutomername);
+                                    GiftOder.put("customerPhone",cutomerphone);
+                                    GiftOder.put("customerAddress",cutomerAddress);
+                                    GiftOder.put("customerEmail",cutomerEmail);
+                                    GiftOder.put("customerCoin",coin);
+                                    GiftOder.put("productName",intGiftProname);
+                                    GiftOder.put("giftProCoi",coinprice);
+
+                                    final CollectionReference GiftOrder = FirebaseFirestore.getInstance()
+                                            .collection("GiftOrder");
+                                    GiftOrder.document().set(GiftOder).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<Void> task) {
+                                            if (task.isSuccessful()) {
+
+
+
+                                                final CollectionReference MyInfo1 = FirebaseFirestore.getInstance()
+                                                        .collection("Globlecustomers").document(globlecutouser_id).collection("info");
+
+                                                MyInfo1.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                                    @Override
+                                                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+
+                                                        if (task.isSuccessful()){
+                                                            int myfriendCoin = 0;
+                                                            String id = null;
+                                                            for (QueryDocumentSnapshot document : Objects.requireNonNull(task.getResult())) {
+                                                                final GlobleCustomerNote myglobleCustomerNote = document.toObject(GlobleCustomerNote.class);
+
+                                                                myfriendCoin = myglobleCustomerNote.getCoine();
+                                                                id = myglobleCustomerNote.getId();
+                                                            }
+                                                            myfriendCoin = myfriendCoin - coinprice;
+
+                                                            MyInfo1.document(id).update("coine",myfriendCoin,"firstTimeRafer",true).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                                @Override
+                                                                public void onComplete(@NonNull Task<Void> task) {
+                                                                    if(task.isSuccessful()){
+                                                                        new MaterialAlertDialogBuilder(GlobleCustomerActivity.this)
+                                                                                .setMessage("Order Complete")
+                                                                                .setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
+                                                                                    @Override
+                                                                                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                                                                                        dialogInterface.dismiss();
+                                                                                    }
+                                                                                })
+                                                                                .show();
+                                                                        progressDialog.dismiss();
+                                                                    }
+                                                                }
+                                                            });
+                                                        }
+                                                    }
+
+                                                });
+
+                                            }
+                                         }
+                                    });
+
+
+                                }
+                            })
+                            .setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+
+                                    dialogInterface.dismiss();
+                                }
+                            })
+                            .show();
+
+
+
+
+
+                }
+
+            }
+        });
+
 
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-
-        giftAdapter.startListening();
+        if(currentUser != null){
+            giftAdapter.startListening();
+        }
     }
 
 

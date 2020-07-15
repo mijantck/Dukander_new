@@ -320,7 +320,8 @@ public class GlobleProductListActivity extends AppCompatActivity implements Navi
         sliderView.setOnIndicatorClickListener(new DrawController.ClickListener() {
             @Override
             public void onIndicatorClicked(int position) {
-                Toast.makeText(GlobleProductListActivity.this, ""+sliderView.getCurrentPagePosition(), Toast.LENGTH_SHORT).show();
+
+              // Toast.makeText(GlobleProductListActivity.this, ""+sliderView.getCurrentPagePosition(), Toast.LENGTH_SHORT).show();
 
             }
         });
@@ -343,6 +344,9 @@ public class GlobleProductListActivity extends AppCompatActivity implements Navi
                       SliderItem sliderItem = new SliderItem();
                       sliderItem.setDescription(adsUrlNote.getShopName());
                       sliderItem.setImageUrl(adsUrlNote.getUrl());
+                      sliderItem.setShopID(adsUrlNote.getShopID());
+
+                      sliderItem.setUser_id(adsUrlNote.getUser_id());
 
                       sliderItemList.add(sliderItem);
                   }
@@ -368,7 +372,9 @@ public class GlobleProductListActivity extends AppCompatActivity implements Navi
 
             case R.id.shoplist:
                startActivity(new Intent(GlobleProductListActivity.this,ShopListActivity.class));
-
+                break;
+                case R.id.Favorite:
+               startActivity(new Intent(GlobleProductListActivity.this,FeveretActivity.class));
                 break;
                 case R.id.orderHistory:
 
@@ -555,15 +561,11 @@ public class GlobleProductListActivity extends AppCompatActivity implements Navi
                 startActivity(Game);
                 break;
                 case R.id.InviteAndEarn:
-
                     Invaite();
                 break;
 
-
-
-
             case R.id.Contact_us:
-
+                startActivity(new Intent(GlobleProductListActivity.this,ContactUsActivity.class));
                 break;
             case R.id.logout:
 
@@ -642,6 +644,7 @@ public class GlobleProductListActivity extends AppCompatActivity implements Navi
 
         if (currentUser != null){
 
+            progressDialog.show();
             final CollectionReference MyInfo = FirebaseFirestore.getInstance()
                     .collection("Globlecustomers").document(globlecutouser_id).collection("info");
 
@@ -672,7 +675,7 @@ public class GlobleProductListActivity extends AppCompatActivity implements Navi
                                     "- You can pick the shop you trust from your past buyings - " +
                                     "First ever product search engine including everything means every thing! " +
                                     " must be faster than any delivery service."+
-                                    "&si=" + "https://www.linkpicture.com/q/logo_2.jpg" +
+                                    "&si=" + "https://www.linkpicture.com/q/logomain.jpg" +
                                     "&apn=" + getPackageName();
 
 
@@ -695,6 +698,7 @@ public class GlobleProductListActivity extends AppCompatActivity implements Navi
                                                 intent.setType("text/plain");
                                                 startActivity(intent);
 
+                                                progressDialog.dismiss();
 
                                             } else {
                                                 // Error
@@ -1184,7 +1188,7 @@ public class GlobleProductListActivity extends AppCompatActivity implements Navi
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.OrderListTorbar:
-               startActivity(new Intent(GlobleProductListActivity.this,OrderListActivity.class));
+               startActivity(new Intent(GlobleProductListActivity.this,wishListActivity.class));
                 return true;
 
             default:

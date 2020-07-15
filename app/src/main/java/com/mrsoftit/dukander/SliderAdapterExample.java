@@ -1,6 +1,7 @@
 package com.mrsoftit.dukander;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -49,9 +50,9 @@ public class SliderAdapterExample extends
     @Override
     public void onBindViewHolder(SliderAdapterVH viewHolder, final int position) {
 
-        SliderItem sliderItem = mSliderItems.get(position);
+        final SliderItem sliderItem = mSliderItems.get(position);
 
-        viewHolder.textViewDescription.setText(sliderItem.getDescription());
+      //  viewHolder.textViewDescription.setText(sliderItem.getDescription());
         viewHolder.textViewDescription.setTextSize(16);
         viewHolder.textViewDescription.setTextColor(Color.WHITE);
         Glide.with(viewHolder.itemView)
@@ -62,7 +63,16 @@ public class SliderAdapterExample extends
         viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(context, "This is item in position " + position, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, "This is item in position " + sliderItem.getShopID(), Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(v.getContext(), ShopViewActivity.class);
+                    intent.putExtra("proIdURL", sliderItem.getShopID());
+                    intent.putExtra("user_IdURL", sliderItem.getUser_id());
+                    intent.putExtra("fromURL", "shop");
+
+                if (sliderItem.getUser_id() != null) {
+
+                    v.getContext().startActivity(intent);
+                }
             }
         });
     }

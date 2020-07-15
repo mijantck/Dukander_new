@@ -72,46 +72,6 @@ public class GiftAdapter extends FirestoreRecyclerAdapter<GiftNote, GiftAdapter.
             Picasso.get().load(Url).into(holder.giftImage);
         }
 
-        holder.giftcoin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(final View v) {
-
-                if (currentUser !=null){
-                    final CollectionReference MyInfo = FirebaseFirestore.getInstance()
-                            .collection("Globlecustomers").document(globlecutouser_id).collection("info");
-
-                    MyInfo.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                        @Override
-                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
-
-                            int  coin =0;
-                            if (task.isSuccessful()){
-                                for (QueryDocumentSnapshot document : Objects.requireNonNull(task.getResult())) {
-                                    final GlobleCustomerNote myglobleCustomerNote = document.toObject(GlobleCustomerNote.class);
-                                    coin = myglobleCustomerNote.getCoine();
-                                }
-                                if (coin < model.getGiftCoin()){
-                                    new MaterialAlertDialogBuilder(v.getContext())
-                                            .setTitle(" Opp..Sorry ")
-                                            .setMessage(" You earn get more ")
-                                            .setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
-                                                @Override
-                                                public void onClick(DialogInterface dialogInterface, int i) {
-                                                    dialogInterface.dismiss();
-                                                }
-                                            })
-                                            .show();
-                                }
-                            }
-                        }
-                    });
-                }else {
-
-
-                }
-
-            }
-        });
     }
 
     @NonNull
@@ -136,6 +96,19 @@ public class GiftAdapter extends FirestoreRecyclerAdapter<GiftNote, GiftAdapter.
             giftcoin = itemView.findViewById(R.id.giftcoinbuy);
             giftImage = itemView.findViewById(R.id.giftImage);
 
+
+
+            giftcoin.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int position = getAdapterPosition();
+                    if (position != RecyclerView.NO_POSITION && listener != null) {
+                        listener.onCoinClick(getSnapshots().getSnapshot(position), position);
+                    }
+
+                }
+            });
+
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -154,18 +127,18 @@ public class GiftAdapter extends FirestoreRecyclerAdapter<GiftNote, GiftAdapter.
 
     public interface OnItemClickListener {
         void onItemClick(DocumentSnapshot documentSnapshot, int position);
+        void onCoinClick(DocumentSnapshot documentSnapshot, int position);
     }
 
     public void setOnItemClickListener(OnItemClickListener listener) {
         this.listener = listener;
     }
 
-    static double calcuateDiscount(double markedprice, double s)
-    {
+    static double calcuateDiscount(double markedprice, double s) {
         double dis = 100-s;
         double amount= (dis*markedprice)/100;
-
         return amount;
+
 
     }
 }

@@ -6,7 +6,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".wishListActivity">
+    tools:context=".FeveretActivity">
+
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar_support"
         android:layout_width="match_parent"
@@ -20,7 +21,7 @@
             android:textSize="20sp"
             android:textColor="#FFFF"
             android:gravity="center"
-            android:text="Add Cart List"
+            android:text="Wish List"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
     </androidx.appcompat.widget.Toolbar>
@@ -28,7 +29,8 @@
 
     <androidx.recyclerview.widget.RecyclerView
 
-        android:id="@+id/addcart"
+        android:id="@+id/wishList"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
+
 </LinearLayout>

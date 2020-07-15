@@ -125,6 +125,7 @@ public class ProductAddActivity extends AppCompatActivity implements EasyPermiss
    private SearchableSpinner Categoryspinner;
     String Categoryspinneritem;
     int CategoryspinneritemInt;
+
     String[] privacyspinnerList = { "Public", "private" };
 
     String[] CategoryspinnerList = { "Mobiles","Tablets","Used Mobile","Mobile accessories","Foods","jewellery","Motorcycle accessories","Cosmetics","Grocery",
@@ -1400,7 +1401,8 @@ public class ProductAddActivity extends AppCompatActivity implements EasyPermiss
     public void setGlobleProductupdate(final String productId, final String productName, final double productPrice,
                                        final double productQuantidy, final String productCode, final String privecy,
                                        final String Catagury, final int date, final String ImageUrl, final int pdicount,
-                                       final String comomCatagory,final String size1, final  String color1,final String typ,final String description){
+                                       final String comomCatagory,final String size1, final  String color1,final String typ,
+                                       final String description){
 
         myInfo.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override

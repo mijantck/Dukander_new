@@ -22,6 +22,10 @@
                 app:itemTextAppearance="@style/Style_TextView"
                 android:id="@+id/InviteAndEarn"
                 android:title="Invite &amp; Earn" />
+            <item
+                app:itemTextAppearance="@style/Style_TextView"
+                android:id="@+id/Favorite"
+                android:title="Favorite" />
         </menu>
     </item>
     <item android:title="Shop list">

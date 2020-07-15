@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
@@ -54,11 +55,19 @@ public class ShopViewActivity extends AppCompatActivity {
     CollectionReference GlobleSoplist = FirebaseFirestore.getInstance()
             .collection("GlobleSoplist");
 
+    ProgressDialog progressDialog;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_shop_view);
 
+
+        progressDialog = new ProgressDialog(ShopViewActivity.this);
+        // Setting Message
+        progressDialog.setMessage("Loading..."); // Setting Title
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progressDialog.setCanceledOnTouchOutside(false);
 
         Toolbar toolbar =  findViewById(R.id.toolbar_support);
         shopImage = findViewById(R.id.shop_list_image_view_activity);
@@ -156,7 +165,7 @@ public class ShopViewActivity extends AppCompatActivity {
         shareButtonShop.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(ShopViewActivity.this, "click ", Toast.LENGTH_SHORT).show();
+                progressDialog.show();
                 String sharelinktext  = "https://a2zloja.page.link/?"+
                         "link=https://a2zloja.page.link/jdF1?"+
                         "proID="+"-"+"shop"+
@@ -185,6 +194,7 @@ public class ShopViewActivity extends AppCompatActivity {
                                     intent.setType("text/plain");
                                     startActivity(intent);
 
+                                    progressDialog.dismiss();
 
                                 } else {
                                     // Error

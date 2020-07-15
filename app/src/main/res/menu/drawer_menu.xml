@@ -10,43 +10,43 @@
             android:title="Shop Info" />
         <item
             android:id="@+id/Market"
-            android:icon="@drawable/logout"
+            android:icon="@drawable/icons8_mobile_shopping_64"
             android:title="Go to Market "/>
         <item
             android:id="@+id/OrderList"
-            android:icon="@drawable/logout"
+            android:icon="@drawable/icons8_mobile_order_64"
             android:title="Order List" />
         <item
             android:id="@+id/Notification"
-            android:icon="@drawable/logout"
+            android:icon="@drawable/icons8_notification_48"
             android:title="Notification " />
         <item
             android:id="@+id/nav_message"
            android:icon="@drawable/customer"
-            android:title="Customer Info" />
+            android:title="Customers" />
         <item
             android:id="@+id/Unknown_customer"
             android:icon="@drawable/customer"
-            android:title="Unknown Customer Info" />
+            android:title="Unknown Customers" />
         <item
             android:id="@+id/nav_chat"
-            android:icon="@drawable/produclist"
-            android:title="Product Info" />
+            android:icon="@drawable/icons8_new_product_64"
+            android:title="Products" />
         <item
             android:id="@+id/nav_profile"
-            android:icon="@drawable/producthisstory"
+            android:icon="@drawable/icons8_sale_price_tag_48"
             android:title=" Approved sales " />
         <item
             android:id="@+id/confarlSaleList"
-            android:icon="@drawable/producthisstory"
+            android:icon="@drawable/icons8_sale_price_tag_48"
             android:title="Total sale" />
         <item
             android:id="@+id/Profite"
-            android:icon="@drawable/producthisstory"
+            android:icon="@drawable/icons8_profit_48"
             android:title="Profit" />
         <item
             android:id="@+id/recharge"
-            android:icon="@drawable/producthisstory"
+            android:icon="@drawable/icons8_coin_wallet_64"
             android:title="Recharge " />
     </group>
 

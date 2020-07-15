@@ -69,7 +69,7 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-            <ImageView
+            <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/globle_customer_profile_pic"
                 android:src="@drawable/person"
                 android:layout_width="150dp"
