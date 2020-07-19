@@ -130,8 +130,7 @@ public class ProductAddActivity extends AppCompatActivity implements EasyPermiss
 
     String[] CategoryspinnerList = { "Mobiles","Tablets","Used Mobile","Mobile accessories","Foods","jewellery","Motorcycle accessories","Cosmetics","Grocery",
     "Panjabi","Pajama","Shirts","Pant","T-Shirt","Polo","Lungi","Man Shoes","Man Accessories","Saree",
-            "Shalwar Kameez", "Shawls","Girls Panjabi",
-            "Nightwear", "Scarves", "Dupatta", "Girls Shoes", "Girls Accessories",
+            "Shalwar Kameez", "Shawls","Girls Panjabi", "Nightwear", "Scarves", "Dupatta", "Girls Shoes", "Girls Accessories",
             "kids","Medicine","Sports", "Computer accessories","Home accessories","Books","Electronics","Game"};
 
     String productCode;
@@ -556,11 +555,6 @@ public class ProductAddActivity extends AppCompatActivity implements EasyPermiss
                     return;
                 }
 
-
-
-
-
-
                 Random r = new Random();
                 int randomNumber = r.nextInt(1000);
 
@@ -593,6 +587,11 @@ public class ProductAddActivity extends AppCompatActivity implements EasyPermiss
                 String ppq = productQuantayn.getText().toString();
                 String pBpq = pruductBuyPrice.getText().toString();
                 String pmq = pruductMin.getText().toString();
+                String pruductDiscountCheck = pruductDiscount.getText().toString();
+                String pruductColorCheck  = pruductColor.getText().toString();
+                String pruductTypeCheck  = pruductType.getText().toString();
+                String pruductDescriptionCheck  = pruductDescription.getText().toString();
+                String pruductSizeCheck  = pruductSize.getText().toString();
 
               color = pruductColor.getText().toString();
                typ = pruductType.getText().toString();
@@ -627,6 +626,11 @@ public class ProductAddActivity extends AppCompatActivity implements EasyPermiss
                 }
                 if (TextUtils.isEmpty(pmq) ){
                     Toast.makeText(getApplicationContext(), " Minimum Quantity...", Toast.LENGTH_LONG).show();
+                    return;
+                }
+                if (TextUtils.isEmpty(pruductDiscountCheck) || TextUtils.isEmpty(pruductColorCheck) || TextUtils.isEmpty(pruductTypeCheck) ||
+                        TextUtils.isEmpty(pruductDescriptionCheck) || TextUtils.isEmpty(pruductSizeCheck)){
+                    Toast.makeText(getApplicationContext(), " Product Information filup ", Toast.LENGTH_LONG).show();
                     return;
                 }
 
@@ -974,7 +978,7 @@ public class ProductAddActivity extends AppCompatActivity implements EasyPermiss
                                     final String id = task.getResult().getId();
 
 
-                                    product.document(id).update("proId", id,"color","Size",Size,color,"type",typ,"description",descreption).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                    product.document(id).update("proId", id,"color",color,"Size",Size,"type",typ,"description",descreption).addOnCompleteListener(new OnCompleteListener<Void>() {
                                         @Override
                                         public void onComplete(@NonNull Task<Void> task) {
 

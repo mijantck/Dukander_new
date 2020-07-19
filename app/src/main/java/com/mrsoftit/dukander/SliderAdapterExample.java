@@ -63,7 +63,7 @@ public class SliderAdapterExample extends
         viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                    Toast.makeText(context, "This is item in position " + sliderItem.getShopID(), Toast.LENGTH_SHORT).show();
+
                     Intent intent = new Intent(v.getContext(), ShopViewActivity.class);
                     intent.putExtra("proIdURL", sliderItem.getShopID());
                     intent.putExtra("user_IdURL", sliderItem.getUser_id());

@@ -172,7 +172,9 @@ public class ProductOrderAdapter extends FirestoreRecyclerAdapter<OrderNote, Pro
             orderShopPhone = itemView.findViewById(R.id.corderShopPhone);
             orderShopAddress = itemView.findViewById(R.id.corderShopAddress);
             corderProductSize = itemView.findViewById(R.id.corderProductSize);
+            deliveryBoyLayout = itemView.findViewById(R.id.deliveryBoyLayout);
             corderProductConfimeOrCancel = itemView.findViewById(R.id.corderProductConfimeOrCancel);
+
 
 
 

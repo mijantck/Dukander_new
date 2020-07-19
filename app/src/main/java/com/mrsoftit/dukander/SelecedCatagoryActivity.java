@@ -93,7 +93,8 @@ public class SelecedCatagoryActivity extends AppCompatActivity {
 
 
           if (comomCatagory != null) {
-        Query querytest = GlobleProduct.whereEqualTo("comomCatagory", comomCatagory).whereEqualTo("productPrivacy", "Public");
+        Query querytest = GlobleProduct.whereEqualTo("comomCatagory", comomCatagory)
+                .whereEqualTo("productPrivacy", "Public").whereEqualTo("productVerification","certify");
         querytest.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
@@ -112,7 +113,9 @@ public class SelecedCatagoryActivity extends AppCompatActivity {
         });
     }
           if (catagoryUp != null) {
-        Query querytest = GlobleProduct.whereEqualTo("productCategory", catagoryUp).whereEqualTo("productPrivacy", "Public");
+        Query querytest = GlobleProduct.whereEqualTo("productCategory", catagoryUp)
+                .whereEqualTo("productPrivacy", "Public")
+                .whereEqualTo("productVerification","certify");
         querytest.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
@@ -137,7 +140,9 @@ public class SelecedCatagoryActivity extends AppCompatActivity {
 
             CatagoryTitel.setText(comomCatagory);
 
-            Query query = GlobleProduct.whereEqualTo("comomCatagory",comomCatagory).whereEqualTo("productPrivacy","Public");
+            Query query = GlobleProduct.whereEqualTo("comomCatagory",comomCatagory)
+                    .whereEqualTo("productPrivacy","Public")
+                    .whereEqualTo("productVerification","certify");
 
             FirestoreRecyclerOptions<GlobleProductNote6> options = new FirestoreRecyclerOptions.Builder<GlobleProductNote6>()
                     .setQuery(query, GlobleProductNote6.class)
@@ -187,7 +192,9 @@ public class SelecedCatagoryActivity extends AppCompatActivity {
 
             CatagoryTitel.setText(catagoryUp);
 
-            Query query = GlobleProduct.whereEqualTo("productCategory",catagoryUp).whereEqualTo("productPrivacy","Public");
+            Query query = GlobleProduct.whereEqualTo("productCategory",catagoryUp)
+                    .whereEqualTo("productPrivacy","Public")
+                    .whereEqualTo("productVerification","certify");
 
             FirestoreRecyclerOptions<GlobleProductNote6> options = new FirestoreRecyclerOptions.Builder<GlobleProductNote6>()
                     .setQuery(query, GlobleProductNote6.class)
@@ -198,7 +205,7 @@ public class SelecedCatagoryActivity extends AppCompatActivity {
 
             RecyclerView recyclerView = findViewById(R.id.selectedCatagory);
             recyclerView.setHasFixedSize(true);
-            recyclerView.setLayoutManager(new GridLayoutManager(this, 3));
+            recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
             recyclerView.setAdapter(globleProductListAdapter6);
 
                globleProductListAdapter6.setOnItemClickListener(new GlobleProductListAdapter6.OnItemClickListener() {
@@ -275,7 +282,9 @@ public class SelecedCatagoryActivity extends AppCompatActivity {
 
     private void allProductShow(String productName) {
         Query query = GlobleProduct.orderBy("search").startAt(productName.toLowerCase()).endAt(productName.toLowerCase()+ "\uf8ff")
-                .whereEqualTo("productCategory",catagoryUp).whereEqualTo("productPrivacy","Public");
+                .whereEqualTo("productCategory",catagoryUp)
+                .whereEqualTo("productPrivacy","Public")
+                .whereEqualTo("productVerification","certify");
 
 
         FirestoreRecyclerOptions<GlobleProductNote6> options = new FirestoreRecyclerOptions.Builder<GlobleProductNote6>()

@@ -526,38 +526,38 @@ public class GlobleProductListActivity extends AppCompatActivity implements Navi
                 break;
             case R.id.Medicine:
                 Intent Medicine = new Intent(GlobleProductListActivity.this,SelecedCatagoryActivity.class);
-                Medicine.putExtra("catagory","Medicine");
+                Medicine.putExtra("catagory","medicine");
                 startActivity(Medicine);
                 break;
             case R.id.Sports:
                 Intent Sports = new Intent(GlobleProductListActivity.this,SelecedCatagoryActivity.class);
-                Sports.putExtra("catagory","Sports");
+                Sports.putExtra("catagory","sports");
                 startActivity(Sports);
                 break;
             case R.id.Computer_accessories:
                 Intent Computer_accessories = new Intent(GlobleProductListActivity.this,SelecedCatagoryActivity.class);
-                Computer_accessories.putExtra("catagory","Computer accessories");
+                Computer_accessories.putExtra("catagory","computer accessories");
                 startActivity(Computer_accessories);
                 break;
             case R.id.Home_accessories:
                 Intent Home_accessories = new Intent(GlobleProductListActivity.this,SelecedCatagoryActivity.class);
-                Home_accessories.putExtra("catagory","Home accessories");
+                Home_accessories.putExtra("catagory","home accessories");
                 startActivity(Home_accessories);
                 break;
             case R.id.Books:
                 Intent Books = new Intent(GlobleProductListActivity.this,SelecedCatagoryActivity.class);
-                Books.putExtra("catagory","Books");
+                Books.putExtra("catagory","books");
                 startActivity(Books);
                 break;
             case R.id.Electronics:
                 Intent Electronics = new Intent(GlobleProductListActivity.this,SelecedCatagoryActivity.class);
-                Electronics.putExtra("catagory","Electronics");
+                Electronics.putExtra("catagory","electronics");
                 startActivity(Electronics);
                 break;
 
             case R.id.Game:
                 Intent Game = new Intent(GlobleProductListActivity.this,SelecedCatagoryActivity.class);
-                Game.putExtra("catagory","Game");
+                Game.putExtra("catagory","game");
                 startActivity(Game);
                 break;
                 case R.id.InviteAndEarn:
@@ -809,7 +809,7 @@ public class GlobleProductListActivity extends AppCompatActivity implements Navi
     //adapter 1
     private void allProductShowMobilesteeshairt() {
         Query query1 = GlobleProduct.whereEqualTo("productPrivacy","Public")
-                .whereEqualTo("productCategory","Tee Shirt");
+                .whereEqualTo("productVerification","certify").whereEqualTo("productCategory","T-Shirt");
 
         FirestoreRecyclerOptions<GlobleProductNote1> options = new FirestoreRecyclerOptions.Builder<GlobleProductNote1>()
                 .setQuery(query1, GlobleProductNote1.class)
@@ -862,7 +862,7 @@ public class GlobleProductListActivity extends AppCompatActivity implements Navi
     private void allProductShowMobilesshirt() {
 
         Query query = GlobleProduct.whereEqualTo("productPrivacy","Public")
-                .whereEqualTo("productCategory","Shirts");
+                .whereEqualTo("productVerification","certify").whereEqualTo("productCategory","Shirts");
 
         FirestoreRecyclerOptions<GlobleProductNote2> options = new FirestoreRecyclerOptions.Builder<GlobleProductNote2>()
                 .setQuery(query, GlobleProductNote2.class)
@@ -914,8 +914,9 @@ public class GlobleProductListActivity extends AppCompatActivity implements Navi
     //Adapter 3
     private void allProductShowManAccessoris() {
 
-        Query query = GlobleProduct.whereEqualTo("productCategory","Man Accessories")
-                .whereEqualTo("productPrivacy","Public");
+        Query query = GlobleProduct.whereEqualTo("productPrivacy","Public")
+                .whereEqualTo("productVerification","certify")
+                .whereEqualTo("productCategory","Man Accessories");
 
         FirestoreRecyclerOptions<GlobleProductNote3> options = new FirestoreRecyclerOptions.Builder<GlobleProductNote3>()
                 .setQuery(query, GlobleProductNote3.class)
@@ -968,7 +969,7 @@ public class GlobleProductListActivity extends AppCompatActivity implements Navi
     private void allProductShowSalwareKamiz() {
 
         Query query = GlobleProduct.whereEqualTo("productPrivacy","Public")
-                .whereEqualTo("productCategory","Shalwar Kameez");
+                .whereEqualTo("productVerification","certify").whereEqualTo("productCategory","Shalwar Kameez");
 
         FirestoreRecyclerOptions<GlobleProductNote4> options = new FirestoreRecyclerOptions.Builder<GlobleProductNote4>()
                 .setQuery(query, GlobleProductNote4.class)
@@ -1020,7 +1021,7 @@ public class GlobleProductListActivity extends AppCompatActivity implements Navi
     //Adapter 5
     private void allProductShowGirlAccessoris() {
         Query query = GlobleProduct.whereEqualTo("productPrivacy","Public")
-                .whereEqualTo("productCategory","Girls Accessories");
+                .whereEqualTo("productVerification","certify").whereEqualTo("productCategory","Girls Accessories");
 
         FirestoreRecyclerOptions<GlobleProductNote5> options = new FirestoreRecyclerOptions.Builder<GlobleProductNote5>()
                 .setQuery(query, GlobleProductNote5.class)
@@ -1072,7 +1073,8 @@ public class GlobleProductListActivity extends AppCompatActivity implements Navi
     //Adapter 6
     private void allProductShow(String productName) {
 
-        Query query = GlobleProduct.orderBy("search").startAt(productName.toLowerCase()).endAt(productName.toLowerCase()+ "\uf8ff").whereEqualTo("productPrivacy","Public");
+        Query query = GlobleProduct.orderBy("search").startAt(productName.toLowerCase()).endAt(productName.toLowerCase()+ "\uf8ff")
+                .whereEqualTo("productPrivacy","Public").whereEqualTo("productVerification","certify");
 
         FirestoreRecyclerOptions<GlobleProductNote6> options = new FirestoreRecyclerOptions.Builder<GlobleProductNote6>()
                 .setQuery(query, GlobleProductNote6.class)

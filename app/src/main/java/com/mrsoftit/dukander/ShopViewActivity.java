@@ -212,7 +212,8 @@ public class ShopViewActivity extends AppCompatActivity {
         if (user_id !=null && shop_id!=null){
             CollectionReference ShopGlobleproduct = FirebaseFirestore.getInstance()
                     .collection("GlobleProduct");
-            Query query = ShopGlobleproduct.whereEqualTo("productPrivacy","Public").whereEqualTo("UserId",user_id);
+            Query query = ShopGlobleproduct.whereEqualTo("productPrivacy","Public")
+                    .whereEqualTo("productVerification","certify").whereEqualTo("UserId",user_id);
 
         FirestoreRecyclerOptions<GlobleProductNote6> options = new FirestoreRecyclerOptions.Builder<GlobleProductNote6>()
                 .setQuery(query, GlobleProductNote6.class)
@@ -295,7 +296,7 @@ public class ShopViewActivity extends AppCompatActivity {
                     .collection("users").document(user_id).collection("Product");
 
             Query query = ShopGlobleproduct.orderBy("search").startAt(productName.toLowerCase()).endAt(productName.toLowerCase() + "\uf8ff")
-                    .whereEqualTo("productPrivacy", "Public");
+                    .whereEqualTo("productPrivacy", "Public").whereEqualTo("productVerification","certify");
 
 
             FirestoreRecyclerOptions<GlobleProductNote6> options = new FirestoreRecyclerOptions.Builder<GlobleProductNote6>()

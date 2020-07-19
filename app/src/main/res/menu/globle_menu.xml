@@ -25,7 +25,7 @@
             <item
                 app:itemTextAppearance="@style/Style_TextView"
                 android:id="@+id/Favorite"
-                android:title="Favorite" />
+                android:title=" Wish list" />
         </menu>
     </item>
     <item android:title="Shop list">

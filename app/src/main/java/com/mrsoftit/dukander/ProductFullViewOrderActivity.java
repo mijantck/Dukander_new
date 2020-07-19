@@ -651,14 +651,18 @@ public class ProductFullViewOrderActivity extends AppCompatActivity {
     public void ProductaddInCustomer(String wishOrFavert, String DukanName,  String dukanderPhone,  String dukanderAddress,
                                        String dukanderid,  String user_id,  String token,  final String productId,
                                        final String productName, final String productPrice,
-                                       final String productQuantidy, final String productCode, final String privecy,
+                                       String productQuantidy, final String productCode, final String privecy,
                                        final String Catagury, final String date, final String ImageUrl, final String pdicount,
                                        final String size1, final  String color1,final String typ,
                                        final String description){
 
 
+        if (productQuantidy.isEmpty() ){
+            productQuantidy = "1";
+        }
         double productPriceD = Double.parseDouble(productPrice);
         double productQuantidyD = Double.parseDouble(productQuantidy);
+
         int dateI =Integer.parseInt(date);
         int pdicountI =Integer.parseInt(pdicount);
 

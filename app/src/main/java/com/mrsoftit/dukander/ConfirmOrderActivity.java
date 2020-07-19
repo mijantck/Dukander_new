@@ -515,12 +515,10 @@ public class ConfirmOrderActivity extends AppCompatActivity {
 
     public  void  notificationSend( String Token){
 
-        Toast.makeText(this, Token+"", Toast.LENGTH_SHORT).show();
         TOPIC = "Product Order ";
-                //"Order From "+Shipping_name; //topic must match with what the receiver subscribed to
 
-        String news_feed = "Order fom "+Shipping_name +"Product Name "+proNameup;
-                //" Product Name "+proNameup+" Quantity "+proQuaup+"  Price :"+proPriceup;
+        String news_feed = "Order fom "+Shipping_name.getText().toString() +"Product Name "+proNameup;
+
         NOTIFICATION_TITLE = TOPIC;
         NOTIFICATION_MESSAGE = news_feed;
 

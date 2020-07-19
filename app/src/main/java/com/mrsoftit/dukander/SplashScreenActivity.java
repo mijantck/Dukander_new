@@ -115,8 +115,47 @@ public class SplashScreenActivity extends AppCompatActivity {
                                 intent.putExtra("UserID", productID);
                                 intent.putExtra("id", userID);
                                 intent.putExtra("fromURL", "refer");
-
                                 startActivity(intent);
+                                finish();
+                            }
+
+                        }
+                        else {
+                            if (mAuth.getCurrentUser() != null) {
+
+                                FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+                                String user_id = currentUser.getUid();
+
+                                CollectionReference Info = FirebaseFirestore.getInstance()
+                                        .collection("Globlecustomers").document(user_id).collection("info");
+
+                                Info.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                        if (task.isSuccessful()) {
+
+                                            for (QueryDocumentSnapshot document : Objects.requireNonNull(task.getResult())) {
+                                                GlobleCustomerNote globleCustomerNote = document.toObject(GlobleCustomerNote.class);
+                                                cType = globleCustomerNote.getCustomerType();
+                                            }
+
+                                            if (cType != null) {
+
+                                                startActivity(new Intent(SplashScreenActivity.this, GlobleProductListActivity.class));
+                                                finish();
+
+                                            } else {
+                                                startActivity(new Intent(SplashScreenActivity.this, PinViewActivity.class));
+                                                finish();
+                                            }
+                                        }
+                                    }
+                                });
+
+                            }
+
+                            else if (enterMainActivity == true) {
+                                startActivity(new Intent(SplashScreenActivity.this, GlobleProductListActivity.class));
                                 finish();
                             }
 
@@ -131,43 +170,6 @@ public class SplashScreenActivity extends AppCompatActivity {
                 });
 
 
-        if (mAuth.getCurrentUser() != null) {
-
-            FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
-            String user_id = currentUser.getUid();
-
-            CollectionReference Info = FirebaseFirestore.getInstance()
-                    .collection("Globlecustomers").document(user_id).collection("info");
-
-            Info.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                @Override
-                public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                    if (task.isSuccessful()) {
-
-                        for (QueryDocumentSnapshot document : Objects.requireNonNull(task.getResult())) {
-                            GlobleCustomerNote globleCustomerNote = document.toObject(GlobleCustomerNote.class);
-                            cType = globleCustomerNote.getCustomerType();
-                        }
-
-                        if (cType != null) {
-
-                            startActivity(new Intent(SplashScreenActivity.this, GlobleProductListActivity.class));
-                            finish();
-
-                        } else {
-                            startActivity(new Intent(SplashScreenActivity.this, PinViewActivity.class));
-                            finish();
-                        }
-                    }
-                }
-            });
-
-        }
-
-        else if (enterMainActivity == true) {
-            startActivity(new Intent(SplashScreenActivity.this, GlobleProductListActivity.class));
-            finish();
-        }
 
 
     View easySplashScreen = config.create();
