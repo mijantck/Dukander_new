@@ -110,7 +110,7 @@
                        >
                        <ImageView
                            android:id="@+id/manlogo"
-                           android:src="@drawable/icons_man"
+                           android:src="@drawable/iconsmannew"
                            android:layout_width="100dp"
                            android:layout_height="80dp"/>
 
@@ -121,7 +121,7 @@
                            android:layout_height="wrap_content"
                            android:layout_gravity="bottom"
                            android:gravity="center"
-                           android:text="MAN" />
+                           android:text="" />
 
                    </androidx.cardview.widget.CardView>
                    <androidx.cardview.widget.CardView
@@ -135,7 +135,7 @@
                        >
                        <ImageView
                            android:id="@+id/girlslogo"
-                           android:src="@drawable/icons_girl"
+                           android:src="@drawable/iconsgirlsnew"
                            android:layout_width="100dp"
                            android:layout_height="80dp"/>
 
@@ -147,7 +147,7 @@
                            android:layout_height="wrap_content"
                            android:layout_gravity="bottom"
                            android:gravity="center"
-                           android:text="GIRLS" />
+                           android:text="" />
 
                    </androidx.cardview.widget.CardView>
                    <androidx.cardview.widget.CardView
@@ -161,7 +161,7 @@
                        >
                        <ImageView
                            android:id="@+id/mpbilelogo"
-                           android:src="@drawable/icons_smartphone_tablet"
+                           android:src="@drawable/iconsphonenew"
                            android:layout_width="100dp"
                            android:layout_height="80dp"/>
 
@@ -172,7 +172,7 @@
                            android:layout_height="wrap_content"
                            android:layout_gravity="bottom"
                            android:gravity="center"
-                           android:text="PHONE" />
+                           android:text="" />
 
                    </androidx.cardview.widget.CardView>
                    <androidx.cardview.widget.CardView
@@ -186,7 +186,7 @@
                        >
                        <ImageView
                            android:id="@+id/foodslogo"
-                           android:src="@drawable/icons_food"
+                           android:src="@drawable/foodnew"
                            android:layout_width="100dp"
                            android:layout_height="80dp"/>
 
@@ -197,7 +197,7 @@
                            android:layout_height="wrap_content"
                            android:layout_gravity="bottom"
                            android:gravity="center"
-                           android:text="FOODS" />
+                           android:text="" />
 
                    </androidx.cardview.widget.CardView>
                    <androidx.cardview.widget.CardView
@@ -211,7 +211,7 @@
                        >
                        <ImageView
                            android:id="@+id/jewelarylogo"
-                           android:src="@drawable/icons_jewelry"
+                           android:src="@drawable/iconsjewelrnew"
                            android:layout_width="100dp"
                            android:layout_height="80dp"/>
 
@@ -222,8 +222,7 @@
                            android:layout_height="wrap_content"
                            android:layout_gravity="bottom"
                            android:gravity="center"
-
-                           android:text="JEWELRY" />
+                           android:text="" />
 
                    </androidx.cardview.widget.CardView>
                    <androidx.cardview.widget.CardView
@@ -250,7 +249,7 @@
                            android:layout_gravity="bottom"
                            android:gravity="center"
 
-                           android:text="MOTORCYCLE" />
+                           android:text="" />
 
                    </androidx.cardview.widget.CardView>
                    <androidx.cardview.widget.CardView
@@ -264,7 +263,7 @@
                        >
                        <ImageView
                            android:id="@+id/grosary_logo"
-                           android:src="@drawable/icons_grosary"
+                           android:src="@drawable/iconsgrocerynew"
                            android:layout_width="100dp"
                            android:layout_height="80dp"/>
 
@@ -276,7 +275,7 @@
                            android:layout_gravity="bottom"
                            android:gravity="center"
 
-                           android:text="GROCERY" />
+                           android:text="" />
 
                    </androidx.cardview.widget.CardView>
 

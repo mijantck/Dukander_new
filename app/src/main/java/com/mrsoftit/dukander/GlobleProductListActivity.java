@@ -756,7 +756,7 @@ public class GlobleProductListActivity extends AppCompatActivity implements Navi
     @RequiresApi(api = Build.VERSION_CODES.N)
     private void allProductShowMobiles() {
 
-        Query query = GlobleProduct.whereEqualTo("productPrivacy","Public").whereEqualTo("productCategory","Mobiles");
+        Query query = GlobleProduct.whereEqualTo("productPrivacy","Public").whereEqualTo("productVerification","certify").whereEqualTo("productCategory","Mobiles");
 
         FirestoreRecyclerOptions<GlobleProductNote> options = new FirestoreRecyclerOptions.Builder<GlobleProductNote>()
                 .setQuery(query, GlobleProductNote.class)

@@ -19,7 +19,9 @@ import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.media.AudioManager;
 import android.media.ToneGenerator;
+import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.util.SparseArray;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -44,6 +46,8 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.dynamiclinks.FirebaseDynamicLinks;
+import com.google.firebase.dynamiclinks.ShortDynamicLink;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
@@ -208,9 +212,6 @@ public class ProductListActivity extends AppCompatActivity {
         adapter.setOnItemClickListener(new ProductAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(final DocumentSnapshot documentSnapshot, final int position) {
-
-
-
                 android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(ProductListActivity.this);
                 String[] option = {"Product Edit ","Delete"};
                 builder.setItems(option, new DialogInterface.OnClickListener() {
@@ -314,6 +315,56 @@ public class ProductListActivity extends AppCompatActivity {
 
             @Override
             public void onShearClick(DocumentSnapshot documentSnapshot, int position) {
+
+                ProductNote productNote = documentSnapshot.toObject(ProductNote.class);
+
+                String id = documentSnapshot.getId();
+                String imageurl = productNote.getProImgeUrl();
+                String name = productNote.getProName();
+                String discount = String.valueOf(productNote.getPruductDiscount());
+
+                String pp = String.valueOf(productNote.getProPrice());
+
+                String sharelinktext  =  "https://a2zloja.page.link/?"+
+                        "link=https://a2zloja.page.link/jdF1?"+
+                        "proID="+"-"+"product"+
+                        "-"+id+
+                        "-"+id+
+                        "&st="+name+
+                        "&sd="+"Price "+pp+ "\ndiscount ="+discount+
+                        "&si="+imageurl+
+                        "&apn="+getPackageName();
+
+
+
+                Task<ShortDynamicLink> shortLinkTask = FirebaseDynamicLinks.getInstance().createDynamicLink()
+                        // .setLongLink(dynamicLink.getUri())
+                        .setLongLink(Uri.parse(sharelinktext))// manually
+                        .buildShortDynamicLink()
+                        .addOnCompleteListener(ProductListActivity.this, new OnCompleteListener<ShortDynamicLink>() {
+                            @Override
+                            public void onComplete(@NonNull Task<ShortDynamicLink> task) {
+                                if (task.isSuccessful()) {
+                                    // Short link created
+                                    Uri shortLink = task.getResult().getShortLink();
+                                    Uri flowchartLink = task.getResult().getPreviewLink();
+                                    Log.e("main ", "short link "+ shortLink.toString());
+                                    // share app dialog
+                                    Intent intent = new Intent();
+                                    intent.setAction(Intent.ACTION_SEND);
+                                    intent.putExtra(Intent.EXTRA_TEXT,  shortLink.toString());
+                                    intent.setType("text/plain");
+                                    startActivity(intent);
+
+
+                                } else {
+                                    // Error
+                                    // ...
+                                    Log.e("main", " error "+task.getException() );
+
+                                }
+                            }
+                        });
 
             }
         });

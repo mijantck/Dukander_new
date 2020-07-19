@@ -45,6 +45,8 @@ import com.google.firebase.auth.EmailAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.dynamiclinks.FirebaseDynamicLinks;
+import com.google.firebase.dynamiclinks.ShortDynamicLink;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -133,13 +135,14 @@ public class MyInfoActivity extends AppCompatActivity implements EasyPermissions
 
 
 
+
     private TextInputEditText dukanName, dukanPhone,dukanaddess,orldpass,newpass,oldapproved,newApproved;
     private MaterialButton addmyinfo,confirm,HomeId,newApprovedButton;
 
     FirebaseFirestore firestore;
     TextView chagepasswordtextview,changeApprovedPintextview;
     TextView chagepintextview;
-    TextView recharchButton;
+    TextView recharchButton,shareButtonShopmyProfile;
 
     boolean open = true;
 
@@ -241,6 +244,7 @@ public class MyInfoActivity extends AppCompatActivity implements EasyPermissions
 
 
         appCompatImageView = findViewById(R.id.appCompatImageView);
+        shareButtonShopmyProfile = findViewById(R.id.shareButtonShopmyProfile);
         dukanName = findViewById(R.id.DukantName);
         dukanPhone = findViewById(R.id.DukantPhone);
         dukanaddess = findViewById(R.id.DukantAddres);
@@ -300,6 +304,82 @@ public class MyInfoActivity extends AppCompatActivity implements EasyPermissions
         });
 
 
+
+        shareButtonShopmyProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                progressDialog.show();
+                CollectionReference myInfo = FirebaseFirestore.getInstance()
+                        .collection("users").document(user_id).collection("DukanInfo");
+
+                myInfo.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+
+                            String imageuploadurlShear = null;
+                            String idshera = null;
+                            String ShopnameMy = null;
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                MyInfoNote myInfoNote = document.toObject(MyInfoNote.class);
+                                imageuploadurlShear = myInfoNote.getDukanaddpicurl();
+                                idshera = myInfoNote.getMyid();
+                                ShopnameMy = myInfoNote.getDukanName();
+
+                            }
+                            if (imageuploadurlShear !=null || idshera !=null || ShopnameMy != null ) {
+
+                                String sharelinktext = "https://a2zloja.page.link/?" +
+                                        "link=https://a2zloja.page.link/jdF1?" +
+                                        "proID=" + "-" + "shop" +
+                                        "-" + idshera +
+                                        "-" + user_id +
+                                        "&st=" + ShopnameMy +
+                                        "&sd=" + "Contract me  " +
+                                        "&si=" + imageuploadurlShear +
+                                        "&apn=" + getPackageName();
+
+                                Task<ShortDynamicLink> shortLinkTask = FirebaseDynamicLinks.getInstance().createDynamicLink()
+                                        // .setLongLink(dynamicLink.getUri())
+                                        .setLongLink(Uri.parse(sharelinktext))// manually
+                                        .buildShortDynamicLink()
+                                        .addOnCompleteListener(MyInfoActivity.this, new OnCompleteListener<ShortDynamicLink>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<ShortDynamicLink> task) {
+                                                if (task.isSuccessful()) {
+                                                    // Short link created
+                                                    Uri shortLink = task.getResult().getShortLink();
+                                                    Uri flowchartLink = task.getResult().getPreviewLink();
+                                                    Log.e("main ", "short link " + shortLink.toString());
+                                                    // share app dialog
+                                                    Intent intent = new Intent();
+                                                    intent.setAction(Intent.ACTION_SEND);
+                                                    intent.putExtra(Intent.EXTRA_TEXT, shortLink.toString());
+                                                    intent.setType("text/plain");
+                                                    startActivity(intent);
+
+                                                    progressDialog.dismiss();
+
+                                                } else {
+                                                    // Error
+                                                    // ...
+                                                    Log.e("main", " error " + task.getException());
+                                                }
+                                            }
+                                        });
+
+                            }
+                        }
+
+
+                    }
+                });
+
+
+
+
+            }
+        });
         ShopOnlineButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -1131,18 +1211,14 @@ public class MyInfoActivity extends AppCompatActivity implements EasyPermissions
         GlobaleShopList.put("ShopAddress", shopAddress);
         GlobaleShopList.put("token", token);
         GlobaleShopList.put("approved", approved);
+        GlobaleShopList.put("UserEmail", currentUser.getEmail());
 
         if (update == false) {
             GlobleSoplist.document(shoId).set(GlobaleShopList).addOnCompleteListener(new OnCompleteListener<Void>() {
                 @Override
                 public void onComplete(@NonNull Task<Void> task) {
 
-                    confirmSoplist.document(shoId).set(GlobaleShopList).addOnCompleteListener(new OnCompleteListener<Void>() {
-                        @Override
-                        public void onComplete(@NonNull Task<Void> task) {
-                            progressDialog.dismiss();
-                        }
-                    });
+                    progressDialog.dismiss();
                 }
             });
         }else if (update == true){
@@ -1150,12 +1226,7 @@ public class MyInfoActivity extends AppCompatActivity implements EasyPermissions
                 @Override
                 public void onComplete(@NonNull Task<Void> task) {
 
-                    confirmSoplist.document(shopUserId).update(GlobaleShopList).addOnCompleteListener(new OnCompleteListener<Void>() {
-                        @Override
-                        public void onComplete(@NonNull Task<Void> task) {
-                            progressDialog.dismiss();
-                        }
-                    });
+                    progressDialog.dismiss();
                 }
             });
         }
@@ -1175,19 +1246,13 @@ public class MyInfoActivity extends AppCompatActivity implements EasyPermissions
         GlobaleShopList.put("ShopAddress", shopAddress);
         GlobaleShopList.put("token", token);
         GlobaleShopList.put("approved", approved);
+        GlobaleShopList.put("UserEmail", currentUser.getEmail());
 
         if (update == false) {
             GlobleSoplist.document(shoId).set(GlobaleShopList).addOnCompleteListener(new OnCompleteListener<Void>() {
                 @Override
                 public void onComplete(@NonNull Task<Void> task) {
-                    confirmSoplist.document(shopUserId).set(GlobaleShopList).addOnCompleteListener(new OnCompleteListener<Void>() {
-                        @Override
-                        public void onComplete(@NonNull Task<Void> task) {
-
-                            progressDialog.dismiss();
-
-                        }
-                    });
+                    progressDialog.dismiss();
                 }
             });
         }
@@ -1196,13 +1261,7 @@ public class MyInfoActivity extends AppCompatActivity implements EasyPermissions
                 @Override
                 public void onComplete(@NonNull Task<Void> task) {
 
-                    confirmSoplist.document(shoId).update(GlobaleShopList).addOnCompleteListener(new OnCompleteListener<Void>() {
-                        @Override
-                        public void onComplete(@NonNull Task<Void> task) {
-
-                            progressDialog.dismiss();
-                        }
-                    });
+                   progressDialog.dismiss();
                 }
             });
         }

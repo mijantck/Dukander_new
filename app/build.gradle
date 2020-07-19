@@ -9,8 +9,8 @@ android {
         applicationId "com.mrsoftit.dukander"
         minSdkVersion 21
         targetSdkVersion 29
-        versionCode 3
-        versionName "20.007.154"
+        versionCode 4
+        versionName "20.007.191"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }

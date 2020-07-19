@@ -180,7 +180,7 @@ public class ProductAddActivity extends AppCompatActivity implements EasyPermiss
             .collection("GlobleProduct");
 
     CollectionReference confirmSoplist = FirebaseFirestore.getInstance()
-            .collection("confirmSoplist");
+            .collection("GlobleSoplist");
 
 
     @Override
@@ -200,6 +200,7 @@ public class ProductAddActivity extends AppCompatActivity implements EasyPermiss
                     }
 
                     if (Approved.equals("pending")){
+
                         new MaterialAlertDialogBuilder(ProductAddActivity.this)
                                 .setMessage("Please! Approved from A2ZLOJA. Contact us")
                                 .setCancelable(false)
@@ -1312,6 +1313,8 @@ public class ProductAddActivity extends AppCompatActivity implements EasyPermiss
                     GlobaleProductObject.put("color", color1);
                     GlobaleProductObject.put("type", typ);
                     GlobaleProductObject.put("description", description);
+                    GlobaleProductObject.put("productVerification", "certify");
+
 
                     GlobleProduct.document(productId).set(GlobaleProductObject).addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
@@ -1384,6 +1387,7 @@ public class ProductAddActivity extends AppCompatActivity implements EasyPermiss
                     GlobaleProductObject.put("color", color1);
                     GlobaleProductObject.put("type", typ);
                     GlobaleProductObject.put("description", description);
+                    GlobaleProductObject.put("productVerification", "certify");
 
 
                     GlobleProduct.document(productId).set(GlobaleProductObject).addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -1457,6 +1461,7 @@ public class ProductAddActivity extends AppCompatActivity implements EasyPermiss
                     GlobaleProductObject.put("color", color1);
                     GlobaleProductObject.put("type", typ);
                     GlobaleProductObject.put("description", description);
+                    GlobaleProductObject.put("productVerification", "certify");
 
                     GlobleProduct.document(productId).set(GlobaleProductObject).addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override

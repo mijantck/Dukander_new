@@ -379,7 +379,8 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
 
                     if (urlImage!=null){
 
-                        dwnld(MainActivity.this, urlImage, "01743.jpeg");
+
+                      //  dwnld(MainActivity.this, urlImage, "01743.jpeg");
 
                     }
 
@@ -447,6 +448,10 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
                 case R.id.Market:
                 Intent MarketInte =new Intent(MainActivity.this, GlobleProductListActivity.class);
                 startActivity(MarketInte);
+                break;
+            case R.id.Contact_usin:
+                Intent Contact_usinInte =new Intent(MainActivity.this, ContactUsActivity.class);
+                startActivity(Contact_usinInte);
                 break;
             case R.id.nav_share:
                 signOut();
