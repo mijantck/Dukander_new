@@ -784,6 +784,10 @@ public class GlobleProductListActivity extends AppCompatActivity implements Navi
                 intent.putExtra("productCodeup",globleProductNote.getProductCode());
                 intent.putExtra("productPrivacyup",globleProductNote.getProductPrivacy());
                 intent.putExtra("proImgeUrlup",globleProductNote.getProImgeUrl());
+                intent.putExtra("proImgeUrlup1",globleProductNote.getProImgeUrl1());
+                intent.putExtra("proImgeUrlup2",globleProductNote.getProImgeUrl2());
+                intent.putExtra("proImgeUrlup3",globleProductNote.getProImgeUrl3());
+                intent.putExtra("proImgeUrlup4",globleProductNote.getProImgeUrl4());
                 intent.putExtra("ShopNameup",globleProductNote.getShopName());
                 intent.putExtra("ShopPhoneup",globleProductNote.getShopPhone());
                 intent.putExtra("ShopAddressup",globleProductNote.getShopAddress());
@@ -837,6 +841,10 @@ public class GlobleProductListActivity extends AppCompatActivity implements Navi
                 intent.putExtra("productCodeup",globleProductNote.getProductCode());
                 intent.putExtra("productPrivacyup",globleProductNote.getProductPrivacy());
                 intent.putExtra("proImgeUrlup",globleProductNote.getProImgeUrl());
+                intent.putExtra("proImgeUrlup1",globleProductNote.getProImgeUrl1());
+                intent.putExtra("proImgeUrlup2",globleProductNote.getProImgeUrl2());
+                intent.putExtra("proImgeUrlup3",globleProductNote.getProImgeUrl3());
+                intent.putExtra("proImgeUrlup4",globleProductNote.getProImgeUrl4());
                 intent.putExtra("ShopNameup",globleProductNote.getShopName());
                 intent.putExtra("ShopPhoneup",globleProductNote.getShopPhone());
                 intent.putExtra("ShopAddressup",globleProductNote.getShopAddress());
@@ -890,6 +898,10 @@ public class GlobleProductListActivity extends AppCompatActivity implements Navi
                 intent.putExtra("productCodeup",globleProductNote.getProductCode());
                 intent.putExtra("productPrivacyup",globleProductNote.getProductPrivacy());
                 intent.putExtra("proImgeUrlup",globleProductNote.getProImgeUrl());
+                intent.putExtra("proImgeUrlup1",globleProductNote.getProImgeUrl1());
+                intent.putExtra("proImgeUrlup2",globleProductNote.getProImgeUrl2());
+                intent.putExtra("proImgeUrlup3",globleProductNote.getProImgeUrl3());
+                intent.putExtra("proImgeUrlup4",globleProductNote.getProImgeUrl4());
                 intent.putExtra("ShopNameup",globleProductNote.getShopName());
                 intent.putExtra("ShopPhoneup",globleProductNote.getShopPhone());
                 intent.putExtra("ShopAddressup",globleProductNote.getShopAddress());
@@ -944,6 +956,10 @@ public class GlobleProductListActivity extends AppCompatActivity implements Navi
                 intent.putExtra("productCodeup",globleProductNote.getProductCode());
                 intent.putExtra("productPrivacyup",globleProductNote.getProductPrivacy());
                 intent.putExtra("proImgeUrlup",globleProductNote.getProImgeUrl());
+                intent.putExtra("proImgeUrlup1",globleProductNote.getProImgeUrl1());
+                intent.putExtra("proImgeUrlup2",globleProductNote.getProImgeUrl2());
+                intent.putExtra("proImgeUrlup3",globleProductNote.getProImgeUrl3());
+                intent.putExtra("proImgeUrlup4",globleProductNote.getProImgeUrl4());
                 intent.putExtra("ShopNameup",globleProductNote.getShopName());
                 intent.putExtra("ShopPhoneup",globleProductNote.getShopPhone());
                 intent.putExtra("ShopAddressup",globleProductNote.getShopAddress());
@@ -997,6 +1013,10 @@ public class GlobleProductListActivity extends AppCompatActivity implements Navi
                 intent.putExtra("productCodeup",globleProductNote.getProductCode());
                 intent.putExtra("productPrivacyup",globleProductNote.getProductPrivacy());
                 intent.putExtra("proImgeUrlup",globleProductNote.getProImgeUrl());
+                intent.putExtra("proImgeUrlup1",globleProductNote.getProImgeUrl1());
+                intent.putExtra("proImgeUrlup2",globleProductNote.getProImgeUrl2());
+                intent.putExtra("proImgeUrlup3",globleProductNote.getProImgeUrl3());
+                intent.putExtra("proImgeUrlup4",globleProductNote.getProImgeUrl4());
                 intent.putExtra("ShopNameup",globleProductNote.getShopName());
                 intent.putExtra("ShopPhoneup",globleProductNote.getShopPhone());
                 intent.putExtra("ShopAddressup",globleProductNote.getShopAddress());
@@ -1049,6 +1069,10 @@ public class GlobleProductListActivity extends AppCompatActivity implements Navi
                 intent.putExtra("productCodeup",globleProductNote.getProductCode());
                 intent.putExtra("productPrivacyup",globleProductNote.getProductPrivacy());
                 intent.putExtra("proImgeUrlup",globleProductNote.getProImgeUrl());
+                intent.putExtra("proImgeUrlup1",globleProductNote.getProImgeUrl1());
+                intent.putExtra("proImgeUrlup2",globleProductNote.getProImgeUrl2());
+                intent.putExtra("proImgeUrlup3",globleProductNote.getProImgeUrl3());
+                intent.putExtra("proImgeUrlup4",globleProductNote.getProImgeUrl4());
                 intent.putExtra("ShopNameup",globleProductNote.getShopName());
                 intent.putExtra("ShopPhoneup",globleProductNote.getShopPhone());
                 intent.putExtra("ShopAddressup",globleProductNote.getShopAddress());
@@ -1084,7 +1108,7 @@ public class GlobleProductListActivity extends AppCompatActivity implements Navi
 
         RecyclerView recyclerView = findViewById(R.id.wholProductList);
         recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new GridLayoutManager(this, 3));
+        recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
         recyclerView.setAdapter(globleProductListAdapter6);
         TextView noItem = findViewById(R.id.noItem);
         noItem.setVisibility(View.VISIBLE);
@@ -1100,6 +1124,10 @@ public class GlobleProductListActivity extends AppCompatActivity implements Navi
                 intent.putExtra("productCodeup",globleProductNote.getProductCode());
                 intent.putExtra("productPrivacyup",globleProductNote.getProductPrivacy());
                 intent.putExtra("proImgeUrlup",globleProductNote.getProImgeUrl());
+                intent.putExtra("proImgeUrlup1",globleProductNote.getProImgeUrl1());
+                intent.putExtra("proImgeUrlup2",globleProductNote.getProImgeUrl2());
+                intent.putExtra("proImgeUrlup3",globleProductNote.getProImgeUrl3());
+                intent.putExtra("proImgeUrlup4",globleProductNote.getProImgeUrl4());
                 intent.putExtra("ShopNameup",globleProductNote.getShopName());
                 intent.putExtra("ShopPhoneup",globleProductNote.getShopPhone());
                 intent.putExtra("ShopAddressup",globleProductNote.getShopAddress());

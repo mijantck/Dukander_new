@@ -103,7 +103,7 @@ import pub.devrel.easypermissions.EasyPermissions;
 
 public class ProductAddActivity extends AppCompatActivity implements EasyPermissions.PermissionCallbacks {
 
-    ImageView pruductImage,barcodeIcon;
+    ImageView pruductImage,barcodeIcon,ImageAdded,ImageAdded1,ImageAdded2,ImageAdded3,ImageAdded4;
 
     private TextInputEditText productName, productPrice,productQuantayn,pruductMin,pruductBuyPrice,pruductDiscount
             ,pruductColor,pruductType,pruductDescription,pruductSize;
@@ -115,7 +115,8 @@ public class ProductAddActivity extends AppCompatActivity implements EasyPermiss
     ProgressDialog progressDialog;
     FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
     String   proIdup, productNameup,pruductBuyPriceup, productPriceup,productQuantaynup,pruductMinup,addresup,
-            pruductImageup,barcodenumber,privecyup,catagoryup,dicountup,descriptuionup,typeup,colorup,sizeup;
+            pruductImageup,pruductImageup1,pruductImageup2,pruductImageup3,pruductImageup4,barcodenumber,privecyup,
+            catagoryup,dicountup,descriptuionup,typeup,colorup,sizeup;
 
     FloatingActionButton imageSeletprioduct;
 
@@ -147,6 +148,20 @@ public class ProductAddActivity extends AppCompatActivity implements EasyPermiss
 
     private static final int PICK_IMAGE_REQUEST = 1;
     public Uri mImageUri;
+
+    public String mImageUriS;
+    public Uri mImageUri1;
+
+    public String mImageUri1S;
+    public Uri mImageUri2;
+
+    public String mImageUri2S;
+    public Uri mImageUri3;
+    public String mImageUri3S;
+    public Uri mImageUri4;
+    public String mImageUri4S;
+    public  int SilrctorNumber;
+    public  int uploadtnumber = 0;
     String id,comonCatagory;
 
 
@@ -159,7 +174,7 @@ public class ProductAddActivity extends AppCompatActivity implements EasyPermiss
     private static final int REQUEST_CAMERA_PERMISSION = 201;
     //This class provides methods to play DTMF tones
     private ToneGenerator toneGen1;
-    private TextView barcodeText;
+    private TextView barcodeText,check;
     private String barcodeData;
     private MaterialButton barcode_Buton;
 
@@ -200,7 +215,7 @@ public class ProductAddActivity extends AppCompatActivity implements EasyPermiss
 
                     if (Approved.equals("pending")){
 
-                        new MaterialAlertDialogBuilder(ProductAddActivity.this)
+                      /*  new MaterialAlertDialogBuilder(ProductAddActivity.this)
                                 .setMessage("Please! Approved from A2ZLOJA. Contact us")
                                 .setCancelable(false)
                                 .setPositiveButton("GOT IT", new DialogInterface.OnClickListener() {
@@ -218,7 +233,7 @@ public class ProductAddActivity extends AppCompatActivity implements EasyPermiss
 
                                     }
                                 })
-                                .show();
+                                .show();*/
 
                     }
 
@@ -235,7 +250,7 @@ public class ProductAddActivity extends AppCompatActivity implements EasyPermiss
         setContentView(R.layout.activity_product_add);
 
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_support);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_support1);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
@@ -272,6 +287,7 @@ public class ProductAddActivity extends AppCompatActivity implements EasyPermiss
         privacyspinner = findViewById(R.id.privacyspinner);
         Categoryspinner = findViewById(R.id.Categoryspinner);
         pruductDiscount = findViewById(R.id.pruductDiscount);
+        check = findViewById(R.id.check);
 
 
         pruductColor = findViewById(R.id.pruductColor);
@@ -279,7 +295,21 @@ public class ProductAddActivity extends AppCompatActivity implements EasyPermiss
         pruductDescription = findViewById(R.id.pruductDescription);
         pruductSize = findViewById(R.id.pruductSize);
 
+        ImageAdded = findViewById(R.id.ImageAdded);
+        ImageAdded1 = findViewById(R.id.ImageAdded1);
+        ImageAdded2 = findViewById(R.id.ImageAdded2);
+        ImageAdded3 = findViewById(R.id.ImageAdded3);
+        ImageAdded4 = findViewById(R.id.ImageAdded4);
 
+
+        check.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+
+                Toast.makeText(ProductAddActivity.this, mImageUriS+"  "+mImageUri1S+"   "+mImageUri2S, Toast.LENGTH_SHORT).show();
+            }
+        });
 
         final Bundle bundle = getIntent().getExtras();
 
@@ -299,7 +329,18 @@ public class ProductAddActivity extends AppCompatActivity implements EasyPermiss
             }
             productQuantaynup = bundle.getString("pQuan");
             pruductMinup = bundle.getString("pmini");
+
             pruductImageup = bundle.getString("imageurl");
+            mImageUriS = pruductImageup;
+            pruductImageup1 = bundle.getString("imageurl1");
+            mImageUri1S = pruductImageup1;
+            pruductImageup2 = bundle.getString("imageurl2");
+            mImageUri2S = pruductImageup2;
+            pruductImageup3 = bundle.getString("imageurl3");
+            mImageUri3S = pruductImageup3;
+            pruductImageup4 = bundle.getString("imageurl4");
+            mImageUri4S = pruductImageup4;
+
             if (bundle.getString("dicount")!=null){
                 dicountup =bundle.getString("dicount");
                 pruductDiscount.setText(dicountup);
@@ -323,8 +364,29 @@ public class ProductAddActivity extends AppCompatActivity implements EasyPermiss
             id = proIdup;
             if (pruductImageup!=null){
               Uri myUri = Uri.parse(pruductImageup);
-              mImageUri = myUri;
+             // mImageUriB = myUri;
               Picasso.get().load(myUri).into(pruductImage);
+              Picasso.get().load(myUri).into(ImageAdded);
+            }
+            if (pruductImageup1!=null){
+                Uri myUri = Uri.parse(pruductImageup1);
+               // mImageUri1B = myUri;
+                Picasso.get().load(myUri).into(ImageAdded1);
+            }
+            if (pruductImageup2!=null){
+                Uri myUri = Uri.parse(pruductImageup2);
+               // mImageUri2B = myUri;
+                Picasso.get().load(myUri).into(ImageAdded2);
+            }
+            if (pruductImageup3!=null){
+                Uri myUri = Uri.parse(pruductImageup3);
+               // mImageUri3B = myUri;
+                Picasso.get().load(myUri).into(ImageAdded3);
+            }
+            if (pruductImageup4!=null){
+                Uri myUri = Uri.parse(pruductImageup4);
+               // mImageUri4B = myUri;
+                Picasso.get().load(myUri).into(ImageAdded4);
             }
 
             productName.setText(productNameup);
@@ -341,6 +403,99 @@ public class ProductAddActivity extends AppCompatActivity implements EasyPermiss
 
 
 
+        ImageAdded.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+
+                SilrctorNumber = 1;
+                if (bundle!=null){
+                    image = true;
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                        getIMEGE();
+                    }
+                }else {
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                        getIMEGE();
+                    }
+                }
+
+            }
+        });
+
+        ImageAdded1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                SilrctorNumber = 2;
+                if (bundle!=null){
+                    image = true;
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                        getIMEGE();
+                    }
+                }else {
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                        getIMEGE();
+                    }
+                }
+
+            }
+        });
+        ImageAdded2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                SilrctorNumber = 3;
+                if (bundle!=null){
+                    image = true;
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                        getIMEGE();
+                    }
+                }else {
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                        getIMEGE();
+                    }
+                }
+
+            }
+        });
+        ImageAdded3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                SilrctorNumber = 4;
+                if (bundle!=null){
+                    image = true;
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                        getIMEGE();
+                    }
+                }else {
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                        getIMEGE();
+                    }
+                }
+
+            }
+        });
+        ImageAdded4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                SilrctorNumber = 5;
+                if (bundle!=null){
+                    image = true;
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                        getIMEGE();
+
+                    }
+                }else {
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                        getIMEGE();
+                    }
+                }
+
+            }
+        });
 
         imageSeletprioduct.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -413,7 +568,7 @@ public class ProductAddActivity extends AppCompatActivity implements EasyPermiss
                 comonCatagory = "Motorcycle accessories";
 
             }else if ( catagoryupInt == 7){
-                comonCatagory = "Cosmetics";
+                comonCatagory = "Girls";
 
             }
             else if (catagoryupInt == 8){
@@ -492,7 +647,7 @@ public class ProductAddActivity extends AppCompatActivity implements EasyPermiss
                     comonCatagory = "Motorcycle accessories";
 
                 }else if ( position == 7){
-                    comonCatagory = "Cosmetics";
+                    comonCatagory = "Girls";
 
                 }
                 else if (position == 8){
@@ -601,6 +756,7 @@ public class ProductAddActivity extends AppCompatActivity implements EasyPermiss
                 final String dicount = pruductDiscount.getText().toString();
 
 
+/*
 
                 if (TextUtils.isEmpty(name) ){
                     Toast.makeText(getApplicationContext(), "Product Name...", Toast.LENGTH_LONG).show();
@@ -628,11 +784,12 @@ public class ProductAddActivity extends AppCompatActivity implements EasyPermiss
                     Toast.makeText(getApplicationContext(), " Minimum Quantity...", Toast.LENGTH_LONG).show();
                     return;
                 }
-                if (TextUtils.isEmpty(pruductDiscountCheck) || TextUtils.isEmpty(pruductColorCheck) || TextUtils.isEmpty(pruductTypeCheck) ||
+                if (TextUtils.isEmpty(pruductColorCheck) || TextUtils.isEmpty(pruductTypeCheck) ||
                         TextUtils.isEmpty(pruductDescriptionCheck) || TextUtils.isEmpty(pruductSizeCheck)){
                     Toast.makeText(getApplicationContext(), " Product Information filup ", Toast.LENGTH_LONG).show();
                     return;
                 }
+*/
 
                 if (!dicount.isEmpty()){
                     if (pdicount>=100 && pdicount<=1){
@@ -740,11 +897,52 @@ public class ProductAddActivity extends AppCompatActivity implements EasyPermiss
 
                 }
 
-                else if (mImageUri!=null){
+                 else if (mImageUri!=null){
 
                   //  CustomerInfoUpload( mImageUri);
-                    uploadImageUri( mImageUri);
+
+                    Toast.makeText(ProductAddActivity.this, " else if (mImageUri!=null){   "+mImageUri, Toast.LENGTH_SHORT).show();
+
+                    if (mImageUri != null && uploadtnumber == 0 ){
+
+                        uploadImageUri( mImageUri);
+
+                     //   Toast.makeText(ProductAddActivity.this, " if (mImageUri != null && uploadtnumber == 0 ){", Toast.LENGTH_SHORT).show();
+                    }
                 }
+
+
+               /* if (bundle !=null){
+
+                    if (mImageUri !=null){
+                        uploadImageUri( mImageUri);
+                        Toast.makeText(ProductAddActivity.this, "mImageUri", Toast.LENGTH_SHORT).show();
+                    }
+                    if (mImageUri1 !=null){
+                        uploadImageUri1( mImageUri1);
+                        Toast.makeText(ProductAddActivity.this, "mImageUri1", Toast.LENGTH_SHORT).show();
+                    }
+                    if (mImageUri2 !=null){
+                        uploadImageUri2( mImageUri2);
+                        Toast.makeText(ProductAddActivity.this, "mImageUri2", Toast.LENGTH_SHORT).show();
+
+                    }
+                    if (mImageUri3 !=null){
+                        uploadImageUri2( mImageUri2);
+                        Toast.makeText(ProductAddActivity.this, "mImageUri3", Toast.LENGTH_SHORT).show();
+
+                    }
+                    if (mImageUri3 !=null){
+                        uploadImageUri3( mImageUri3);
+                        Toast.makeText(ProductAddActivity.this, "mImageUri4", Toast.LENGTH_SHORT).show();
+
+                    }
+                    if (mImageUri4 !=null){
+                        uploadImageUri4( mImageUri4);
+                        Toast.makeText(ProductAddActivity.this, "mImageUri5", Toast.LENGTH_SHORT).show();
+
+                    }
+                }*/
 
 
             }
@@ -756,6 +954,7 @@ public class ProductAddActivity extends AppCompatActivity implements EasyPermiss
 
 
     }
+
     @RequiresApi(api = Build.VERSION_CODES.M)
     @AfterPermissionGranted(PICK_IMAGE_REQUEST)
     private void getIMEGE() {
@@ -794,23 +993,10 @@ public class ProductAddActivity extends AppCompatActivity implements EasyPermiss
 
 
         } else {
-/*
-
-            Intent intent = new Intent();
-            intent.setType("image/*");
-            intent.setAction(Intent.ACTION_GET_CONTENT);
-            startActivityForResult(Intent.createChooser(intent, "Image Add "), PICK_IMAGE_REQUEST);
-*/
 
         }
 
-
-
-
-
-
-        /////////////////////////////////////////////////////////////////////////////////////////////
-        String[] perms = {Manifest.permission.READ_EXTERNAL_STORAGE};
+  String[] perms = {Manifest.permission.READ_EXTERNAL_STORAGE};
 
         if (EasyPermissions.hasPermissions(this, perms)) {
 
@@ -864,21 +1050,89 @@ public class ProductAddActivity extends AppCompatActivity implements EasyPermiss
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
             if (data.getData() != null) {
-                mImageUri = data.getData();
-                Picasso.get().load(mImageUri).into(pruductImage);
+
+                if ( SilrctorNumber == 1 ){
+                   mImageUri = data.getData();
+                  Picasso.get().load(mImageUri).into(pruductImage);
+                  Picasso.get().load(mImageUri).into(ImageAdded);
+                }
+                else if (SilrctorNumber == 2 ){
+                    mImageUri1 = data.getData();
+                    Picasso.get().load(mImageUri1).into(pruductImage);
+                    Picasso.get().load(mImageUri1).into(ImageAdded1);
+                }
+                else if (SilrctorNumber == 3){
+                    mImageUri2 = data.getData();
+                    Picasso.get().load(mImageUri2).into(pruductImage);
+                    Picasso.get().load(mImageUri2).into(ImageAdded2);
+                }
+                else if (SilrctorNumber == 4){
+                    mImageUri3 = data.getData();
+                    Picasso.get().load(mImageUri3).into(pruductImage);
+                    Picasso.get().load(mImageUri3).into(ImageAdded3);
+                    new MaterialAlertDialogBuilder(ProductAddActivity.this)
+                            .setMessage("Do you change Image")
+                            .setCancelable(false)
+                            .setPositiveButton("YES", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+
+                                    progressDialog = new ProgressDialog(ProductAddActivity.this);
+                                    progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+                                    progressDialog.setMessage("Loading...");
+                                    progressDialog.show();
+                                    progressDialog.setCanceledOnTouchOutside(false);
+
+                                    uploadImageUrisingleImageUpdate(mImageUri4,"proImgeUrl4");
+
+                                }
+                            })
+                            .setNegativeButton("NO", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+
+                                }
+                            })
+                            .show();
+                }
+                else if (SilrctorNumber == 5){
+                    mImageUri4 = data.getData();
+                    Picasso.get().load(mImageUri4).into(pruductImage);
+                    Picasso.get().load(mImageUri4).into(ImageAdded4);
+
+                    new MaterialAlertDialogBuilder(ProductAddActivity.this)
+                            .setMessage("Please! Approved from A2ZLOJA. Contact us")
+                            .setCancelable(false)
+                            .setPositiveButton("GOT IT", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+
+                                    progressDialog = new ProgressDialog(ProductAddActivity.this);
+                                    progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+                                    progressDialog.setMessage("Loading...");
+                                    progressDialog.show();
+                                    progressDialog.setCanceledOnTouchOutside(false);
+
+                                    uploadImageUrisingleImageUpdate(mImageUri4,"proImgeUrl4");
+
+                                }
+                            })
+                            .setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+
+                                }
+                            })
+                            .show();
+
+
+                }
+
+
             } else {
                 Toast.makeText(this, "No file chosen", Toast.LENGTH_SHORT).show();
             }
         }}
-/*
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-
-        EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this);
-    }
-*/
 
     @Override
     public void onPermissionsGranted(int requestCode, @NonNull List<String> perms) {
@@ -895,13 +1149,7 @@ public class ProductAddActivity extends AppCompatActivity implements EasyPermiss
 
 
 
-
-
-
-
-    private void uploadImageUri(Uri imageUri){
-
-
+    private void uploadImageUri(Uri imageUri ){
         try {
             File file = new File(Environment.getExternalStorageDirectory(), "profilePicTemp");
 
@@ -918,90 +1166,161 @@ public class ProductAddActivity extends AppCompatActivity implements EasyPermiss
 
 
 
-          //  Log.d("Test", "uploadImageUri: " +);
-
-
             upload(file, new UploadCallback() {
                 @Override
                 public void onSuccess(final String downloadLink) {
 
 
-                    final String pnmae = productName.getText().toString();
-                    String barCode = productBarcodeNumber.getText().toString();
-                    final String pps = productPrice.getText().toString();
-                    final double pp = Double.parseDouble(pps);
-                    final String pBps = pruductBuyPrice.getText().toString();
-                    double pBp = Double.parseDouble(pBps);
-                    final String pqs = productQuantayn.getText().toString();
-                    final double pq = Double.parseDouble(pqs);
-                    final String pms = pruductMin.getText().toString();
-                    double pm = Double.parseDouble(pms);
+                        mImageUriS = downloadLink;
 
-                    final String dicount = pruductDiscount.getText().toString();
-                    if (!dicount.isEmpty()){
-                        pdicount = Integer.parseInt(dicount);
+                        Toast.makeText(ProductAddActivity.this, mImageUriS+" first", Toast.LENGTH_SHORT).show();
+                        uploadtnumber = 1;
+
+                        if (mImageUri1 !=null && uploadtnumber == 1 ){
+
+                            uploadImageUri1( mImageUri1);
+
+                        } else {
+                            PicturUpLoad(mImageUriS,null,null,null,null);
+                        }
+
+
                     }
 
-                    if (image != false) {
 
-                        product.document(id).update("proId", id, "proName", pnmae, "proPrice",
-                                pp,"proBuyPrice", pBp, "proQua", pq, "proMin", pm, "proImgeUrl",downloadLink,"barCode",
-                                barCode,"search",pnmae.toLowerCase(),"comomCatagory",comonCatagory,"color",color,"type",
-                                "Size",Size,typ,"description",descreption)
-                                .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                    @Override
-                                    public void onComplete(@NonNull Task<Void> task) {
-                                        setGlobleProductupdate(id,pnmae,pp,pq,productCode,privacyspinneritem,Categoryspinneritem,datenew,
-                                                downloadLink,pdicount,comonCatagory,Size,color,typ,descreption);
+                @Override
+                public void onFailed(String message) {
+                }
+            });
 
-                                        progressDialog.dismiss();
-                                    }
-                                }).addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-                                progressDialog.dismiss();
+        } catch (Exception e){
+            e.printStackTrace();
 
-                                Intent intent = new Intent(ProductAddActivity.this,ProductListActivity.class);
-                                startActivity(intent);
-                                finish();
-                            }
-                        });
+        }
 
-                    } else {
-                        product.add(new ProductNote(null, pnmae, pp,pBp, pq, pm, downloadLink,barCode,productCode,privacyspinneritem,
-                                Categoryspinneritem,datenew,pnmae.toLowerCase(),pdicount,comonCatagory)).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
-                            @Override
-                            public void onComplete(@NonNull Task<DocumentReference> task) {
+    }
+    private void uploadImageUri1(Uri imageUri ){
 
-                                if (task.isSuccessful()) {
+        Toast.makeText(this, "get method", Toast.LENGTH_SHORT).show();
+        try {
+            File file = new File(Environment.getExternalStorageDirectory(), "profilePicTemp");
 
-                                    final String id = task.getResult().getId();
+            InputStream in = getContentResolver().openInputStream(imageUri);
+            OutputStream out = new FileOutputStream(file);
+            byte[] buf = new byte[1024];
+            int len;
+            while ((len = in.read(buf)) > 0) {
+                out.write(buf, 0, len);
+            }
+            out.close();
+            in.close();
+
+            upload(file, new UploadCallback() {
+                @Override
+                public void onSuccess(final String downloadLink) {
+
+                        mImageUri1S = downloadLink;
+                        Toast.makeText(ProductAddActivity.this, mImageUri1S+" secend", Toast.LENGTH_SHORT).show();
+                        uploadtnumber = 2;
+
+                        if (mImageUri2 != null && uploadtnumber == 2 ){
+                            uploadImageUri2( mImageUri2 );
+                        }else {
+                            PicturUpLoad(mImageUriS,mImageUri1S,null,null,null);
+                        }
 
 
-                                    product.document(id).update("proId", id,"color",color,"Size",Size,"type",typ,"description",descreption).addOnCompleteListener(new OnCompleteListener<Void>() {
-                                        @Override
-                                        public void onComplete(@NonNull Task<Void> task) {
 
+                }
 
-                                            setGlobleProduct(id,pnmae,pp,pq,productCode,privacyspinneritem,Categoryspinneritem,
-                                                    datenew,downloadLink,pdicount,comonCatagory,Size,color,typ,descreption);
+                @Override
+                public void onFailed(String message) {
+                }
+            });
 
-                                            Toast.makeText(ProductAddActivity.this, " successful ", Toast.LENGTH_SHORT).show();
+        } catch (Exception e){
+            e.printStackTrace();
 
-                                        }
-                                    });
+        }
+    }
+    private void uploadImageUrisingleImageUpdate(Uri imageUri , final String filde ){
+
+        try {
+            File file = new File(Environment.getExternalStorageDirectory(), "profilePicTemp");
+
+            InputStream in = getContentResolver().openInputStream(imageUri);
+            OutputStream out = new FileOutputStream(file);
+            byte[] buf = new byte[1024];
+            int len;
+            while ((len = in.read(buf)) > 0) {
+                out.write(buf, 0, len);
+            }
+            out.close();
+            in.close();
+
+            upload(file, new UploadCallback() {
+                @Override
+                public void onSuccess(final String downloadLink) {
+
+                    CollectionReference product = FirebaseFirestore.getInstance()
+                            .collection("users").document(user_id).collection("Product");
+
+                    product.document(id).update(filde, downloadLink).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+
+                            GlobleProduct.document(id).update(filde, downloadLink).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+
+                                 progressDialog.dismiss();
                                 }
+                            });
+                        }
+                    });
 
-                            }
-                        });
-                    }
+                }
 
-                    progressDialog.dismiss();
+                @Override
+                public void onFailed(String message) {
+                }
+            });
 
-                    Intent intent = new Intent(ProductAddActivity.this, ProductListActivity.class);
-                    startActivity(intent);
-                    finish();
-                    progressDialog.dismiss();
+        } catch (Exception e){
+            e.printStackTrace();
+
+        }
+    }
+    private void uploadImageUri2(Uri imageUri ){
+
+
+        try {
+            File file = new File(Environment.getExternalStorageDirectory(), "profilePicTemp");
+
+            InputStream in = getContentResolver().openInputStream(imageUri);
+            OutputStream out = new FileOutputStream(file);
+            byte[] buf = new byte[1024];
+            int len;
+            while ((len = in.read(buf)) > 0) {
+                out.write(buf, 0, len);
+            }
+            out.close();
+            in.close();
+            upload(file, new UploadCallback() {
+                @Override
+                public void onSuccess(final String downloadLink) {
+
+                        mImageUri2S = downloadLink;
+                        Toast.makeText(ProductAddActivity.this, mImageUri2S+" thert ", Toast.LENGTH_SHORT).show();
+                        uploadtnumber = 3;
+
+                        if (mImageUri3 != null && uploadtnumber == 3 ){
+                            uploadImageUri3( mImageUri3 );
+                        }else {
+                            PicturUpLoad(mImageUriS,mImageUri1S,mImageUri2S,null,null);                        }
+
+
+
                 }
 
                 @Override
@@ -1016,6 +1335,180 @@ public class ProductAddActivity extends AppCompatActivity implements EasyPermiss
 
 
     }
+    private void uploadImageUri3(Uri imageUri ){
+
+
+        try {
+            File file = new File(Environment.getExternalStorageDirectory(), "profilePicTemp");
+
+            InputStream in = getContentResolver().openInputStream(imageUri);
+            OutputStream out = new FileOutputStream(file);
+            byte[] buf = new byte[1024];
+            int len;
+            while ((len = in.read(buf)) > 0) {
+                out.write(buf, 0, len);
+            }
+            out.close();
+            in.close();
+            upload(file, new UploadCallback() {
+                @Override
+                public void onSuccess(final String downloadLink) {
+
+
+                        mImageUri3S = downloadLink;
+                        uploadtnumber = 4;
+
+                        if (mImageUri4 != null && uploadtnumber == 4 ){
+                            uploadImageUri4( mImageUri4 );
+                        }else {
+                            PicturUpLoad(mImageUriS,mImageUri1S,mImageUri2S,mImageUri3S,null);                        }
+
+                    }
+
+
+
+                @Override
+                public void onFailed(String message) {
+                }
+            });
+
+        } catch (Exception e){
+            e.printStackTrace();
+
+        }
+
+
+    }
+    private void uploadImageUri4(Uri imageUri ){
+
+
+        try {
+            File file = new File(Environment.getExternalStorageDirectory(), "profilePicTemp");
+
+            InputStream in = getContentResolver().openInputStream(imageUri);
+            OutputStream out = new FileOutputStream(file);
+            byte[] buf = new byte[1024];
+            int len;
+            while ((len = in.read(buf)) > 0) {
+                out.write(buf, 0, len);
+            }
+            out.close();
+            in.close();
+            upload(file, new UploadCallback() {
+                @Override
+                public void onSuccess(final String downloadLink) {
+
+                        mImageUri4S = downloadLink;
+                        uploadtnumber = 5;
+
+
+
+
+                    PicturUpLoad(mImageUriS,mImageUri1S,mImageUri2S,mImageUri3S,mImageUri4S);
+
+
+                }
+
+                @Override
+                public void onFailed(String message) {
+                }
+            });
+
+        } catch (Exception e){
+            e.printStackTrace();
+
+        }
+
+
+    }
+
+
+
+    public  void  PicturUpLoad(final String downloadLink1, final String downloadLink2, final String downloadLink3, final String downloadLink4, final String downloadLink5){
+
+
+        final String pnmae = productName.getText().toString();
+        String barCode = productBarcodeNumber.getText().toString();
+        final String pps = productPrice.getText().toString();
+        final double pp = Double.parseDouble(pps);
+        final String pBps = pruductBuyPrice.getText().toString();
+        double pBp = Double.parseDouble(pBps);
+        final String pqs = productQuantayn.getText().toString();
+        final double pq = Double.parseDouble(pqs);
+        final String pms = pruductMin.getText().toString();
+        double pm = Double.parseDouble(pms);
+
+        final String dicount = pruductDiscount.getText().toString();
+        if (!dicount.isEmpty()){
+            pdicount = Integer.parseInt(dicount);
+        }
+
+        if (image != false) {
+
+            product.document(id).update("proId", id, "proName", pnmae, "proPrice",
+                    pp,"proBuyPrice", pBp, "proQua", pq, "proMin", pm,"proImgeUrl",mImageUriS
+                    ,"proImgeUrl",mImageUri1S,"proImgeUrl",mImageUri2S,"proImgeUrl",mImageUri3S,"proImgeUrl",mImageUri4S
+                    ,"barCode", barCode,"search",pnmae.toLowerCase(),"comomCatagory",comonCatagory,"color",color,"type",
+                    "Size",Size,typ,"description",descreption)
+                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            setGlobleProductupdate(id,pnmae,pp,pq,productCode,privacyspinneritem,Categoryspinneritem,datenew
+                                    ,mImageUriS,mImageUri1S,mImageUri2S,mImageUri3S,mImageUri4S
+                                    ,pdicount,comonCatagory,Size,color,typ,descreption);
+
+                            progressDialog.dismiss();
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    progressDialog.dismiss();
+
+                    Intent intent = new Intent(ProductAddActivity.this,ProductListActivity.class);
+                    startActivity(intent);
+                    finish();
+                }
+            });
+
+        } else {
+
+            product.add(new ProductNote(null, pnmae, pp,pBp, pq, pm,downloadLink1,downloadLink2,downloadLink3,downloadLink4,downloadLink5,barCode,productCode,privacyspinneritem,
+                    Categoryspinneritem,datenew,pnmae.toLowerCase(),pdicount,comonCatagory)).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
+                @Override
+                public void onComplete(@NonNull Task<DocumentReference> task) {
+
+                    if (task.isSuccessful()) {
+
+                        final String id = task.getResult().getId();
+                        product.document(id).update("proId", id, "proImgeUrl1",mImageUri1S,
+                                "proImgeUrl2",mImageUri2S,"proImgeUrl3",mImageUri3S,"proImgeUrl4",mImageUri4S,"color",color,"Size",Size,"type"
+                                ,typ,"description",descreption).addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+
+
+                                setGlobleProduct(id,pnmae,pp,pq,productCode,privacyspinneritem,Categoryspinneritem,
+                                        datenew,mImageUriS,mImageUri1S,mImageUri2S,mImageUri3S,mImageUri4S
+                                        ,pdicount,comonCatagory,Size,color,typ,descreption);
+
+                                Toast.makeText(ProductAddActivity.this, " successful ", Toast.LENGTH_SHORT).show();
+
+                            }
+                        });
+                    }
+
+                }
+            });
+        }
+
+        progressDialog.dismiss();
+
+        Intent intent = new Intent(ProductAddActivity.this, ProductListActivity.class);
+        startActivity(intent);
+        finish();
+
+    }
+
 
     private void upload(File file, final UploadCallback uploadCallback) {
 
@@ -1041,8 +1534,6 @@ public class ProductAddActivity extends AppCompatActivity implements EasyPermiss
         final OkHttpClient client = new OkHttpClient().newBuilder()
                 .addInterceptor(loggingInterceptor)
                 .build();
-
-
 
         //network request so we need to run on new thread
         new Thread(new Runnable() {
@@ -1332,153 +1823,7 @@ public class ProductAddActivity extends AppCompatActivity implements EasyPermiss
 
 
     }
-    public void setGlobleProduct(final String productId, final String productName, final double productPrice,
-                                 final double productQuantidy, final String productCode, final String privecy,
-                                 final String Catagury, final int date, final String ImageUrl, final int pdicount,
-                                 final String comomCatagory,final String size1, final  String color1,final String typ,final String description){
 
-        myInfo.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if (task.isSuccessful()) {
-
-                    String DukanName = null;
-                    String DukanImageUrl = null;
-                    String dukanderid = null;
-                    String dukanderPhone = null;
-                    String dukanderAddress = null;
-
-                    for (QueryDocumentSnapshot document : Objects.requireNonNull(task.getResult())) {
-                        MyInfoNote myInfoNote = document.toObject(MyInfoNote.class);
-
-                        if (myInfoNote.getDukanName()!=null){
-                           DukanName = myInfoNote.getDukanName();
-                        }
-
-                        if (myInfoNote.getDukanaddpicurl()!=null){
-                            DukanImageUrl = myInfoNote.getDukanaddpicurl();
-                        }
-                        if (myInfoNote.getDukanphone()!=null){
-                            dukanderPhone = myInfoNote.getDukanphone();
-                        }
-                        if (myInfoNote.getDukanaddress()!=null){
-                            dukanderAddress = myInfoNote.getDukanaddress();
-                        }
-                       dukanderid = document.get("myid").toString();
-
-                    }
-
-                    Map<String, Object> GlobaleProductObject = new HashMap<>();
-                    GlobaleProductObject.put("proId", productId);
-                    GlobaleProductObject.put("proName", productName);
-                    GlobaleProductObject.put("search", productName.toLowerCase());
-                    GlobaleProductObject.put("proPrice", productPrice);
-                    GlobaleProductObject.put("pruductDiscount", pdicount);
-                    GlobaleProductObject.put("proImgeUrl",ImageUrl);
-                    GlobaleProductObject.put("productCode", productCode);
-                    GlobaleProductObject.put("comomCatagory", comomCatagory);
-                    GlobaleProductObject.put("productPrivacy", privecy);
-                    GlobaleProductObject.put("ShopName", DukanName);
-                    GlobaleProductObject.put("ShopPhone", dukanderPhone);
-                    GlobaleProductObject.put("ShopAddress", dukanderAddress);
-                    GlobaleProductObject.put("ShopId", dukanderid);
-                    GlobaleProductObject.put("productCategory", Catagury);
-                    GlobaleProductObject.put("date", date);
-                    GlobaleProductObject.put("proQua", productQuantidy);
-                    GlobaleProductObject.put("UserId", user_id);
-                    GlobaleProductObject.put("token", token);
-                    GlobaleProductObject.put("Size", size1);
-                    GlobaleProductObject.put("color", color1);
-                    GlobaleProductObject.put("type", typ);
-                    GlobaleProductObject.put("description", description);
-                    GlobaleProductObject.put("productVerification", "certify");
-
-
-                    GlobleProduct.document(productId).set(GlobaleProductObject).addOnCompleteListener(new OnCompleteListener<Void>() {
-                        @Override
-                        public void onComplete(@NonNull Task<Void> task) {
-
-                        }
-                    });
-                }
-            }
-        });
-
-
-    }
-    public void setGlobleProductupdate(final String productId, final String productName, final double productPrice,
-                                       final double productQuantidy, final String productCode, final String privecy,
-                                       final String Catagury, final int date, final String ImageUrl, final int pdicount,
-                                       final String comomCatagory,final String size1, final  String color1,final String typ,
-                                       final String description){
-
-        myInfo.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if (task.isSuccessful()) {
-
-                    String DukanName = null;
-                    String DukanImageUrl = null;
-                    String dukanderid = null;
-                    String dukanderPhone = null;
-                    String dukanderAddress = null;
-
-                    for (QueryDocumentSnapshot document : Objects.requireNonNull(task.getResult())) {
-                        MyInfoNote myInfoNote = document.toObject(MyInfoNote.class);
-
-                        if (myInfoNote.getDukanName()!=null){
-                           DukanName = myInfoNote.getDukanName();
-                        }
-
-                        if (myInfoNote.getDukanaddpicurl()!=null){
-                            DukanImageUrl = myInfoNote.getDukanaddpicurl();
-                        }
-                        if (myInfoNote.getDukanphone()!=null){
-                            dukanderPhone = myInfoNote.getDukanphone();
-                        }
-                        if (myInfoNote.getDukanaddress()!=null){
-                            dukanderAddress = myInfoNote.getDukanaddress();
-                        }
-                       dukanderid = document.get("myid").toString();
-
-                    }
-
-                    Map<String, Object> GlobaleProductObject = new HashMap<>();
-                    GlobaleProductObject.put("proId", productId);
-                    GlobaleProductObject.put("proName", productName);
-                    GlobaleProductObject.put("search", productName.toLowerCase());
-                    GlobaleProductObject.put("proPrice", productPrice);
-                    GlobaleProductObject.put("pruductDiscount", pdicount);
-                    GlobaleProductObject.put("comomCatagory", comomCatagory);
-                    GlobaleProductObject.put("proImgeUrl",ImageUrl);
-                    GlobaleProductObject.put("productPrivacy", privecy);
-                    GlobaleProductObject.put("ShopName", DukanName);
-                    GlobaleProductObject.put("ShopPhone", dukanderPhone);
-                    GlobaleProductObject.put("ShopAddress", dukanderAddress);
-                    GlobaleProductObject.put("ShopId", dukanderid);
-                    GlobaleProductObject.put("productCategory", Catagury);
-                    GlobaleProductObject.put("date", date);
-                    GlobaleProductObject.put("proQua", productQuantidy);
-                    GlobaleProductObject.put("UserId", user_id);
-                    GlobaleProductObject.put("token", token);
-                    GlobaleProductObject.put("Size", size1);
-                    GlobaleProductObject.put("color", color1);
-                    GlobaleProductObject.put("type", typ);
-                    GlobaleProductObject.put("description", description);
-                    GlobaleProductObject.put("productVerification", "certify");
-
-                    GlobleProduct.document(productId).set(GlobaleProductObject).addOnCompleteListener(new OnCompleteListener<Void>() {
-                        @Override
-                        public void onComplete(@NonNull Task<Void> task) {
-
-                        }
-                    });
-                }
-            }
-        });
-
-
-    }
     public void setGlobleProductupdate(final String productId, final String productName, final double productPrice,
                                        final double productQuantidy, final String productCode, final String privecy,
                                        final String Catagury, final int date, final int pdicount, final String comomCatagory,
@@ -1538,6 +1883,165 @@ public class ProductAddActivity extends AppCompatActivity implements EasyPermiss
                     GlobaleProductObject.put("description", description);
 
                     GlobleProduct.document(productId).update(GlobaleProductObject).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+
+                        }
+                    });
+                }
+            }
+        });
+
+
+    }
+
+    public void setGlobleProduct(final String productId, final String productName, final double productPrice,
+                                 final double productQuantidy, final String productCode, final String privecy,
+                                 final String Catagury, final int date, final String ImageUrl, final String ImageUrl1
+                                 ,final String ImageUrl2, final String ImageUrl3, final String ImageUrl4, final int pdicount,
+                                 final String comomCatagory,final String size1, final  String color1,final String typ,
+                                 final String description){
+
+        myInfo.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+
+                    String DukanName = null;
+                    String DukanImageUrl = null;
+                    String dukanderid = null;
+                    String dukanderPhone = null;
+                    String dukanderAddress = null;
+
+                    for (QueryDocumentSnapshot document : Objects.requireNonNull(task.getResult())) {
+                        MyInfoNote myInfoNote = document.toObject(MyInfoNote.class);
+
+                        if (myInfoNote.getDukanName()!=null){
+                            DukanName = myInfoNote.getDukanName();
+                        }
+
+                        if (myInfoNote.getDukanaddpicurl()!=null){
+                            DukanImageUrl = myInfoNote.getDukanaddpicurl();
+                        }
+                        if (myInfoNote.getDukanphone()!=null){
+                            dukanderPhone = myInfoNote.getDukanphone();
+                        }
+                        if (myInfoNote.getDukanaddress()!=null){
+                            dukanderAddress = myInfoNote.getDukanaddress();
+                        }
+                        dukanderid = document.get("myid").toString();
+
+                    }
+
+                    Map<String, Object> GlobaleProductObject = new HashMap<>();
+                    GlobaleProductObject.put("proId", productId);
+                    GlobaleProductObject.put("proName", productName);
+                    GlobaleProductObject.put("search", productName.toLowerCase());
+                    GlobaleProductObject.put("proPrice", productPrice);
+                    GlobaleProductObject.put("pruductDiscount", pdicount);
+                    GlobaleProductObject.put("proImgeUrl",ImageUrl);
+                    GlobaleProductObject.put("proImgeUrl1",ImageUrl1);
+                    GlobaleProductObject.put("proImgeUrl2",ImageUrl2);
+                    GlobaleProductObject.put("proImgeUrl3",ImageUrl3);
+                    GlobaleProductObject.put("proImgeUrl4",ImageUrl4);
+                    GlobaleProductObject.put("productCode", productCode);
+                    GlobaleProductObject.put("comomCatagory", comomCatagory);
+                    GlobaleProductObject.put("productPrivacy", privecy);
+                    GlobaleProductObject.put("ShopName", DukanName);
+                    GlobaleProductObject.put("ShopPhone", dukanderPhone);
+                    GlobaleProductObject.put("ShopAddress", dukanderAddress);
+                    GlobaleProductObject.put("ShopId", dukanderid);
+                    GlobaleProductObject.put("productCategory", Catagury);
+                    GlobaleProductObject.put("date", date);
+                    GlobaleProductObject.put("proQua", productQuantidy);
+                    GlobaleProductObject.put("UserId", user_id);
+                    GlobaleProductObject.put("token", token);
+                    GlobaleProductObject.put("Size", size1);
+                    GlobaleProductObject.put("color", color1);
+                    GlobaleProductObject.put("type", typ);
+                    GlobaleProductObject.put("description", description);
+                    GlobaleProductObject.put("productVerification", "certify");
+
+
+                    GlobleProduct.document(productId).set(GlobaleProductObject).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+
+                        }
+                    });
+                }
+            }
+        });
+
+
+    }
+    public void setGlobleProductupdate(final String productId, final String productName, final double productPrice,
+                                       final double productQuantidy, final String productCode, final String privecy,
+                                       final String Catagury, final int date, final String ImageUrl,final String ImageUrl1
+                                      ,final String ImageUrl2, final String ImageUrl3, final String ImageUrl4,  final int pdicount,
+                                       final String comomCatagory,final String size1, final  String color1,final String typ,
+                                       final String description){
+
+        myInfo.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+
+                    String DukanName = null;
+                    String DukanImageUrl = null;
+                    String dukanderid = null;
+                    String dukanderPhone = null;
+                    String dukanderAddress = null;
+
+                    for (QueryDocumentSnapshot document : Objects.requireNonNull(task.getResult())) {
+                        MyInfoNote myInfoNote = document.toObject(MyInfoNote.class);
+
+                        if (myInfoNote.getDukanName()!=null){
+                            DukanName = myInfoNote.getDukanName();
+                        }
+
+                        if (myInfoNote.getDukanaddpicurl()!=null){
+                            DukanImageUrl = myInfoNote.getDukanaddpicurl();
+                        }
+                        if (myInfoNote.getDukanphone()!=null){
+                            dukanderPhone = myInfoNote.getDukanphone();
+                        }
+                        if (myInfoNote.getDukanaddress()!=null){
+                            dukanderAddress = myInfoNote.getDukanaddress();
+                        }
+                        dukanderid = document.get("myid").toString();
+
+                    }
+
+                    Map<String, Object> GlobaleProductObject = new HashMap<>();
+                    GlobaleProductObject.put("proId", productId);
+                    GlobaleProductObject.put("proName", productName);
+                    GlobaleProductObject.put("search", productName.toLowerCase());
+                    GlobaleProductObject.put("proPrice", productPrice);
+                    GlobaleProductObject.put("pruductDiscount", pdicount);
+                    GlobaleProductObject.put("comomCatagory", comomCatagory);
+                    GlobaleProductObject.put("proImgeUrl",ImageUrl);
+                    GlobaleProductObject.put("proImgeUrl1",ImageUrl1);
+                    GlobaleProductObject.put("proImgeUrl2",ImageUrl2);
+                    GlobaleProductObject.put("proImgeUrl3",ImageUrl3);
+                    GlobaleProductObject.put("proImgeUrl4",ImageUrl4);
+                    GlobaleProductObject.put("productPrivacy", privecy);
+                    GlobaleProductObject.put("ShopName", DukanName);
+                    GlobaleProductObject.put("ShopPhone", dukanderPhone);
+                    GlobaleProductObject.put("ShopAddress", dukanderAddress);
+                    GlobaleProductObject.put("ShopId", dukanderid);
+                    GlobaleProductObject.put("productCategory", Catagury);
+                    GlobaleProductObject.put("date", date);
+                    GlobaleProductObject.put("proQua", productQuantidy);
+                    GlobaleProductObject.put("UserId", user_id);
+                    GlobaleProductObject.put("token", token);
+                    GlobaleProductObject.put("Size", size1);
+                    GlobaleProductObject.put("color", color1);
+                    GlobaleProductObject.put("type", typ);
+                    GlobaleProductObject.put("description", description);
+                    GlobaleProductObject.put("productVerification", "certify");
+
+                    GlobleProduct.document(productId).set(GlobaleProductObject).addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
 

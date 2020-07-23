@@ -239,6 +239,10 @@ public class ShopViewActivity extends AppCompatActivity {
                 intent.putExtra("productCodeup",globleProductNote.getProductCode());
                 intent.putExtra("productPrivacyup",globleProductNote.getProductPrivacy());
                 intent.putExtra("proImgeUrlup",globleProductNote.getProImgeUrl());
+                intent.putExtra("proImgeUrlup1",globleProductNote.getProImgeUrl1());
+                intent.putExtra("proImgeUrlup2",globleProductNote.getProImgeUrl2());
+                intent.putExtra("proImgeUrlup3",globleProductNote.getProImgeUrl3());
+                intent.putExtra("proImgeUrlup4",globleProductNote.getProImgeUrl4());
                 intent.putExtra("ShopNameup",globleProductNote.getShopName());
                 intent.putExtra("ShopPhoneup",globleProductNote.getShopPhone());
                 intent.putExtra("ShopAddressup",globleProductNote.getShopAddress());
@@ -324,6 +328,10 @@ public class ShopViewActivity extends AppCompatActivity {
                     intent.putExtra("productCodeup",globleProductNote.getProductCode());
                     intent.putExtra("productPrivacyup",globleProductNote.getProductPrivacy());
                     intent.putExtra("proImgeUrlup",globleProductNote.getProImgeUrl());
+                    intent.putExtra("proImgeUrlup1",globleProductNote.getProImgeUrl1());
+                    intent.putExtra("proImgeUrlup2",globleProductNote.getProImgeUrl2());
+                    intent.putExtra("proImgeUrlup3",globleProductNote.getProImgeUrl3());
+                    intent.putExtra("proImgeUrlup4",globleProductNote.getProImgeUrl4());
                     intent.putExtra("ShopNameup",globleProductNote.getShopName());
                     intent.putExtra("ShopPhoneup",globleProductNote.getShopPhone());
                     intent.putExtra("ShopAddressup",globleProductNote.getShopAddress());

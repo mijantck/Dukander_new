@@ -41,7 +41,7 @@ public class PinSetActivity extends AppCompatActivity {
         setContentView(R.layout.activity_pin_set);
 
         progressDialog = new ProgressDialog(PinSetActivity.this);
-        progressDialog.setTitle("তথ্য প্রস্তুত হচ্ছে...");
+        progressDialog.setMessage("loading...");
         progressDialog.setCancelable(false);
 
         final CollectionReference myPin = FirebaseFirestore.getInstance()
@@ -57,9 +57,8 @@ public class PinSetActivity extends AppCompatActivity {
                     pin = str.toString();
 
                     new MaterialAlertDialogBuilder(PinSetActivity.this, R.style.CutShapeTheme)
-                            .setTitle("আপনার সুরক্ষা কোড সেট করন ")
-                            .setMessage("আপনার সুরক্ষা কোড :" +pin)
-                            .setPositiveButton("বুঝেছি ", new DialogInterface.OnClickListener() {
+                            .setMessage("Your pin code :" +pin)
+                            .setPositiveButton("ok ", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialogInterface, int i) {
 

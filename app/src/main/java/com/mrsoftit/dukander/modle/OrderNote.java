@@ -1,6 +1,7 @@
 package com.mrsoftit.dukander.modle;
 
 public class OrderNote {
+
     private String cutomerName;
     private String cutomerPhone;
     private String cutomerAddress;
@@ -28,6 +29,7 @@ public class OrderNote {
     private String size;
     private String color;
     private String type;
+    private String deliveryBoyId;
 
 
 
@@ -284,5 +286,13 @@ public class OrderNote {
 
     public void setDeliveryBoyPhone(String deliveryBoyPhone) {
         this.deliveryBoyPhone = deliveryBoyPhone;
+    }
+
+    public String getDeliveryBoyId() {
+        return deliveryBoyId;
+    }
+
+    public void setDeliveryBoyId(String deliveryBoyId) {
+        this.deliveryBoyId = deliveryBoyId;
     }
 }

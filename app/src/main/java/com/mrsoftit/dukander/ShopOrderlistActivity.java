@@ -60,6 +60,8 @@ public class ShopOrderlistActivity extends AppCompatActivity {
     BoyAdapter boyAdapter;
     String  user_id;
 
+    String ProductName;
+
 
     final private String FCM_API = "https://fcm.googleapis.com/fcm/send";
     final private String serverKey = "key=" + "AAAAttd1svE:APA91bFocWSMpJ4WTI-CI_plcvO9Cj31dB3ENhHybDmR4t2Do9yZZC4jEvylhxPfz-7RoTiWzUT3zZYUSb8pYy0-R4SUMhY5BmzXzZ9pYfrJljKvJgjFPyEw_mV_Z8xpzclcM6phwTkN";
@@ -130,6 +132,7 @@ public class ShopOrderlistActivity extends AppCompatActivity {
             public void onItemClick(DocumentSnapshot documentSnapshot, int position) {
                 OrderNote orderNote = documentSnapshot.toObject(OrderNote.class);
                 String order =  orderNote.getOrderID();
+               ProductName =  orderNote.getProductName();
             }
 
             @Override
@@ -177,7 +180,9 @@ public class ShopOrderlistActivity extends AppCompatActivity {
                                             @Override
                                             public void onComplete(@NonNull Task<Void> task) {
 
-                                                notificationSend(customerToken);
+                                                dialog.dismiss();
+                                                notificationSend(customerToken,"Confirm Order",ProductName);
+
 
                                             }
                                         })  ;
@@ -194,17 +199,18 @@ public class ShopOrderlistActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
 
-                        shopForOrder.document(productID).update("confirmetionStatus","Confirm from Shop ").addOnCompleteListener(new OnCompleteListener<Void>() {
+                        shopForOrder.document(productID).update("confirmetionStatus","Delivery DONE. Thanks And welcome ").addOnCompleteListener(new OnCompleteListener<Void>() {
                             @Override
                             public void onComplete(@NonNull Task<Void> task) {
-                                customerForOrder.document(productID).update("confirmetionStatus","Confirm from Shop ").addOnCompleteListener(new OnCompleteListener<Void>() {
+                                customerForOrder.document(productID).update("confirmetionStatus","Delivery DONE. Thanks And welcome ").addOnCompleteListener(new OnCompleteListener<Void>() {
                                     @Override
                                     public void onComplete(@NonNull Task<Void> task) {
                                         globleForOrder.document(productID).update("confirmetionStatus","Delivery DONE. Thanks And welcome ").addOnCompleteListener(new OnCompleteListener<Void>() {
                                             @Override
                                             public void onComplete(@NonNull Task<Void> task) {
 
-                                                notificationSend(customerToken);
+                                                dialog.dismiss();
+                                                notificationSend(customerToken,"Delivery DONE. Thanks And welcome",ProductName);
 
                                             }
                                         })  ;
@@ -231,7 +237,7 @@ public class ShopOrderlistActivity extends AppCompatActivity {
                                             @Override
                                             public void onComplete(@NonNull Task<Void> task) {
 
-                                                notificationSend(customerToken);
+                                                notificationSend(customerToken,"Cancel from Shop",ProductName);
 
                                             }
                                         })  ;
@@ -252,17 +258,66 @@ public class ShopOrderlistActivity extends AppCompatActivity {
             public void onBoySelectClick(DocumentSnapshot documentSnapshot, int position) {
 
                 final OrderNote orderNote = documentSnapshot.toObject(OrderNote.class);
-                final String customerID =  orderNote.getCutomerID();
-                final String shopUserID =  orderNote.getUserID();
-                final String customerToken = orderNote.getCustomerToken();
+
+
+                final String cutomerName =  orderNote.getCutomerName();
+                final String cutomerPhone =  orderNote.getCutomerPhone();
+                final String cutomerAddress =  orderNote.getCutomerAddress();
+                final String cutomerID =  orderNote.getCutomerID();
+                final String shopName =  orderNote.getShopName();
+                final String shopPhone =  orderNote.getShopPhone();
+                final String shopAddress =  orderNote.getShopAddress();
+                final String shopID =  orderNote.getShopID();
+                final String userID =  orderNote.getUserID();
+                final String orderID =  orderNote.getOrderID();
+                final int orderDate = orderNote.getOrderDate();
+                final String productName =  orderNote.getProductName();
                 final String productID =  orderNote.getOrderID();
+                final String productURL =  orderNote.getProductURL();
+                final String productCode =  orderNote.getProductCode();
+                final String productPrice =  orderNote.getProductPrice();
+                final String productQuantity =  orderNote.getProductQuantity();
+                final String offerForShop =  orderNote.getOfferForShop();
+                final String offerForcoupon =  orderNote.getOfferForcoupon();
+                final String confirmetionStatus =  orderNote.getConfirmetionStatus();
+                final String orderStatus =  orderNote.getOrderStatus();
+                final String deliveryBoyName =  orderNote.getDeliveryBoyName();
+                final String deliveryBoyPhone =  orderNote.getDeliveryBoyPhone();
+                final String customerToken  = orderNote.getCustomerToken();
+                final String size =  orderNote.getSize();
+                final String color =  orderNote.getColor();
+                final String type=  orderNote.getType();
+
 
                 Intent intent = new  Intent(ShopOrderlistActivity.this,DeliveryBoyListActivity.class);
 
-                intent.putExtra("customerID",customerID);
-                intent.putExtra("shopUserID",shopUserID);
-                intent.putExtra("customerToken",customerToken);
+                intent.putExtra("cutomerName",cutomerName);
+                intent.putExtra("cutomerPhone",cutomerPhone);
+                intent.putExtra("cutomerAddress",cutomerAddress);
+                intent.putExtra("cutomerID",cutomerID);
+                intent.putExtra("shopName",shopName);
+                intent.putExtra("shopPhone",shopPhone);
+                intent.putExtra("shopAddress",shopAddress);
+                intent.putExtra("shopID",shopID);
+                intent.putExtra("userID",userID);
+                intent.putExtra("orderID",orderID);
+                intent.putExtra("orderDate",orderDate);
+                intent.putExtra("productName",productName);
                 intent.putExtra("productID",productID);
+                intent.putExtra("productURL",productURL);
+                intent.putExtra("productCode",productCode);
+                intent.putExtra("productPrice",productPrice);
+                intent.putExtra("productQuantity",productQuantity);
+                intent.putExtra("offerForShop",offerForShop);
+                intent.putExtra("offerForcoupon",offerForcoupon);
+                intent.putExtra("confirmetionStatus",confirmetionStatus);
+                intent.putExtra("orderStatus",orderStatus);
+                intent.putExtra("deliveryBoyName",deliveryBoyName);
+                intent.putExtra("deliveryBoyPhone",deliveryBoyPhone);
+                intent.putExtra("customerToken",customerToken);
+                intent.putExtra("size",size);
+                intent.putExtra("color",color);
+                intent.putExtra("type",type);
 
                 startActivity(intent);
 
@@ -279,13 +334,11 @@ public class ShopOrderlistActivity extends AppCompatActivity {
     }
 
 
-    public  void  notificationSend( String Token){
+    public  void  notificationSend( String Token,String OrderStutas,String orderDiscription){
 
-        TOPIC = "new sms "; //topic must match with what the receiver subscribed to
 
-        String news_feed = "NewsFeeed.getText().toString()";
-        NOTIFICATION_TITLE = TOPIC;
-        NOTIFICATION_MESSAGE = news_feed;
+        NOTIFICATION_TITLE = orderDiscription;
+        NOTIFICATION_MESSAGE = OrderStutas;
 
         JSONObject notification = new JSONObject();
         JSONObject notifcationBody = new JSONObject();
@@ -308,7 +361,6 @@ public class ShopOrderlistActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(JSONObject response) {
                         Log.i(TAG, "onResponse: " + response.toString());
-                        Toast.makeText(ShopOrderlistActivity.this, response.toString()+"  ", Toast.LENGTH_LONG).show();
 
                     }
                 },

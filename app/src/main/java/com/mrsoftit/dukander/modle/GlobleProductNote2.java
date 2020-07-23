@@ -8,6 +8,10 @@ public class GlobleProductNote2 {
     private String productCode;
     private String productPrivacy;
     private String proImgeUrl;
+    private String proImgeUrl1;
+    private String proImgeUrl2;
+    private String proImgeUrl3;
+    private String proImgeUrl4;
     private String ShopName;
     private String ShopPhone;
     private String ShopAddress;
@@ -26,6 +30,39 @@ public class GlobleProductNote2 {
 
 
     public GlobleProductNote2() {
+    }
+
+
+    public String getProImgeUrl1() {
+        return proImgeUrl1;
+    }
+
+    public void setProImgeUrl1(String proImgeUrl1) {
+        this.proImgeUrl1 = proImgeUrl1;
+    }
+
+    public String getProImgeUrl2() {
+        return proImgeUrl2;
+    }
+
+    public void setProImgeUrl2(String proImgeUrl2) {
+        this.proImgeUrl2 = proImgeUrl2;
+    }
+
+    public String getProImgeUrl3() {
+        return proImgeUrl3;
+    }
+
+    public void setProImgeUrl3(String proImgeUrl3) {
+        this.proImgeUrl3 = proImgeUrl3;
+    }
+
+    public String getProImgeUrl4() {
+        return proImgeUrl4;
+    }
+
+    public void setProImgeUrl4(String proImgeUrl4) {
+        this.proImgeUrl4 = proImgeUrl4;
     }
 
     public String getSize() {

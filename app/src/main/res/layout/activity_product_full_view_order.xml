@@ -74,11 +74,25 @@
                             android:layout_height="wrap_content"
                             android:orientation="vertical">
 
+                            <com.smarteist.autoimageslider.SliderView
+                                android:id="@+id/imageSliderFullProductView"
+                                android:layout_width="wrap_content"
+                                android:layout_height="250dp"
+                                app:sliderIndicatorOrientation="horizontal"
+                                app:sliderIndicatorPadding="3dp"
+                                app:sliderIndicatorRadius="2dp"
+                                app:sliderStartAutoCycle="false"
+                                app:sliderAutoCycleEnabled="false"
+                                app:sliderIndicatorSelectedColor="#5A5A5A"
+                                app:sliderIndicatorUnselectedColor="#FFF"
+                                app:sliderScrollTimeInSec="1" />
+
+
                             <ImageView
+                                android:visibility="gone"
                                 android:id="@+id/productImageDetail"
                                 android:layout_width="match_parent"
                                 android:layout_height="250dp"
-                                android:scaleType="fitXY"
                                 android:src="@drawable/textimage" />
 
                             <androidx.cardview.widget.CardView
@@ -274,6 +288,7 @@
                                                 android:layout_height="wrap_content">
 
                                                 <TextView
+                                                    android:textColor="@color/black"
                                                     android:layout_width="wrap_content"
                                                     android:layout_height="wrap_content"
                                                     android:text="Quan :  "
@@ -297,6 +312,7 @@
                                                 android:layout_height="wrap_content">
 
                                                 <TextView
+                                                    android:textColor="@color/black"
                                                     android:layout_width="wrap_content"
                                                     android:layout_height="wrap_content"
                                                     android:text="Price :   "
@@ -327,6 +343,7 @@
                                                 android:layout_height="wrap_content">
 
                                                 <TextView
+                                                    android:textColor="@color/black"
                                                     android:layout_width="wrap_content"
                                                     android:layout_height="wrap_content"
                                                     android:text="Color : "
@@ -348,6 +365,7 @@
                                                 android:layout_height="wrap_content">
 
                                                 <TextView
+                                                    android:textColor="@color/black"
                                                     android:layout_width="wrap_content"
                                                     android:layout_height="wrap_content"
                                                     android:text="Size :  "
@@ -369,6 +387,7 @@
                                                 android:layout_height="wrap_content">
 
                                                 <TextView
+                                                    android:textColor="@color/black"
                                                     android:layout_width="wrap_content"
                                                     android:layout_height="wrap_content"
                                                     android:text="Type : "
@@ -417,15 +436,18 @@
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"/>
 
-                                    <RelativeLayout
+                                    <LinearLayout
+                                        android:weightSum="10"
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content">
 
                                         <LinearLayout
-                                            android:layout_width="wrap_content"
+                                            android:layout_weight="8"
+                                            android:layout_width="0dp"
                                             android:layout_height="wrap_content">
 
                                             <TextView
+                                               android:textColor="@color/black"
                                                 android:layout_width="wrap_content"
                                                 android:layout_height="match_parent"
                                                 android:fontFamily="@font/nunito_sans_bold"
@@ -433,22 +455,24 @@
                                                 android:textSize="15dp" />
 
                                             <TextView
-                                                android:id="@+id/ProductCode"
                                                 android:layout_width="wrap_content"
+                                                android:id="@+id/ProductCode"
                                                 android:layout_height="match_parent"
                                                 android:text="SJ3093JKHD"
                                                 android:textSize="15dp" />
 
                                         </LinearLayout>
+
+
                                         <LinearLayout
-                                            android:layout_alignParentRight="true"
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content">
 
                                             <TextView
+                                                android:textColor="@color/black"
                                                 android:layout_width="wrap_content"
                                                 android:layout_height="wrap_content"
-                                                android:text="Store :  "
+                                                android:text=" Store :  "
                                                 android:textSize="15dp" />
 
                                             <TextView
@@ -462,16 +486,19 @@
 
                                         </LinearLayout>
 
-                                    </RelativeLayout>
-                                    <RelativeLayout
+                                    </LinearLayout>
+                                    <LinearLayout
+                                        android:weightSum="10"
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content">
 
                                         <LinearLayout
-                                            android:layout_width="wrap_content"
+                                            android:layout_weight="6"
+                                            android:layout_width="0dp"
                                             android:layout_height="wrap_content">
 
                                             <TextView
+                                                android:textColor="@color/black"
                                                 android:layout_width="wrap_content"
                                                 android:layout_height="match_parent"
                                                 android:fontFamily="@font/nunito_sans_bold"
@@ -486,28 +513,31 @@
                                                 android:textSize="15dp" />
 
                                         </LinearLayout>
+
                                         <LinearLayout
-                                            android:layout_alignParentRight="true"
-                                            android:layout_width="wrap_content"
+                                            android:layout_weight="2"
+                                            android:layout_width="0dp"
                                             android:layout_height="wrap_content">
 
                                             <TextView
+                                                android:textColor="@color/black"
                                                 android:layout_width="wrap_content"
                                                 android:layout_height="wrap_content"
                                                 android:text="Type :  "
                                                 android:textSize="15dp" />
 
                                             <TextView
+                                                android:maxLines="1"
                                                 android:layout_marginRight="3dp"
                                                 android:id="@+id/productType"
                                                 android:layout_width="match_parent"
                                                 android:layout_height="wrap_content"
-                                                android:text="             "
+                                                android:text=""
                                                 android:textSize="18sp" />
 
                                         </LinearLayout>
 
-                                    </RelativeLayout>
+                                    </LinearLayout>
 
                                     <RelativeLayout
                                         android:layout_width="match_parent"
@@ -518,6 +548,7 @@
                                             android:layout_height="wrap_content">
 
                                             <TextView
+                                                android:textColor="@color/black"
                                                 android:layout_width="wrap_content"
                                                 android:layout_height="match_parent"
                                                 android:fontFamily="@font/nunito_sans_bold"
@@ -588,7 +619,6 @@
                                 android:gravity="center"
                                 android:orientation="horizontal">
 
-
                                 <TextView
                                     android:id="@+id/shopD"
                                     android:layout_width="match_parent"
@@ -650,7 +680,7 @@
 
                             <LinearLayout
                                 android:layout_width="match_parent"
-                                android:layout_height="300dp"
+                                android:layout_height="match_parent"
                                 android:layout_marginBottom="30dp"
                                 android:orientation="vertical">
 
@@ -673,8 +703,7 @@
                                     android:id="@+id/fullProductViewReletetProuct"
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
-                                    android:orientation="horizontal"
-                                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
+                                  />
                             </LinearLayout>
 
                         </LinearLayout>

@@ -63,6 +63,9 @@ import com.mrsoftit.dukander.adapter.ReviewAdapter;
 import com.mrsoftit.dukander.modle.GlobleCustomerNote;
 import com.mrsoftit.dukander.modle.GlobleProductNote6;
 import com.mrsoftit.dukander.modle.ReviewComentNote;
+import com.smarteist.autoimageslider.IndicatorView.animation.type.IndicatorAnimationType;
+import com.smarteist.autoimageslider.SliderAnimations;
+import com.smarteist.autoimageslider.SliderView;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
@@ -76,9 +79,11 @@ import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
@@ -98,6 +103,16 @@ public class ProductFullViewOrderActivity extends AppCompatActivity {
     private Uri dynamicLink1 = null;
 
 
+    SliderView sliderView;
+    private SliderAdapterExamplepro adapter;
+    List<SliderItem> sliderItemList;
+    SliderItem sliderItem;
+    SliderItem sliderItem1;
+    SliderItem sliderItem2;
+    SliderItem sliderItem3;
+    SliderItem sliderItem4;
+    String cType;
+
     DecimalFormat df2 = new DecimalFormat("#.##");
 
     GlobleProductListAdapter6 globleProductListAdapter6;
@@ -112,7 +127,8 @@ public class ProductFullViewOrderActivity extends AppCompatActivity {
 
     Double commonPrice;
     private String proIdup,fromURL, proNameup,proPriceup,productCodeup,productPrivacyup,proImgeUrlup,
-            ShopNameup,ShopPhoneup,ShopAddressup,ShopImageUrlup,ShopIdup,UserIdup,productCategoryup,dateup,
+            proImgeUrlup1,proImgeUrlup2,proImgeUrlup3,proImgeUrlup4, ShopNameup,ShopPhoneup,ShopAddressup,
+            ShopImageUrlup,ShopIdup,UserIdup,productCategoryup,dateup,
             proQuaup,discuntup,tokenup,sizeup,descriptuionup,typeup,colorup;
 
     ProgressDialog progressDialog;
@@ -158,6 +174,12 @@ public class ProductFullViewOrderActivity extends AppCompatActivity {
         progressDialog.setMessage("Loading..."); // Setting Title
         progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         progressDialog.setCanceledOnTouchOutside(false);
+        sliderItemList = new ArrayList<>();
+        sliderItem = new SliderItem();
+        sliderItem1 = new SliderItem();
+        sliderItem2 = new SliderItem();
+        sliderItem3 = new SliderItem();
+        sliderItem4 = new SliderItem();
 
         androidx.appcompat.widget.Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_support);
 
@@ -181,6 +203,7 @@ public class ProductFullViewOrderActivity extends AppCompatActivity {
         productPriceDetails = findViewById(R.id.productPriceDetails);
         shopDetailName = findViewById(R.id.shopDetailName);
         shopDetailPhone = findViewById(R.id.shopDetailPhone);
+        sliderView = findViewById(R.id.imageSliderFullProductView);
 
 
 
@@ -243,8 +266,42 @@ public class ProductFullViewOrderActivity extends AppCompatActivity {
             }
             if (bundle.getString("proImgeUrlup")!=null){
                 proImgeUrlup = bundle.getString("proImgeUrlup");
-                String Url = proImgeUrlup;
-                Picasso.get().load(Url).into(productImageDetail);
+
+                sliderItem.setImageUrl(proImgeUrlup);
+                sliderItemList.add(sliderItem);
+              //  String Url = proImgeUrlup;
+               // Picasso.get().load(Url).into(productImageDetail);
+            }
+            if (bundle.getString("proImgeUrlup1")!=null){
+                proImgeUrlup1 = bundle.getString("proImgeUrlup1");
+
+                sliderItem1.setImageUrl(proImgeUrlup1);
+                sliderItemList.add(sliderItem1);
+                //  String Url = proImgeUrlup;
+                // Picasso.get().load(Url).into(productImageDetail);
+            }
+            if (bundle.getString("proImgeUrlup2")!=null){
+                proImgeUrlup2 = bundle.getString("proImgeUrlup2");
+
+                sliderItem2.setImageUrl(proImgeUrlup2);
+                sliderItemList.add(sliderItem2);
+                //  String Url = proImgeUrlup;
+                // Picasso.get().load(Url).into(productImageDetail);
+            }
+            if (bundle.getString("proImgeUrlup3")!=null){
+                proImgeUrlup3 = bundle.getString("proImgeUrlup3");
+
+                sliderItem3.setImageUrl(proImgeUrlup3);
+                sliderItemList.add(sliderItem3);
+                //  String Url = proImgeUrlup;
+                // Picasso.get().load(Url).into(productImageDetail);
+            }
+            if (bundle.getString("proImgeUrlup4")!=null){
+                proImgeUrlup4 = bundle.getString("proImgeUrlup4");
+                sliderItem4.setImageUrl(proImgeUrlup4);
+                sliderItemList.add(sliderItem4);
+                //  String Url = proImgeUrlup;
+                // Picasso.get().load(Url).into(productImageDetail);
             }
             if (bundle.getString("ShopNameup")!=null){
                 ShopNameup = bundle.getString("ShopNameup");
@@ -386,11 +443,8 @@ public class ProductFullViewOrderActivity extends AppCompatActivity {
                             if (model.getShopAddress()!=null){
                                 shopDetailAddress.setText(model.getShopAddress());
                             }
-
                         }
                     }
-
-
                 }
             });
 
@@ -574,6 +628,20 @@ public class ProductFullViewOrderActivity extends AppCompatActivity {
 
 
         reletedProduct(productCategoryup);
+
+        adapter = new SliderAdapterExamplepro(this);
+        sliderView.setSliderAdapter(adapter);
+        sliderView.setIndicatorAnimation(IndicatorAnimationType.WORM); //set indicator animation by using SliderLayout.IndicatorAnimations. :WORM or THIN_WORM or COLOR or DROP or FILL or NONE or SCALE or SCALE_DOWN or SLIDE and SWAP!!
+        sliderView.setSliderTransformAnimation(SliderAnimations.SIMPLETRANSFORMATION);
+        sliderView.setAutoCycleDirection(SliderView.AUTO_CYCLE_DIRECTION_BACK_AND_FORTH);
+        sliderView.setIndicatorSelectedColor(Color.WHITE);
+        sliderView.setIndicatorUnselectedColor(Color.GRAY);
+        sliderView.setScrollTimeInSec(3);
+        sliderView.setAutoCycle(true);
+        sliderView.startAutoCycle();
+
+        adapter.renewItems(sliderItemList);
+
     }
 
 
@@ -595,7 +663,7 @@ public class ProductFullViewOrderActivity extends AppCompatActivity {
     public void  reletedProduct(String catagory){
 
 
-            Query query = GlobleProduct.whereEqualTo("productCategory",catagory).whereEqualTo("productPrivacy","Public");
+            Query query = GlobleProduct.whereEqualTo("productCategory",catagory).whereEqualTo("productPrivacy","Public").limit(14);
 
             FirestoreRecyclerOptions<GlobleProductNote6> options = new FirestoreRecyclerOptions.Builder<GlobleProductNote6>()
                     .setQuery(query, GlobleProductNote6.class)
@@ -606,8 +674,10 @@ public class ProductFullViewOrderActivity extends AppCompatActivity {
 
             RecyclerView recyclerView = findViewById(R.id.fullProductViewReletetProuct);
             recyclerView.setHasFixedSize(true);
-            LinearLayoutManager linearLayoutManager = new LinearLayoutManager(ProductFullViewOrderActivity.this,RecyclerView.HORIZONTAL,false);
-            recyclerView.setLayoutManager(linearLayoutManager);
+           // LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+           // LinearLayoutManager linearLayoutManager = new LinearLayoutManager(ProductFullViewOrderActivity.this,RecyclerView.HORIZONTAL,false);
+              recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
+          //  recyclerView.setLayoutManager(linearLayoutManager);
             recyclerView.setAdapter(globleProductListAdapter6);
            globleProductListAdapter6.startListening();
 
@@ -622,6 +692,10 @@ public class ProductFullViewOrderActivity extends AppCompatActivity {
                     intent.putExtra("productCodeup",globleProductNote.getProductCode());
                     intent.putExtra("productPrivacyup",globleProductNote.getProductPrivacy());
                     intent.putExtra("proImgeUrlup",globleProductNote.getProImgeUrl());
+                    intent.putExtra("proImgeUrlup1",globleProductNote.getProImgeUrl1());
+                    intent.putExtra("proImgeUrlup2",globleProductNote.getProImgeUrl2());
+                    intent.putExtra("proImgeUrlup3",globleProductNote.getProImgeUrl3());
+                    intent.putExtra("proImgeUrlup4",globleProductNote.getProImgeUrl4());
                     intent.putExtra("ShopNameup",globleProductNote.getShopName());
                     intent.putExtra("ShopPhoneup",globleProductNote.getShopPhone());
                     intent.putExtra("ShopAddressup",globleProductNote.getShopAddress());

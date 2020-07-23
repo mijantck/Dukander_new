@@ -224,6 +224,10 @@ public class ProductListActivity extends AppCompatActivity {
                             ProductNote productNote = documentSnapshot.toObject(ProductNote.class);
                             String id = documentSnapshot.getId();
                             String imageurl = productNote.getProImgeUrl();
+                            String imageurl1 = productNote.getProImgeUrl1();
+                            String imageurl2 = productNote.getProImgeUrl2();
+                            String imageurl3 = productNote.getProImgeUrl3();
+                            String imageurl4 = productNote.getProImgeUrl4();
                             String name = productNote.getProName();
                             String color = productNote.getColor();
                             String Size = productNote.getSize();
@@ -239,8 +243,21 @@ public class ProductListActivity extends AppCompatActivity {
                             String discount = String.valueOf(productNote.getPruductDiscount());
                             Intent pdfIntent = new Intent(ProductListActivity.this, ProductAddActivity.class);
                             pdfIntent.putExtra("id", id);
+
                             if (imageurl != null) {
                                 pdfIntent.putExtra("imageurl", imageurl);
+                            }
+                            if (imageurl1 != null) {
+                                pdfIntent.putExtra("imageurl1", imageurl1);
+                            }
+                            if (imageurl2 != null) {
+                                pdfIntent.putExtra("imageurl2", imageurl2);
+                            }
+                            if (imageurl3 != null) {
+                                pdfIntent.putExtra("imageurl3", imageurl3);
+                            }
+                            if (imageurl4 != null) {
+                                pdfIntent.putExtra("imageurl4", imageurl4);
                             }
                             pdfIntent.putExtra("name", name);
                             pdfIntent.putExtra("code", barcode);
@@ -261,7 +278,7 @@ public class ProductListActivity extends AppCompatActivity {
                             }
 
 
-
+                            Toast.makeText(ProductListActivity.this, imageurl+"\n"+imageurl1+"\n"+imageurl2+"\n"+imageurl3+"\n"+imageurl4+"\n", Toast.LENGTH_SHORT).show();
                             startActivity(pdfIntent);
 
 
@@ -408,6 +425,10 @@ public class ProductListActivity extends AppCompatActivity {
                             ProductNote productNote = documentSnapshot.toObject(ProductNote.class);
                             String id = documentSnapshot.getId();
                             String imageurl = productNote.getProImgeUrl();
+                            String imageurl1 = productNote.getProImgeUrl1();
+                            String imageurl2 = productNote.getProImgeUrl2();
+                            String imageurl3 = productNote.getProImgeUrl3();
+                            String imageurl4 = productNote.getProImgeUrl4();
                             String name = productNote.getProName();
                             String color = productNote.getColor();
                             String Size = productNote.getSize();
@@ -421,8 +442,21 @@ public class ProductListActivity extends AppCompatActivity {
                             String discount = String.valueOf(productNote.getPruductDiscount());
                             Intent pdfIntent = new Intent(ProductListActivity.this, ProductAddActivity.class);
                             pdfIntent.putExtra("id", id);
+
                             if (imageurl != null) {
                                 pdfIntent.putExtra("imageurl", imageurl);
+                            }
+                            if (imageurl1 != null) {
+                                pdfIntent.putExtra("imageurl1", imageurl1);
+                            }
+                            if (imageurl2 != null) {
+                                pdfIntent.putExtra("imageurl2", imageurl2);
+                            }
+                            if (imageurl3 != null) {
+                                pdfIntent.putExtra("imageurl3", imageurl3);
+                            }
+                            if (imageurl4 != null) {
+                                pdfIntent.putExtra("imageurl4", imageurl4);
                             }
                             pdfIntent.putExtra("name", name);
                             pdfIntent.putExtra("code", barcode);
@@ -659,6 +693,10 @@ public class ProductListActivity extends AppCompatActivity {
                             ProductNote productNote = documentSnapshot.toObject(ProductNote.class);
                             String id = documentSnapshot.getId();
                             String imageurl = productNote.getProImgeUrl();
+                            String imageurl1 = productNote.getProImgeUrl1();
+                            String imageurl2 = productNote.getProImgeUrl2();
+                            String imageurl3 = productNote.getProImgeUrl3();
+                            String imageurl4 = productNote.getProImgeUrl4();
                             String name = productNote.getProName();
                             String Size = productNote.getSize();
                             String color = productNote.getColor();
@@ -677,6 +715,18 @@ public class ProductListActivity extends AppCompatActivity {
                                 pdfIntent.putExtra("imageurl", imageurl);
                             }
 
+                            if (imageurl1 != null) {
+                                pdfIntent.putExtra("imageurl1", imageurl1);
+                            }
+                            if (imageurl2 != null) {
+                                pdfIntent.putExtra("imageurl2", imageurl2);
+                            }
+                            if (imageurl3 != null) {
+                                pdfIntent.putExtra("imageurl3", imageurl3);
+                            }
+                            if (imageurl4 != null) {
+                                pdfIntent.putExtra("imageurl4", imageurl4);
+                            }
                             pdfIntent.putExtra("name", name);
                             pdfIntent.putExtra("code", barcode);
 

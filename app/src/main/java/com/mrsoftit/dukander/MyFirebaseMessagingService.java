@@ -46,6 +46,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
         final Intent intent = new Intent(this, NotificationActivity.class);
         NotificationManager notificationManager = (NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
+
         int notificationID = new Random().nextInt(3000);
 
       /*
@@ -61,7 +62,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                 PendingIntent.FLAG_ONE_SHOT);
 
         Bitmap largeIcon = BitmapFactory.decodeResource(getResources(),
-                R.drawable.noti_icon);
+                R.drawable.ic_launcher_foreground);
 
         Uri notificationSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this, ADMIN_CHANNEL_ID)
