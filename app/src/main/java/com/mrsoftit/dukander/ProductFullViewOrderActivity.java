@@ -386,6 +386,10 @@ public class ProductFullViewOrderActivity extends AppCompatActivity {
             }
         }
 
+
+        reletedProduct(productCategoryup);
+
+
         if (proIdup !=null && fromURL !=null ){
 
             CollectionReference fromURLToCollection = FirebaseFirestore.getInstance()
@@ -627,7 +631,6 @@ public class ProductFullViewOrderActivity extends AppCompatActivity {
         });
 
 
-        reletedProduct(productCategoryup);
 
         adapter = new SliderAdapterExamplepro(this);
         sliderView.setSliderAdapter(adapter);

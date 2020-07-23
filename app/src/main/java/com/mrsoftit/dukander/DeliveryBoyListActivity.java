@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
@@ -31,17 +32,23 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.mrsoftit.dukander.adapter.BoyAdapter;
 import com.mrsoftit.dukander.adapter.ShopProductOrderAdapter;
 import com.mrsoftit.dukander.modle.DeliveryBoyListNote;
+import com.mrsoftit.dukander.modle.NotificationNote;
 import com.mrsoftit.dukander.modle.OrderNote;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -55,6 +62,8 @@ public class DeliveryBoyListActivity extends AppCompatActivity {
     BoyAdapter boyAdapter;
     String  user_id;
 
+    ProgressDialog progressDialog;
+
 
     final private String FCM_API = "https://fcm.googleapis.com/fcm/send";
     final private String serverKey = "key=" + "AAAAttd1svE:APA91bFocWSMpJ4WTI-CI_plcvO9Cj31dB3ENhHybDmR4t2Do9yZZC4jEvylhxPfz-7RoTiWzUT3zZYUSb8pYy0-R4SUMhY5BmzXzZ9pYfrJljKvJgjFPyEw_mV_Z8xpzclcM6phwTkN";
@@ -66,7 +75,7 @@ public class DeliveryBoyListActivity extends AppCompatActivity {
     String TOPIC;
     RecyclerView recyclerView;
 
-      String customerID,shopUserID,customerToken,productID;
+      String customerID,shopUserID,customerToken,productID,productName,productURL,shopName,orderID;
 
 
 
@@ -96,16 +105,20 @@ public class DeliveryBoyListActivity extends AppCompatActivity {
         Bundle bundle = getIntent().getExtras();
 
         if (bundle !=null){
-            customerID = bundle.getString("customerID");
-            shopUserID = bundle.getString("shopUserID");
+
+            customerID = bundle.getString("cutomerID");
+            shopUserID = bundle.getString("userID");
             customerToken = bundle.getString("customerToken");
             productID = bundle.getString("productID");
+            productName = bundle.getString("productName");
+            productURL = bundle.getString("productURL");
+            shopName = bundle.getString("shopName");
+            orderID = bundle.getString("orderID");
 
         }
 
 
-
-
+        Toast.makeText(this, customerID+"", Toast.LENGTH_SHORT).show();
 
         recyclear();
 
@@ -138,7 +151,18 @@ public class DeliveryBoyListActivity extends AppCompatActivity {
                 DeliveryBoyListNote deliveryBoyListNote = documentSnapshot.toObject(DeliveryBoyListNote.class);
                 final String boyName = deliveryBoyListNote.getBoyName();
                 final String boyPhone = deliveryBoyListNote.getBoyPhone();
+                final String boyid = deliveryBoyListNote.getId();
 
+                progressDialog = new ProgressDialog(DeliveryBoyListActivity.this);
+                // Setting Message
+                progressDialog.setMessage("Loading..."); // Setting Title
+                progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+                progressDialog.show();
+
+                Date calendar1 = Calendar.getInstance().getTime();
+                DateFormat df1 = new SimpleDateFormat("yyMMddHHmm");
+                String todayString = df1.format(calendar1);
+                final int datereview = Integer.parseInt(todayString);
 
                 final CollectionReference customerForOrder = FirebaseFirestore.getInstance()
                         .collection("Globlecustomers").document(customerID).collection("OrderList");
@@ -148,23 +172,36 @@ public class DeliveryBoyListActivity extends AppCompatActivity {
 
                 final CollectionReference globleForOrder = FirebaseFirestore.getInstance()
                         .collection("GlobleOrderList");
+                final CollectionReference Notification = FirebaseFirestore.getInstance()
+
+                        .collection("Globlecustomers").document(customerID).collection("Notification");
 
 
 
-                shopForOrder.document(productID).update("deliveryBoyName",boyName,"deliveryBoyPhone",boyPhone).addOnCompleteListener(new OnCompleteListener<Void>() {
+
+                shopForOrder.document(productID).update("deliveryBoyName",boyName,"deliveryBoyPhone",boyPhone,"deliveryBoyID",boyid,"deliveryBoyPanding","Pending","deliveryBoySelectDate",datereview).addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
-                        customerForOrder.document(productID).update("deliveryBoyName",boyName,"deliveryBoyPhone",boyPhone).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        customerForOrder.document(productID).update("deliveryBoyName",boyName,"deliveryBoyPhone",boyPhone,"deliveryBoyID",boyid,"deliveryBoyPanding","Pending","deliveryBoySelectDate",datereview).addOnCompleteListener(new OnCompleteListener<Void>() {
                             @Override
                             public void onComplete(@NonNull Task<Void> task) {
-                                globleForOrder.document(productID).update("deliveryBoyName",boyName,"deliveryBoyPhone",boyPhone).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                globleForOrder.document(productID).update("deliveryBoyName",boyName,"deliveryBoyPhone",boyPhone,"deliveryBoyID",boyid,"deliveryBoyPanding","Pending","deliveryBoySelectDate",datereview).addOnCompleteListener(new OnCompleteListener<Void>() {
                                     @Override
                                     public void onComplete(@NonNull Task<Void> task) {
 
-                                        notificationSend(customerToken);
+                                        Notification.add(new NotificationNote("Order Status",productName,productURL,shopName,orderID,null,datereview))
+                                                .addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
+                                                    @Override
+                                                    public void onComplete(@NonNull Task<DocumentReference> task) {
 
-                                        startActivity(new Intent(DeliveryBoyListActivity.this,ShopOrderlistActivity.class));
-                                        finish();
+                                                        notificationSend(customerToken);
+                                                        progressDialog.dismiss();
+                                                        startActivity(new Intent(DeliveryBoyListActivity.this,ShopOrderlistActivity.class));
+                                                        finish();
+                                                    }
+                                                });
+
+
 
                                     }
                                 });

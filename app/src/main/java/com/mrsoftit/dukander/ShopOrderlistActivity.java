@@ -34,6 +34,7 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
@@ -41,11 +42,16 @@ import com.mrsoftit.dukander.adapter.BoyAdapter;
 import com.mrsoftit.dukander.adapter.ProductOrderAdapter;
 import com.mrsoftit.dukander.adapter.ShopProductOrderAdapter;
 import com.mrsoftit.dukander.modle.DeliveryBoyListNote;
+import com.mrsoftit.dukander.modle.NotificationNote;
 import com.mrsoftit.dukander.modle.OrderNote;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -142,6 +148,17 @@ public class ShopOrderlistActivity extends AppCompatActivity {
                 String shopUserID =  orderNote.getUserID();
                 final String customerToken = orderNote.getCustomerToken();
                 final String productID =  orderNote.getOrderID();
+                final String productName =  orderNote.getProductName();
+                final String productURL =  orderNote.getProductURL();
+                final String shopName =  orderNote.getShopName();
+                final String orderID =  orderNote.getOrderID();
+
+                Date calendar1 = Calendar.getInstance().getTime();
+                DateFormat df1 = new SimpleDateFormat("yyMMddHHmm");
+                String todayString = df1.format(calendar1);
+                final int datereview = Integer.parseInt(todayString);
+
+
 
 
                 final CollectionReference customerForOrder = FirebaseFirestore.getInstance()
@@ -152,6 +169,10 @@ public class ShopOrderlistActivity extends AppCompatActivity {
 
                 final CollectionReference globleForOrder = FirebaseFirestore.getInstance()
                         .collection("GlobleOrderList");
+                final CollectionReference Notification = FirebaseFirestore.getInstance()
+
+                        .collection("Globlecustomers").document(customerID).collection("Notification");
+
 
 
                 final Dialog dialog = new Dialog(ShopOrderlistActivity.this);
@@ -180,8 +201,17 @@ public class ShopOrderlistActivity extends AppCompatActivity {
                                             @Override
                                             public void onComplete(@NonNull Task<Void> task) {
 
-                                                dialog.dismiss();
-                                                notificationSend(customerToken,"Confirm Order",ProductName);
+
+                                                Notification.add(new NotificationNote("Confirm from Shop ",productName,productURL,shopName,orderID,null,datereview))
+                                                        .addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
+                                                            @Override
+                                                            public void onComplete(@NonNull Task<DocumentReference> task) {
+
+                                                                dialog.dismiss();
+                                                                notificationSend(customerToken,"Confirm Order",ProductName);
+                                                            }
+                                                        });
+
 
 
                                             }
@@ -209,8 +239,17 @@ public class ShopOrderlistActivity extends AppCompatActivity {
                                             @Override
                                             public void onComplete(@NonNull Task<Void> task) {
 
-                                                dialog.dismiss();
-                                                notificationSend(customerToken,"Delivery DONE. Thanks And welcome",ProductName);
+
+                                                Notification.add(new NotificationNote("Delivery DONE. Thanks And welcome",productName,productURL,shopName,orderID,null,datereview))
+                                                        .addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
+                                                            @Override
+                                                            public void onComplete(@NonNull Task<DocumentReference> task) {
+
+                                                                dialog.dismiss();
+                                                                notificationSend(customerToken,"Delivery DONE. Thanks And welcome",ProductName);
+
+                                                            }
+                                                        });
 
                                             }
                                         })  ;
@@ -237,7 +276,17 @@ public class ShopOrderlistActivity extends AppCompatActivity {
                                             @Override
                                             public void onComplete(@NonNull Task<Void> task) {
 
-                                                notificationSend(customerToken,"Cancel from Shop",ProductName);
+                                                Notification.add(new NotificationNote("Delivery DONE. Thanks And welcome",productName,productURL,shopName,orderID,null,datereview))
+                                                        .addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
+                                                            @Override
+                                                            public void onComplete(@NonNull Task<DocumentReference> task) {
+
+                                                                notificationSend(customerToken,"Cancel from Shop",ProductName);
+                                                                dialog.dismiss();
+
+                                                            }
+                                                        });
+
 
                                             }
                                         })  ;

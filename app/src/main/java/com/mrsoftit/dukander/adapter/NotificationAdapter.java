@@ -5,6 +5,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -40,7 +41,10 @@ public class NotificationAdapter extends FirestoreRecyclerAdapter<NotificationNo
 
     @Override
     protected void onBindViewHolder(@NonNull ViewHolde holder, int position, @NonNull NotificationNote model) {
-        holder.NotificationTitle.setText(model.getNotiTaile());
+        if (model.getNotiTaile() !=null){
+            holder.NotificationTitlett.setText(model.getNotiTaile());
+        }
+
         holder.Noti_product_name_textView.setText(model.getNotiProductName());
         holder.Noti_product_detais_textView.setText(model.getNotiproductDetails());
 
@@ -65,7 +69,7 @@ public class NotificationAdapter extends FirestoreRecyclerAdapter<NotificationNo
     @NonNull
     @Override
     public ViewHolde onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.review_comment_single_item,
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.notification_single_layout,
                 parent, false);
         return new ViewHolde(v);
     }
@@ -73,14 +77,14 @@ public class NotificationAdapter extends FirestoreRecyclerAdapter<NotificationNo
     public class ViewHolde extends RecyclerView.ViewHolder {
 
 
-        TextView NotificationTitle,Noti_product_name_textView,noti_Date_And_Time,Noti_product_detais_textView;
+        TextView NotificationTitlett,Noti_product_name_textView,noti_Date_And_Time,Noti_product_detais_textView;
         ImageView  noti_Imgae__URL;
 
         public ViewHolde(@NonNull View itemView) {
             super(itemView);
 
 
-            NotificationTitle = itemView.findViewById(R.id.NotificationTitle);
+            NotificationTitlett = itemView.findViewById(R.id.NotificationTitleview);
             Noti_product_name_textView = itemView.findViewById(R.id.Noti_product_name_textView);
             noti_Date_And_Time = itemView.findViewById(R.id.noti_Date_And_Time);
             Noti_product_detais_textView = itemView.findViewById(R.id.Noti_product_detais_textView);

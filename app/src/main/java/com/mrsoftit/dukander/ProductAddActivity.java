@@ -17,6 +17,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.icu.text.DecimalFormat;
 import android.media.AudioManager;
 import android.media.ToneGenerator;
 import android.net.ConnectivityManager;
@@ -120,6 +121,8 @@ public class ProductAddActivity extends AppCompatActivity implements EasyPermiss
 
     FloatingActionButton imageSeletprioduct;
 
+    DecimalFormat df2 = new DecimalFormat("#.##");
+
 
    private Spinner privacyspinner;
     String privacyspinneritem;
@@ -215,7 +218,7 @@ public class ProductAddActivity extends AppCompatActivity implements EasyPermiss
 
                     if (Approved.equals("pending")){
 
-                      /*  new MaterialAlertDialogBuilder(ProductAddActivity.this)
+                        new MaterialAlertDialogBuilder(ProductAddActivity.this)
                                 .setMessage("Please! Approved from A2ZLOJA. Contact us")
                                 .setCancelable(false)
                                 .setPositiveButton("GOT IT", new DialogInterface.OnClickListener() {
@@ -233,7 +236,7 @@ public class ProductAddActivity extends AppCompatActivity implements EasyPermiss
 
                                     }
                                 })
-                                .show();*/
+                                .show();
 
                     }
 
@@ -307,7 +310,6 @@ public class ProductAddActivity extends AppCompatActivity implements EasyPermiss
             public void onClick(View v) {
 
 
-                Toast.makeText(ProductAddActivity.this, mImageUriS+"  "+mImageUri1S+"   "+mImageUri2S, Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -619,7 +621,6 @@ public class ProductAddActivity extends AppCompatActivity implements EasyPermiss
 
               privacyspinneritem = parent.getItemAtPosition(position).toString();
 
-
             }
 
             @Override
@@ -756,7 +757,7 @@ public class ProductAddActivity extends AppCompatActivity implements EasyPermiss
                 final String dicount = pruductDiscount.getText().toString();
 
 
-/*
+
 
                 if (TextUtils.isEmpty(name) ){
                     Toast.makeText(getApplicationContext(), "Product Name...", Toast.LENGTH_LONG).show();
@@ -789,7 +790,7 @@ public class ProductAddActivity extends AppCompatActivity implements EasyPermiss
                     Toast.makeText(getApplicationContext(), " Product Information filup ", Toast.LENGTH_LONG).show();
                     return;
                 }
-*/
+
 
                 if (!dicount.isEmpty()){
                     if (pdicount>=100 && pdicount<=1){
@@ -830,6 +831,7 @@ public class ProductAddActivity extends AppCompatActivity implements EasyPermiss
                             haveProductInvestment = pqinvestment - pq;
                             totalPriceInvestment = haveProductInvestment * pp;
                             invest(pnmae,haveProductInvestment,totalPriceInvestment);
+
                         }
                     }
 
@@ -901,48 +903,14 @@ public class ProductAddActivity extends AppCompatActivity implements EasyPermiss
 
                   //  CustomerInfoUpload( mImageUri);
 
-                    Toast.makeText(ProductAddActivity.this, " else if (mImageUri!=null){   "+mImageUri, Toast.LENGTH_SHORT).show();
-
                     if (mImageUri != null && uploadtnumber == 0 ){
 
                         uploadImageUri( mImageUri);
 
-                     //   Toast.makeText(ProductAddActivity.this, " if (mImageUri != null && uploadtnumber == 0 ){", Toast.LENGTH_SHORT).show();
+
                     }
                 }
 
-
-               /* if (bundle !=null){
-
-                    if (mImageUri !=null){
-                        uploadImageUri( mImageUri);
-                        Toast.makeText(ProductAddActivity.this, "mImageUri", Toast.LENGTH_SHORT).show();
-                    }
-                    if (mImageUri1 !=null){
-                        uploadImageUri1( mImageUri1);
-                        Toast.makeText(ProductAddActivity.this, "mImageUri1", Toast.LENGTH_SHORT).show();
-                    }
-                    if (mImageUri2 !=null){
-                        uploadImageUri2( mImageUri2);
-                        Toast.makeText(ProductAddActivity.this, "mImageUri2", Toast.LENGTH_SHORT).show();
-
-                    }
-                    if (mImageUri3 !=null){
-                        uploadImageUri2( mImageUri2);
-                        Toast.makeText(ProductAddActivity.this, "mImageUri3", Toast.LENGTH_SHORT).show();
-
-                    }
-                    if (mImageUri3 !=null){
-                        uploadImageUri3( mImageUri3);
-                        Toast.makeText(ProductAddActivity.this, "mImageUri4", Toast.LENGTH_SHORT).show();
-
-                    }
-                    if (mImageUri4 !=null){
-                        uploadImageUri4( mImageUri4);
-                        Toast.makeText(ProductAddActivity.this, "mImageUri5", Toast.LENGTH_SHORT).show();
-
-                    }
-                }*/
 
 
             }
@@ -1173,7 +1141,6 @@ public class ProductAddActivity extends AppCompatActivity implements EasyPermiss
 
                         mImageUriS = downloadLink;
 
-                        Toast.makeText(ProductAddActivity.this, mImageUriS+" first", Toast.LENGTH_SHORT).show();
                         uploadtnumber = 1;
 
                         if (mImageUri1 !=null && uploadtnumber == 1 ){
@@ -1201,7 +1168,6 @@ public class ProductAddActivity extends AppCompatActivity implements EasyPermiss
     }
     private void uploadImageUri1(Uri imageUri ){
 
-        Toast.makeText(this, "get method", Toast.LENGTH_SHORT).show();
         try {
             File file = new File(Environment.getExternalStorageDirectory(), "profilePicTemp");
 
@@ -1220,7 +1186,6 @@ public class ProductAddActivity extends AppCompatActivity implements EasyPermiss
                 public void onSuccess(final String downloadLink) {
 
                         mImageUri1S = downloadLink;
-                        Toast.makeText(ProductAddActivity.this, mImageUri1S+" secend", Toast.LENGTH_SHORT).show();
                         uploadtnumber = 2;
 
                         if (mImageUri2 != null && uploadtnumber == 2 ){
@@ -1311,7 +1276,6 @@ public class ProductAddActivity extends AppCompatActivity implements EasyPermiss
                 public void onSuccess(final String downloadLink) {
 
                         mImageUri2S = downloadLink;
-                        Toast.makeText(ProductAddActivity.this, mImageUri2S+" thert ", Toast.LENGTH_SHORT).show();
                         uploadtnumber = 3;
 
                         if (mImageUri3 != null && uploadtnumber == 3 ){
@@ -1669,7 +1633,6 @@ public class ProductAddActivity extends AppCompatActivity implements EasyPermiss
 
     private void initialiseDetectorsAndSources() {
 
-        //Toast.makeText(getApplicationContext(), "Barcode scanner started", Toast.LENGTH_SHORT).show();
 
         barcodeDetector = new BarcodeDetector.Builder(this)
                 .setBarcodeFormats(Barcode.ALL_FORMATS)
@@ -1712,7 +1675,6 @@ public class ProductAddActivity extends AppCompatActivity implements EasyPermiss
         barcodeDetector.setProcessor(new Detector.Processor<Barcode>() {
             @Override
             public void release() {
-                // Toast.makeText(getApplicationContext(), "To prevent memory leaks barcode scanner has been stopped", Toast.LENGTH_SHORT).show();
             }
 
             @Override

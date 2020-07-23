@@ -41,7 +41,7 @@
 
                 <TextView
                     android:fontFamily="@font/nunito_sans_bold"
-                    android:id="@+id/NotificationTitle"
+                    android:id="@+id/NotificationTitleview"
                     android:textSize="13dp"
                     android:textColor="@color/primaryTextColor"
                     android:text="Mijanur"

@@ -148,7 +148,7 @@ public class ShopListActivity extends AppCompatActivity {
     public void ShopSearch(String ShopName){
 
 
-        Query query = GlobleSoplist.orderBy("search").startAt(ShopName.toLowerCase()).endAt(ShopName.toLowerCase()+ "\uf8ff");
+        Query query = GlobleSoplist.whereEqualTo("approved","certify").orderBy("search").startAt(ShopName.toLowerCase()).endAt(ShopName.toLowerCase()+ "\uf8ff");
 
         FirestoreRecyclerOptions<Shop_list_note> options = new FirestoreRecyclerOptions.Builder<Shop_list_note>()
                 .setQuery(query, Shop_list_note.class)

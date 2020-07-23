@@ -25,6 +25,8 @@ public class OrderNote {
     private String orderStatus;
     private String deliveryBoyName;
     private String deliveryBoyPhone;
+    private String deliveryBoyPanding;
+    private int deliveryBoySelectDate;
     private String customerToken;
     private String size;
     private String color;
@@ -40,7 +42,9 @@ public class OrderNote {
                      String shopPhone, String shopAddress, String shopID, String userID, String orderID, int orderDate,
                      String productName, String productID, String productURL, String productCode, String productPrice,
                      String productQuantity, String offerForShop, String offerForcoupon, String confirmetionStatus,
-                     String orderStatus, String deliveryBoyName, String deliveryBoyPhone, String customerToken,String size,String color,
+                     String orderStatus, String deliveryBoyName, String deliveryBoyPhone,String deliveryBoyId,
+                     String deliveryBoyPanding,int deliveryBoySelectDate,
+                     String customerToken,String size,String color,
                      String type) {
         this.cutomerName = cutomerName;
         this.cutomerPhone = cutomerPhone;
@@ -65,10 +69,30 @@ public class OrderNote {
         this.orderStatus = orderStatus;
         this.deliveryBoyName = deliveryBoyName;
         this.deliveryBoyPhone = deliveryBoyPhone;
+        this.deliveryBoyId = deliveryBoyId;
+        this.deliveryBoyPanding = deliveryBoyPanding;
+        this.deliveryBoySelectDate = deliveryBoySelectDate;
         this.customerToken = customerToken;
         this.size = size;
         this.color = color;
         this.type = type;
+    }
+
+    public int getDeliveryBoySelectDate() {
+        return deliveryBoySelectDate;
+    }
+
+    public void setDeliveryBoySelectDate(int deliveryBoySelectDate) {
+        this.deliveryBoySelectDate = deliveryBoySelectDate;
+    }
+
+
+    public String getDeliveryBoyPanding() {
+        return deliveryBoyPanding;
+    }
+
+    public void setDeliveryBoyPanding(String deliveryBoyPanding) {
+        this.deliveryBoyPanding = deliveryBoyPanding;
     }
 
     public String getColor() {

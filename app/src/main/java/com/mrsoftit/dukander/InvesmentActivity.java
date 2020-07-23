@@ -15,6 +15,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
+import android.icu.text.DecimalFormat;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
@@ -64,6 +65,9 @@ public class InvesmentActivity extends AppCompatActivity {
     EditText payeditetext,moneyInvest_withdrow_ditails_editeTEaxt;
     TextView TitleTExt,paymentLooding,Totalinvestment;
 
+    DecimalFormat df2 = new DecimalFormat("#.##");
+
+
 
 
     @Override
@@ -110,7 +114,7 @@ public class InvesmentActivity extends AppCompatActivity {
                 dialoginvest.setCanceledOnTouchOutside(false);
                 final Button okButton = dialoginvest.findViewById(R.id.addmoney);
                 final TextView Titel = dialoginvest.findViewById(R.id.TitleTExt);
-                Titel.setText("বিনিয়োগ ");
+                Titel.setText("investment ");
                 Button cancelButton = dialoginvest.findViewById(R.id.cancelButton);
 
 
@@ -126,12 +130,12 @@ public class InvesmentActivity extends AppCompatActivity {
                     public void onClick(View v) {
 
                         final ProgressDialog pd = new ProgressDialog(InvesmentActivity.this);
-                        pd.setMessage("লোড করছে...");
+                        pd.setMessage("Loading...");
                         pd.setCancelable(false);
                         String investmenttaka=    payeditetext.getText().toString();
 
                         if (investmenttaka.isEmpty()){
-                            Toast.makeText(InvesmentActivity.this, "বিনিয়োগ ফাঁকা ", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(InvesmentActivity.this, "Investment is empty ", Toast.LENGTH_SHORT).show();
                             return;
                         }
                    double aDoubleinvestmenttaka = Double.parseDouble(investmenttaka);
@@ -208,7 +212,7 @@ public class InvesmentActivity extends AppCompatActivity {
 
                     }
 
-                    Totalinvestment.setText(totalpaybilint+"");
+                    Totalinvestment.setText(df2.format(totalpaybilint)+"");
 
                 }
             }

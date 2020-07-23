@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
@@ -39,6 +40,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.InstanceIdResult;
 import com.mrsoftit.dukander.modle.GlobleCustomerNote;
+import com.mrsoftit.dukander.modle.NotificationNote;
 import com.mrsoftit.dukander.modle.OrderNote;
 import com.squareup.picasso.Picasso;
 
@@ -85,7 +87,8 @@ public class ConfirmOrderActivity extends AppCompatActivity {
 
    private TextInputEditText Shipping_name,Shipping_Phone,Shipping_Address;
    private TextView orderProductName,orderProductPriceSingle,orderProductQuantidy,orderProductTotalPrice,orderProductCoponCodeParsent,
-           withCoponCodeprice,orderProductShipingLearnMore,orderProductShippingCharge,orderProductTotalBill,withDiscuntprice,orderProductDicunt,coponProviderTextView;
+           withCoponCodeprice,orderProductShipingLearnMore,orderProductShippingCharge,orderProductTotalBill,withDiscuntprice,
+           orderProductDicunt,coponProviderTextView;
    private EditText orderProductCoponCode;
    private Button OrderConfirm;
    private ImageView orderProductCoponCodeButton;
@@ -279,6 +282,23 @@ public class ConfirmOrderActivity extends AppCompatActivity {
         });
 
 
+        orderProductShipingLearnMore.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                new MaterialAlertDialogBuilder(ConfirmOrderActivity.this)
+                        .setTitle("Delivery Charge list ")
+                        .setMessage("First 5 km 30 tk.than per km 5 tk.")
+                        .setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                dialogInterface.dismiss();
+                            }
+                        })
+                        .show();
+
+            }
+        });
         OrderConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -308,6 +328,8 @@ public class ConfirmOrderActivity extends AppCompatActivity {
                         }
                     }
                 });
+
+
                progressDialog.show();
 
 
@@ -324,6 +346,9 @@ public class ConfirmOrderActivity extends AppCompatActivity {
 
                 final CollectionReference globleForOrder = FirebaseFirestore.getInstance()
                         .collection("GlobleOrderList");
+                final CollectionReference Notification = FirebaseFirestore.getInstance()
+                        .collection("users").document(UserIdup).collection("Notification");
+
 
 
 
@@ -333,7 +358,7 @@ public class ConfirmOrderActivity extends AppCompatActivity {
                 customerForOrder.add(new OrderNote(ShippingName,ShippingPhone,ShippingAddress,globlecutouser_id,ShopNameup,ShopPhoneup,
                         ShopAddressup,ShopIdup,UserIdup,null,datereview,proNameup,proIdup,proImgeUrlup,productCodeup,
                         TotalproductPrice,proQuaup,discuntup,"promocode",null,null,
-                        null,null,customertoken,size,colorup,typeup))
+                        null,null,null,null,0,customertoken,size,colorup,typeup))
                         .addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
                             @Override
                             public void onComplete(@NonNull Task<DocumentReference> task) {
@@ -367,6 +392,8 @@ public class ConfirmOrderActivity extends AppCompatActivity {
                                             ConfirmOrder.put("orderStatus",null);
                                             ConfirmOrder.put("deliveryBoyName",null);
                                             ConfirmOrder.put("deliveryBoyPhone",null);
+                                            ConfirmOrder.put("deliveryBoyID",null);
+                                            ConfirmOrder.put("deliveryBoyPanding",null);
                                             ConfirmOrder.put("customerToken",customertoken);
                                             ConfirmOrder.put("color", colorup);
                                             ConfirmOrder.put("type", typeup);
@@ -379,10 +406,17 @@ public class ConfirmOrderActivity extends AppCompatActivity {
                                                         @Override
                                                         public void onComplete(@NonNull Task<Void> task) {
 
+                                                            Notification.add(new NotificationNote("Order",proNameup,proImgeUrlup,ShippingName,orderID,null,datereview))
+                                                                    .addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
+                                                                        @Override
+                                                                        public void onComplete(@NonNull Task<DocumentReference> task) {
 
-                                                            notificationSend(tokenup);
-
-                                                       progressDialog.dismiss();
+                                                                            notificationSend(tokenup);
+                                                                           progressDialog.dismiss();
+                                                                            startActivity(new Intent(ConfirmOrderActivity.this,OrderListActivity.class));
+                                                                            finish();
+                                                                        }
+                                                                    });
 
                                                         }
                                                     });
@@ -403,89 +437,101 @@ public class ConfirmOrderActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                progressDialog.show();
-               String couponCode =  orderProductCoponCode.getText().toString();
 
-               if (couponCode.isEmpty()){
+                if ( proPrice <= 500 || proPrice >= 900 || productCategoryup.equals("Mobiles") ){
 
-                   progressDialog.dismiss();
-                   Toast.makeText(ConfirmOrderActivity.this, " Coupon Code is not Empty", Toast.LENGTH_SHORT).show();
-                   return;
-               }
-               if (!couponCode.isEmpty()){
-                   CollectionReference cuopneCode = FirebaseFirestore.getInstance()
-                           .collection("couponCode");
-
-                   Query query = cuopneCode.whereEqualTo("couponCode",couponCode);
-
-                   query.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                       @Override
-                       public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                           if (task.isSuccessful()){
-
-                               progressDialog.dismiss();
-
-                               coponcodProviderLayout.setVisibility(View.VISIBLE);
-                               coponcodesetLayout.setVisibility(View.GONE);
-                               Double discount = null;
-                               Double price = Double.valueOf(commonPriceup);
-
-                               for (QueryDocumentSnapshot document : Objects.requireNonNull(task.getResult())) {
-                                   CouponCode couponCode1 = document.toObject(CouponCode.class);
-
-                                   coponProviderTextView.setText(couponCode1.getNameProvider());
-                                   orderProductCoponCodeParsent.setText(couponCode1.getCopuOffer()+"");
-
-                                   discount =Double.valueOf(couponCode1.getCopuOffer());
-                               }
-
-                               if (discount!=null && price!=null){
-
-                                   Toast.makeText(ConfirmOrderActivity.this, price + discount+" ", Toast.LENGTH_SHORT).show();
-
-                                   withCoponcode = calcuateDiscount(price,discount);
-
-                                   withCoponCodeprice.setText( withCoponcode+"");
-
-                                   withCoponcode = withCoponcode+30;
-                                   orderProductTotalBill.setText(withCoponcode+"");
-                               }
+                    new MaterialAlertDialogBuilder(ConfirmOrderActivity.this)
+                            .setMessage("This Coupon code can not use  ")
+                            .setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    dialogInterface.dismiss();
+                                }
+                            })
+                            .show();
+                }
+                else {
 
 
-                               if (discount == null){
+                    progressDialog.show();
+                    String couponCode = orderProductCoponCode.getText().toString();
 
+                    if (couponCode.isEmpty()) {
 
-                                   new MaterialAlertDialogBuilder(ConfirmOrderActivity.this)
-                                           .setTitle(" Sorry ")
-                                           .setMessage("This Coupon code not use")
-                                           .setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
-                                               @Override
-                                               public void onClick(DialogInterface dialogInterface, int i) {
-                                                   dialogInterface.dismiss();
-                                               }
-                                           })
-                                           .show();
-                               }
+                        progressDialog.dismiss();
+                        Toast.makeText(ConfirmOrderActivity.this, " Coupon Code is not Empty", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                    if (!couponCode.isEmpty()) {
+                        CollectionReference cuopneCode = FirebaseFirestore.getInstance()
+                                .collection("couponCode");
 
-                           }else {
-                               progressDialog.dismiss();
-                               new MaterialAlertDialogBuilder(ConfirmOrderActivity.this)
-                                       .setTitle(" Sorry ")
-                                       .setMessage("This Coupon code not use")
-                                       .setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
-                                           @Override
-                                           public void onClick(DialogInterface dialogInterface, int i) {
-                                               dialogInterface.dismiss();
-                                           }
-                                       })
-                                       .show();
-                           }
-                       }
-                   });
+                        Query query = cuopneCode.whereEqualTo("couponCode", couponCode);
 
-               }
+                        query.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                if (task.isSuccessful()) {
 
+                                    progressDialog.dismiss();
 
+                                    coponcodProviderLayout.setVisibility(View.VISIBLE);
+                                    coponcodesetLayout.setVisibility(View.GONE);
+                                    Double discount = null;
+                                    Double price = Double.valueOf(commonPriceup);
+
+                                    for (QueryDocumentSnapshot document : Objects.requireNonNull(task.getResult())) {
+                                        CouponCode couponCode1 = document.toObject(CouponCode.class);
+
+                                        coponProviderTextView.setText(couponCode1.getNameProvider());
+                                        orderProductCoponCodeParsent.setText(couponCode1.getCopuOffer() + "");
+
+                                        discount = Double.valueOf(couponCode1.getCopuOffer());
+                                    }
+
+                                    if (discount != null && price != null) {
+
+                                        Toast.makeText(ConfirmOrderActivity.this, price + discount + " ", Toast.LENGTH_SHORT).show();
+
+                                        withCoponcode = calcuateDiscount(price, discount);
+
+                                        withCoponCodeprice.setText(withCoponcode + "");
+
+                                        withCoponcode = withCoponcode + 30;
+                                        orderProductTotalBill.setText(withCoponcode + "");
+                                    }
+                                    if (discount == null) {
+                                        new MaterialAlertDialogBuilder(ConfirmOrderActivity.this)
+                                                .setTitle(" Sorry ")
+                                                .setMessage("This Coupon code not use")
+                                                .setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
+                                                    @Override
+                                                    public void onClick(DialogInterface dialogInterface, int i) {
+                                                        dialogInterface.dismiss();
+                                                    }
+                                                })
+                                                .show();
+                                    }
+
+                                } else {
+                                    progressDialog.dismiss();
+                                    new MaterialAlertDialogBuilder(ConfirmOrderActivity.this)
+                                            .setTitle(" Sorry ")
+                                            .setMessage("This Coupon code not use")
+                                            .setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
+                                                @Override
+                                                public void onClick(DialogInterface dialogInterface, int i) {
+                                                    dialogInterface.dismiss();
+                                                }
+                                            })
+                                            .show();
+                                }
+                            }
+                        });
+
+                    }
+
+                }
             }
         });
 
@@ -517,7 +563,7 @@ public class ConfirmOrderActivity extends AppCompatActivity {
 
         TOPIC = "Product Order ";
 
-        String news_feed = "Order fom "+Shipping_name.getText().toString() +"Product Name "+proNameup;
+        String news_feed = "Order fom :"+Shipping_name.getText().toString() +" Product Name :"+proNameup;
 
         NOTIFICATION_TITLE = TOPIC;
         NOTIFICATION_MESSAGE = news_feed;
