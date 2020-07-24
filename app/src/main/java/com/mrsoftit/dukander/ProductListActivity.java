@@ -278,7 +278,6 @@ public class ProductListActivity extends AppCompatActivity {
                             }
 
 
-                            Toast.makeText(ProductListActivity.this, imageurl+"\n"+imageurl1+"\n"+imageurl2+"\n"+imageurl3+"\n"+imageurl4+"\n", Toast.LENGTH_SHORT).show();
                             startActivity(pdfIntent);
 
 

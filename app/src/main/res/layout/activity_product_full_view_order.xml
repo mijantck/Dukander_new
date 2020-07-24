@@ -680,7 +680,7 @@
 
                             <LinearLayout
                                 android:layout_width="match_parent"
-                                android:layout_height="match_parent"
+                                android:layout_height="280dp"
                                 android:layout_marginBottom="30dp"
                                 android:orientation="vertical">
 
@@ -703,6 +703,8 @@
                                     android:id="@+id/fullProductViewReletetProuct"
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
+                                    android:orientation="horizontal"
+                                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                                   />
                             </LinearLayout>
 

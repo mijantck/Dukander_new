@@ -67,6 +67,8 @@ import com.mrsoftit.dukander.adapter.GlobleProductListAdapter3;
 import com.mrsoftit.dukander.adapter.GlobleProductListAdapter4;
 import com.mrsoftit.dukander.adapter.GlobleProductListAdapter5;
 import com.mrsoftit.dukander.adapter.GlobleProductListAdapter6;
+import com.mrsoftit.dukander.adapter.GlobleProductListAdapter7;
+import com.mrsoftit.dukander.adapter.GlobleProductListAdapter8;
 import com.mrsoftit.dukander.adapter.ReviewAdapter;
 import com.mrsoftit.dukander.modle.AdsUrlNote;
 import com.mrsoftit.dukander.modle.GlobleCustomerNote;
@@ -76,6 +78,8 @@ import com.mrsoftit.dukander.modle.GlobleProductNote3;
 import com.mrsoftit.dukander.modle.GlobleProductNote4;
 import com.mrsoftit.dukander.modle.GlobleProductNote5;
 import com.mrsoftit.dukander.modle.GlobleProductNote6;
+import com.mrsoftit.dukander.modle.GlobleProductNote7;
+import com.mrsoftit.dukander.modle.GlobleProductNote8;
 import com.mrsoftit.dukander.modle.ReviewComentNote;
 import com.smarteist.autoimageslider.IndicatorView.animation.type.IndicatorAnimationType;
 import com.smarteist.autoimageslider.IndicatorView.draw.controller.DrawController;
@@ -127,6 +131,8 @@ public class GlobleProductListActivity extends AppCompatActivity implements Navi
     GlobleProductListAdapter4 globleProductListAdapter4;
     GlobleProductListAdapter5 globleProductListAdapter5;
     GlobleProductListAdapter6 globleProductListAdapter6;
+    GlobleProductListAdapter7 globleProductListAdapter7;
+    GlobleProductListAdapter8 globleProductListAdapter8;
     ReviewAdapter reviewAdapter;
 
     private  ImageView manlogo,girlslogo,mpbilelogo,foodslogo,jewelarylogo,Motorcycle_logo,grosary_logo;
@@ -303,7 +309,9 @@ public class GlobleProductListActivity extends AppCompatActivity implements Navi
         allProductShowMobilesteeshairt();
         allProductShowMobilesshirt();
         allProductShowManAccessoris();
+        allProductShowPant();
         allProductShowSalwareKamiz();
+        allProductShowCosmetic();
         allProductShowGirlAccessoris();
 
         adapter = new SliderAdapterExample(this);
@@ -756,7 +764,8 @@ public class GlobleProductListActivity extends AppCompatActivity implements Navi
     @RequiresApi(api = Build.VERSION_CODES.N)
     private void allProductShowMobiles() {
 
-        Query query = GlobleProduct.whereEqualTo("productPrivacy","Public").whereEqualTo("productVerification","certify").whereEqualTo("productCategory","Mobiles");
+        Query query = GlobleProduct.whereEqualTo("productPrivacy","Public")
+                .whereEqualTo("productVerification","certify").whereEqualTo("productCategory","Mobiles");
 
         FirestoreRecyclerOptions<GlobleProductNote> options = new FirestoreRecyclerOptions.Builder<GlobleProductNote>()
                 .setQuery(query, GlobleProductNote.class)
@@ -981,6 +990,64 @@ public class GlobleProductListActivity extends AppCompatActivity implements Navi
         });
 
     }
+    //Adapter 8
+    private void allProductShowCosmetic() {
+
+        Query query = GlobleProduct.whereEqualTo("productPrivacy","Public")
+                .whereEqualTo("productVerification","certify")
+                .whereEqualTo("productCategory","Cosmetics");
+
+        FirestoreRecyclerOptions<GlobleProductNote8> options = new FirestoreRecyclerOptions.Builder<GlobleProductNote8>()
+                .setQuery(query, GlobleProductNote8.class)
+                .build();
+
+        globleProductListAdapter8 = new GlobleProductListAdapter8(options);
+
+
+        RecyclerView recyclerView = findViewById(R.id.globleProductRecyclearViewsCosmetics);
+        recyclerView.setHasFixedSize(true);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(GlobleProductListActivity.this,RecyclerView.HORIZONTAL,false);
+        // recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
+        //  recyclerView.setLayoutManager(ne4 LinearLayoutManager(this));
+        recyclerView.setLayoutManager(linearLayoutManager);
+        recyclerView.setAdapter(globleProductListAdapter8);
+        globleProductListAdapter8.startListening();
+        globleProductListAdapter8.setOnItemClickListener(new GlobleProductListAdapter8.OnItemClickListener() {
+            @Override
+            public void onItemClick(DocumentSnapshot documentSnapshot, int position) {
+                final GlobleProductNote8 globleProductNote = documentSnapshot.toObject(GlobleProductNote8.class);
+                Intent intent = new Intent(GlobleProductListActivity.this, ProductFullViewOrderActivity.class);
+                intent.putExtra("proIdup",globleProductNote.getProId());
+                intent.putExtra("proNameup",globleProductNote.getProName());
+                intent.putExtra("proPriceup",globleProductNote.getProPrice()+"");
+                intent.putExtra("productCodeup",globleProductNote.getProductCode());
+                intent.putExtra("productPrivacyup",globleProductNote.getProductPrivacy());
+                intent.putExtra("proImgeUrlup",globleProductNote.getProImgeUrl());
+                intent.putExtra("proImgeUrlup1",globleProductNote.getProImgeUrl1());
+                intent.putExtra("proImgeUrlup2",globleProductNote.getProImgeUrl2());
+                intent.putExtra("proImgeUrlup3",globleProductNote.getProImgeUrl3());
+                intent.putExtra("proImgeUrlup4",globleProductNote.getProImgeUrl4());
+                intent.putExtra("ShopNameup",globleProductNote.getShopName());
+                intent.putExtra("ShopPhoneup",globleProductNote.getShopPhone());
+                intent.putExtra("ShopAddressup",globleProductNote.getShopAddress());
+                intent.putExtra("ShopImageUrlup",globleProductNote.getShopImageUrl());
+                intent.putExtra("ShopIdup",globleProductNote.getShopId());
+                intent.putExtra("UserIdup",globleProductNote.getUserId());
+                intent.putExtra("productCategoryup",globleProductNote.getProductCategory());
+                intent.putExtra("dateup",globleProductNote.getDate()+"");
+                intent.putExtra("proQuaup",globleProductNote.getProQua()+"");
+                intent.putExtra("discuntup",globleProductNote.getPruductDiscount()+"");
+                intent.putExtra("tokenup",globleProductNote.getToken());
+                intent.putExtra("size",globleProductNote.getSize());
+                intent.putExtra("color",globleProductNote.getColor());
+                intent.putExtra("type", globleProductNote.getType());
+                intent.putExtra("descriptuion", globleProductNote.getDescription());
+                startActivity(intent);
+
+            }
+        });
+
+    }
     //Adapter 4
     private void allProductShowSalwareKamiz() {
 
@@ -1095,6 +1162,63 @@ public class GlobleProductListActivity extends AppCompatActivity implements Navi
 
     }
     //Adapter 6
+
+    private void allProductShowPant() {
+        Query query = GlobleProduct.whereEqualTo("productPrivacy","Public")
+                .whereEqualTo("productVerification","certify").whereEqualTo("productCategory","Pant");
+
+        FirestoreRecyclerOptions<GlobleProductNote7> options = new FirestoreRecyclerOptions.Builder<GlobleProductNote7>()
+                .setQuery(query, GlobleProductNote7.class)
+                .build();
+
+        globleProductListAdapter7 = new GlobleProductListAdapter7(options);
+
+
+        RecyclerView recyclerView = findViewById(R.id.globleProductRecyclearViewPant);
+        recyclerView.setHasFixedSize(true);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(GlobleProductListActivity.this,RecyclerView.HORIZONTAL,false);
+        // recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
+        //  recyclerView.setLayoutManager(ne4 LinearLayoutManager(this));
+        recyclerView.setLayoutManager(linearLayoutManager);
+        recyclerView.setAdapter(globleProductListAdapter7);
+        globleProductListAdapter7.startListening();
+        globleProductListAdapter7.setOnItemClickListener(new GlobleProductListAdapter7.OnItemClickListener() {
+            @Override
+            public void onItemClick(DocumentSnapshot documentSnapshot, int position) {
+                final GlobleProductNote7 globleProductNote = documentSnapshot.toObject(GlobleProductNote7.class);
+                Intent intent = new Intent(GlobleProductListActivity.this, ProductFullViewOrderActivity.class);
+                intent.putExtra("proIdup",globleProductNote.getProId());
+                intent.putExtra("proNameup",globleProductNote.getProName());
+                intent.putExtra("proPriceup",globleProductNote.getProPrice()+"");
+                intent.putExtra("productCodeup",globleProductNote.getProductCode());
+                intent.putExtra("productPrivacyup",globleProductNote.getProductPrivacy());
+                intent.putExtra("proImgeUrlup",globleProductNote.getProImgeUrl());
+                intent.putExtra("proImgeUrlup1",globleProductNote.getProImgeUrl1());
+                intent.putExtra("proImgeUrlup2",globleProductNote.getProImgeUrl2());
+                intent.putExtra("proImgeUrlup3",globleProductNote.getProImgeUrl3());
+                intent.putExtra("proImgeUrlup4",globleProductNote.getProImgeUrl4());
+                intent.putExtra("ShopNameup",globleProductNote.getShopName());
+                intent.putExtra("ShopPhoneup",globleProductNote.getShopPhone());
+                intent.putExtra("ShopAddressup",globleProductNote.getShopAddress());
+                intent.putExtra("ShopImageUrlup",globleProductNote.getShopImageUrl());
+                intent.putExtra("ShopIdup",globleProductNote.getShopId());
+                intent.putExtra("UserIdup",globleProductNote.getUserId());
+                intent.putExtra("productCategoryup",globleProductNote.getProductCategory());
+                intent.putExtra("dateup",globleProductNote.getDate()+"");
+                intent.putExtra("proQuaup",globleProductNote.getProQua()+"");
+                intent.putExtra("discuntup",globleProductNote.getPruductDiscount()+"");
+                intent.putExtra("tokenup",globleProductNote.getToken());
+                intent.putExtra("size",globleProductNote.getSize());
+                intent.putExtra("color",globleProductNote.getColor());
+                intent.putExtra("type", globleProductNote.getType());
+                intent.putExtra("descriptuion", globleProductNote.getDescription());
+                startActivity(intent);
+
+            }
+        });
+
+    }
+    //Adapter 7
     private void allProductShow(String productName) {
 
         Query query = GlobleProduct.orderBy("search").startAt(productName.toLowerCase()).endAt(productName.toLowerCase()+ "\uf8ff")

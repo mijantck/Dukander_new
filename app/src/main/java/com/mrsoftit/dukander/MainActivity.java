@@ -84,7 +84,7 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
 
     FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
 
-    String user_id = Objects.requireNonNull(currentUser).getUid();
+    String user_id = currentUser.getUid();
 
     CollectionReference product = FirebaseFirestore.getInstance()
             .collection("users").document(user_id).collection("Product");

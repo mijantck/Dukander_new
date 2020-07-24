@@ -132,7 +132,8 @@ public class ProductAddActivity extends AppCompatActivity implements EasyPermiss
 
     String[] privacyspinnerList = { "Public", "private" };
 
-    String[] CategoryspinnerList = { "Mobiles","Tablets","Used Mobile","Mobile accessories","Foods","jewellery","Motorcycle accessories","Cosmetics","Grocery",
+    String[] CategoryspinnerList = { "Mobiles","Tablets","Used Mobile","Mobile accessories","Foods","jewellery"
+            ,"Motorcycle accessories","Cosmetics","Grocery",
     "Panjabi","Pajama","Shirts","Pant","T-Shirt","Polo","Lungi","Man Shoes","Man Accessories","Saree",
             "Shalwar Kameez", "Shawls","Girls Panjabi", "Nightwear", "Scarves", "Dupatta", "Girls Shoes", "Girls Accessories",
             "kids","Medicine","Sports", "Computer accessories","Home accessories","Books","Electronics","Game"};

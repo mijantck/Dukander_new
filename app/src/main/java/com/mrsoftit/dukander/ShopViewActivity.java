@@ -313,6 +313,7 @@ public class ShopViewActivity extends AppCompatActivity {
             recyclerView.setHasFixedSize(true);
             // LinearLayoutManager linearLayoutManager = new LinearLayoutManager(GlobleProductListActivity.this,RecyclerView.HORIZONTAL,false);
             recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
+
             //  recyclerView.setLayoutManager(ne4 LinearLayoutManager(this));
             // recyclerView.setLayoutManager(linearLayoutManager);
             recyclerView.setAdapter(globleProductListAdapter6);
@@ -358,7 +359,6 @@ public class ShopViewActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-
         globleProductListAdapter6.startListening();
     }
 

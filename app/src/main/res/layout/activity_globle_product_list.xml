@@ -274,7 +274,6 @@
                            android:layout_height="wrap_content"
                            android:layout_gravity="bottom"
                            android:gravity="center"
-
                            android:text="" />
 
                    </androidx.cardview.widget.CardView>
@@ -320,7 +319,7 @@
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             android:layout_height="match_parent"/>
             </LinearLayout>
-            <!--Thee shirts-->
+            <!-- shirts-->
             <LinearLayout
                 android:orientation="vertical"
                 android:layout_width="match_parent"
@@ -360,6 +359,46 @@
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     android:layout_height="match_parent"/>
             </LinearLayout>
+                <!-- Pant-->
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="280dp">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:fontFamily="@font/nunito_sans_reguler"
+                            android:textColor="@android:color/black"
+                            android:layout_marginLeft="20dp"
+                            android:text="Pant"
+                            android:textSize="15dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"/>
+                        <TextView
+
+                            android:layout_marginRight="20dp"
+                            android:gravity="right"
+                            android:layout_alignParentEnd="true"
+                            android:layout_alignParentRight="true"
+                            android:layout_marginLeft="20dp"
+                            android:text="-->"
+                            android:textSize="15dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"/>
+
+                    </RelativeLayout>
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/globleProductRecyclearViewPant"
+                        android:layout_width="match_parent"
+                        tools:listitem="@layout/card_view"
+                        android:orientation="horizontal"
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                        android:layout_height="match_parent"/>
+                </LinearLayout>
             <!--Thee shirts-->
             <LinearLayout
                 android:orientation="vertical"
@@ -439,6 +478,46 @@
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     android:layout_height="match_parent"/>
             </LinearLayout>
+                <!--Cosmetices-->
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="280dp">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:fontFamily="@font/nunito_sans_reguler"
+                            android:textColor="@android:color/black"
+                            android:layout_marginLeft="20dp"
+                            android:text="Cosmetics"
+                            android:textSize="15dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"/>
+                        <TextView
+
+                            android:layout_marginRight="20dp"
+                            android:gravity="right"
+                            android:layout_alignParentEnd="true"
+                            android:layout_alignParentRight="true"
+                            android:layout_marginLeft="20dp"
+                            android:text="-->"
+                            android:textSize="15dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"/>
+
+                    </RelativeLayout>
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/globleProductRecyclearViewsCosmetics"
+                        android:layout_width="match_parent"
+                        tools:listitem="@layout/card_view"
+                        android:orientation="horizontal"
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                        android:layout_height="match_parent"/>
+                </LinearLayout>
             <!--Shalwar kamis-->
             <LinearLayout
                 android:orientation="vertical"

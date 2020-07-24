@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.smarteist.autoimageslider.SliderViewAdapter;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -53,10 +54,14 @@ public class SliderAdapterExamplepro extends SliderViewAdapter<SliderAdapterExam
       //  viewHolder.textViewDescription.setText(sliderItem.getDescription());
         viewHolder.textViewDescription.setTextSize(16);
         viewHolder.textViewDescription.setTextColor(Color.WHITE);
-        Glide.with(viewHolder.itemView)
+        String Url = sliderItem.getImageUrl();
+
+        Picasso.get().load(Url).into(viewHolder.imageViewBackground);
+
+      /*  Glide.with(viewHolder.itemView)
                 .load(sliderItem.getImageUrl())
                 .fitCenter()
-                .into(viewHolder.imageViewBackground);
+                .into(viewHolder.imageViewBackground);*/
 
         viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override

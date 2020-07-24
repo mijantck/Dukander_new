@@ -174,7 +174,9 @@ public class ProductFullViewOrderActivity extends AppCompatActivity {
         progressDialog.setMessage("Loading..."); // Setting Title
         progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         progressDialog.setCanceledOnTouchOutside(false);
+        progressDialog.show();
         sliderItemList = new ArrayList<>();
+
         sliderItem = new SliderItem();
         sliderItem1 = new SliderItem();
         sliderItem2 = new SliderItem();
@@ -292,6 +294,7 @@ public class ProductFullViewOrderActivity extends AppCompatActivity {
                 proImgeUrlup3 = bundle.getString("proImgeUrlup3");
 
                 sliderItem3.setImageUrl(proImgeUrlup3);
+
                 sliderItemList.add(sliderItem3);
                 //  String Url = proImgeUrlup;
                 // Picasso.get().load(Url).into(productImageDetail);
@@ -386,6 +389,17 @@ public class ProductFullViewOrderActivity extends AppCompatActivity {
             }
         }
 
+        adapter = new SliderAdapterExamplepro(this);
+        sliderView.setSliderAdapter(adapter);
+        sliderView.setIndicatorAnimation(IndicatorAnimationType.WORM); //set indicator animation by using SliderLayout.IndicatorAnimations. :WORM or THIN_WORM or COLOR or DROP or FILL or NONE or SCALE or SCALE_DOWN or SLIDE and SWAP!!
+        sliderView.setSliderTransformAnimation(SliderAnimations.SIMPLETRANSFORMATION);
+        sliderView.setAutoCycleDirection(SliderView.AUTO_CYCLE_DIRECTION_BACK_AND_FORTH);
+        sliderView.setIndicatorSelectedColor(Color.WHITE);
+        sliderView.setIndicatorUnselectedColor(Color.GRAY);
+        sliderView.setScrollTimeInSec(3);
+        sliderView.setAutoCycle(true);
+        sliderView.startAutoCycle();
+        adapter.renewItems(sliderItemList);
 
         reletedProduct(productCategoryup);
 
@@ -632,25 +646,18 @@ public class ProductFullViewOrderActivity extends AppCompatActivity {
 
 
 
-        adapter = new SliderAdapterExamplepro(this);
-        sliderView.setSliderAdapter(adapter);
-        sliderView.setIndicatorAnimation(IndicatorAnimationType.WORM); //set indicator animation by using SliderLayout.IndicatorAnimations. :WORM or THIN_WORM or COLOR or DROP or FILL or NONE or SCALE or SCALE_DOWN or SLIDE and SWAP!!
-        sliderView.setSliderTransformAnimation(SliderAnimations.SIMPLETRANSFORMATION);
-        sliderView.setAutoCycleDirection(SliderView.AUTO_CYCLE_DIRECTION_BACK_AND_FORTH);
-        sliderView.setIndicatorSelectedColor(Color.WHITE);
-        sliderView.setIndicatorUnselectedColor(Color.GRAY);
-        sliderView.setScrollTimeInSec(3);
-        sliderView.setAutoCycle(true);
-        sliderView.startAutoCycle();
-
-        adapter.renewItems(sliderItemList);
 
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        globleProductListAdapter6.startListening();
+
+       progressDialog.dismiss();
 
 
-
-
+    }
 
     static double calcuateDiscount(double markedprice, double s) {
         double dis = 100-s;
@@ -678,11 +685,11 @@ public class ProductFullViewOrderActivity extends AppCompatActivity {
             RecyclerView recyclerView = findViewById(R.id.fullProductViewReletetProuct);
             recyclerView.setHasFixedSize(true);
            // LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
-           // LinearLayoutManager linearLayoutManager = new LinearLayoutManager(ProductFullViewOrderActivity.this,RecyclerView.HORIZONTAL,false);
-              recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
-          //  recyclerView.setLayoutManager(linearLayoutManager);
+            LinearLayoutManager linearLayoutManager = new LinearLayoutManager(ProductFullViewOrderActivity.this,RecyclerView.HORIZONTAL,false);
+            //  recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
+            recyclerView.setLayoutManager(linearLayoutManager);
             recyclerView.setAdapter(globleProductListAdapter6);
-           globleProductListAdapter6.startListening();
+
 
             globleProductListAdapter6.setOnItemClickListener(new GlobleProductListAdapter6.OnItemClickListener() {
                 @Override
