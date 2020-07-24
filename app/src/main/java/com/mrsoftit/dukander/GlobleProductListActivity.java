@@ -382,7 +382,7 @@ public class GlobleProductListActivity extends AppCompatActivity implements Navi
                startActivity(new Intent(GlobleProductListActivity.this,ShopListActivity.class));
                 break;
                 case R.id.Favorite:
-               startActivity(new Intent(GlobleProductListActivity.this,FeveretActivity.class));
+               startActivity(new Intent(GlobleProductListActivity.this,wishListActivity.class));
                 break;
                 case R.id.orderHistory:
 
@@ -1342,7 +1342,7 @@ public class GlobleProductListActivity extends AppCompatActivity implements Navi
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.OrderListTorbar:
-               startActivity(new Intent(GlobleProductListActivity.this,wishListActivity.class));
+               startActivity(new Intent(GlobleProductListActivity.this,ChatActivity.class));
                 return true;
 
             default:

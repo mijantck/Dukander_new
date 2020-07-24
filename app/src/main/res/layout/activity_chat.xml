@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".FeveretActivity">
+    tools:context=".ChatActivity">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar_support"
@@ -21,7 +21,7 @@
             android:textSize="20sp"
             android:textColor="#FFFF"
             android:gravity="center"
-            android:text="Wish List"
+            android:text="Chat List "
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
     </androidx.appcompat.widget.Toolbar>

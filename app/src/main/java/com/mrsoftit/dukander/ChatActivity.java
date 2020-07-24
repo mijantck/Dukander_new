@@ -20,7 +20,7 @@ import com.mrsoftit.dukander.adapter.GlobleProductListAdapter6;
 import com.mrsoftit.dukander.adapter.ProductOrderAdapter;
 import com.mrsoftit.dukander.modle.GlobleProductNote6;
 
-public class FeveretActivity extends AppCompatActivity {
+public class ChatActivity extends AppCompatActivity {
 
 
     GlobleProductListAdapter6 globleProductListAdapter6;
@@ -33,7 +33,7 @@ public class FeveretActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_feveret);
+        setContentView(R.layout.activity_chat);
 
 
         currentUser = FirebaseAuth.getInstance().getCurrentUser();
@@ -42,13 +42,13 @@ public class FeveretActivity extends AppCompatActivity {
 
             comomCatagoryProductShow();
         } else {
-            new MaterialAlertDialogBuilder(FeveretActivity.this)
+            new MaterialAlertDialogBuilder(ChatActivity.this)
                     .setMessage("you have not signup")
                     .setPositiveButton("GOT IT", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
 
-                            startActivity(new Intent(FeveretActivity.this, CustomerLoginActivity.class));
+                            startActivity(new Intent(ChatActivity.this, CustomerLoginActivity.class));
                             finish();
                         }
                     })
@@ -86,6 +86,7 @@ public class FeveretActivity extends AppCompatActivity {
         //  recyclerView.setLayoutManager(ne4 LinearLayoutManager(this));
         // recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(globleProductListAdapter6);
+
         globleProductListAdapter6.startListening();
 
         globleProductListAdapter6.setOnItemClickListener(new GlobleProductListAdapter6.OnItemClickListener() {
@@ -93,7 +94,7 @@ public class FeveretActivity extends AppCompatActivity {
             public void onItemClick(DocumentSnapshot documentSnapshot, int position) {
                 final GlobleProductNote6 globleProductNote = documentSnapshot.toObject(GlobleProductNote6.class);
 
-                Intent intent = new Intent(FeveretActivity.this, ProductFullViewOrderActivity.class);
+                Intent intent = new Intent(ChatActivity.this, ProductFullViewOrderActivity.class);
                 intent.putExtra("proIdup", globleProductNote.getProId());
                 intent.putExtra("proNameup", globleProductNote.getProName());
                 intent.putExtra("proPriceup", globleProductNote.getProPrice() + "");

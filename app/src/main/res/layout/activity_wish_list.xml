@@ -20,7 +20,7 @@
             android:textSize="20sp"
             android:textColor="#FFFF"
             android:gravity="center"
-            android:text="Add Cart List"
+            android:text="Wish List "
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
     </androidx.appcompat.widget.Toolbar>

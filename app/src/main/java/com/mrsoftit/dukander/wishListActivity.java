@@ -67,7 +67,7 @@ public class wishListActivity extends AppCompatActivity {
     private void comomCatagoryProductShow() {
 
         CollectionReference customerForAddCrat = FirebaseFirestore.getInstance()
-                .collection("Globlecustomers").document(user_id).collection("AdddedCart");
+                .collection("Globlecustomers").document(user_id).collection("fevertList");
 
         Query query = customerForAddCrat.orderBy("date", Query.Direction.DESCENDING);
 

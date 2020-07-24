@@ -23,7 +23,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".FeveretActivity"></activity>
+        <activity android:name=".ChatActivity"></activity>
         <activity android:name=".wishListActivity" />
         <activity android:name=".NotificationActivity" />
         <activity android:name=".DeliveryBoyListActivity" />

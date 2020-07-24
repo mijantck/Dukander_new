@@ -10,7 +10,9 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.Manifest;
 import android.app.ProgressDialog;
+import android.content.ContentValues;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
@@ -24,6 +26,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.provider.MediaStore;
 import android.provider.OpenableColumns;
 import android.text.TextUtils;
 import android.util.Log;
@@ -33,6 +36,7 @@ import android.widget.Toast;
 
 import com.androidnetworking.interceptors.HttpLoggingInterceptor;
 import com.dd.CircularProgressButton;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.mrsoftit.dukander.CustomerNote;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -98,6 +102,7 @@ public class CustomerAddActivity extends AppCompatActivity implements EasyPermis
 
 
     private static final int PICK_IMAGE_REQUEST = 1;
+    private int IMAGE_CAPTURE_CODE = 1001;
     public Uri mImageUri;
     String id;
 
@@ -272,10 +277,7 @@ public class CustomerAddActivity extends AppCompatActivity implements EasyPermis
                         public void onComplete(@NonNull Task<DocumentReference> task) {
 
                             if (task.isSuccessful()) {
-
                                 id = task.getResult().getId().toString();
-
-
                                 customer.document(id).update("customerIdDucunt", id).addOnCompleteListener(new OnCompleteListener<Void>() {
                                     @Override
                                     public void onComplete(@NonNull Task<Void> task) {
@@ -310,12 +312,54 @@ public class CustomerAddActivity extends AppCompatActivity implements EasyPermis
             @Override
             public void onClick(View v) {
 
-                if (bundle!=null){
-                    image = true;
-                    getIMEGE();
-                }else {
-                    getIMEGE();
-                }
+
+                new MaterialAlertDialogBuilder(CustomerAddActivity.this)
+                        .setMessage("Image select from ")
+                        .setPositiveButton("CAMERA", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+
+                                if (bundle!=null){
+                                    image = true;
+                                    ContentValues values = new ContentValues();
+                                    values.put(MediaStore.Images.Media.TITLE, "New Picture");
+                                    values.put(MediaStore.Images.Media.DESCRIPTION, "From the Camera");
+                                    mImageUri = getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
+                                    Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                                    cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, mImageUri);
+                                    startActivityForResult(cameraIntent, IMAGE_CAPTURE_CODE);
+                                    dialogInterface.dismiss();
+                                }else {
+                                    ContentValues values = new ContentValues();
+                                    values.put(MediaStore.Images.Media.TITLE, "New Picture");
+                                    values.put(MediaStore.Images.Media.DESCRIPTION, "From the Camera");
+                                    mImageUri = getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
+                                    Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                                    cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, mImageUri);
+                                    startActivityForResult(cameraIntent, IMAGE_CAPTURE_CODE);
+                                    dialogInterface.dismiss();
+                                }
+
+
+                            }
+                        })
+                        .setNegativeButton("GALLERY", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+
+                                if (bundle!=null){
+                                    image = true;
+                                    getIMEGE();
+                                }else {
+                                    getIMEGE();
+                                }
+                                dialogInterface.dismiss();
+                            }
+                        })
+                        .show();
+
+
+
 
 
 
@@ -357,21 +401,7 @@ public class CustomerAddActivity extends AppCompatActivity implements EasyPermis
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                     requestPermissions(sPermissions, PICK_IMAGE_REQUEST);
                 }
-            } else {
-
-
             }
-
-
-        } else {
-/*
-
-            Intent intent = new Intent();
-            intent.setType("image/*");
-            intent.setAction(Intent.ACTION_GET_CONTENT);
-            startActivityForResult(Intent.createChooser(intent, "Image Add "), PICK_IMAGE_REQUEST);
-*/
-
         }
 
 
@@ -400,6 +430,7 @@ public class CustomerAddActivity extends AppCompatActivity implements EasyPermis
 
         stringPermissionList.add(Manifest.permission.READ_EXTERNAL_STORAGE);
         stringPermissionList.add(Manifest.permission.WRITE_EXTERNAL_STORAGE);
+        stringPermissionList.add(Manifest.permission.CAMERA);
         return  stringPermissionList;
     }
 
@@ -417,7 +448,6 @@ public class CustomerAddActivity extends AppCompatActivity implements EasyPermis
             }
         }
         if (isAllPermissionGranted) {
-
             Intent intent = new Intent();
             intent.setType("image/*");
             intent.setAction(Intent.ACTION_GET_CONTENT);
@@ -430,8 +460,12 @@ public class CustomerAddActivity extends AppCompatActivity implements EasyPermis
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-
         super.onActivityResult(requestCode, resultCode, data);
+
+        if (resultCode == RESULT_OK){
+            circleCutomerImageView.setImageURI(mImageUri);
+        }
+
          if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
             if (data.getData() != null) {
                 mImageUri = data.getData();
@@ -439,7 +473,8 @@ public class CustomerAddActivity extends AppCompatActivity implements EasyPermis
             } else {
                 Toast.makeText(this, "No file chosen", Toast.LENGTH_SHORT).show();
             }
-        }}
+        }
+    }
 
     @Override
     public void onPermissionsGranted(int requestCode, @NonNull List<String> perms) {

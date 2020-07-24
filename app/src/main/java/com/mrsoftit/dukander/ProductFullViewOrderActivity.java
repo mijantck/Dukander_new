@@ -3,11 +3,9 @@ package com.mrsoftit.dukander;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -15,7 +13,6 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.icu.text.DecimalFormat;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
@@ -24,30 +21,18 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.android.volley.AuthFailureError;
-import com.android.volley.DefaultRetryPolicy;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.RetryPolicy;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.Volley;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.core.Constants;
-import com.google.firebase.dynamiclinks.DynamicLink;
 import com.google.firebase.dynamiclinks.FirebaseDynamicLinks;
 import com.google.firebase.dynamiclinks.ShortDynamicLink;
 import com.google.firebase.firestore.CollectionReference;
@@ -56,27 +41,13 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
-import com.google.firebase.iid.FirebaseInstanceId;
-import com.google.firebase.iid.InstanceIdResult;
 import com.mrsoftit.dukander.adapter.GlobleProductListAdapter6;
-import com.mrsoftit.dukander.adapter.ReviewAdapter;
-import com.mrsoftit.dukander.modle.GlobleCustomerNote;
 import com.mrsoftit.dukander.modle.GlobleProductNote6;
-import com.mrsoftit.dukander.modle.ReviewComentNote;
 import com.smarteist.autoimageslider.IndicatorView.animation.type.IndicatorAnimationType;
 import com.smarteist.autoimageslider.SliderAnimations;
 import com.smarteist.autoimageslider.SliderView;
 import com.squareup.picasso.Picasso;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.net.URL;
-import java.net.URLDecoder;
-import java.net.URLEncoder;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -86,13 +57,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-
-import okhttp3.MediaType;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.RequestBody;
-
-import static android.provider.SettingsSlicesContract.BASE_URI;
 
 public class ProductFullViewOrderActivity extends AppCompatActivity {
 
@@ -781,48 +745,43 @@ public class ProductFullViewOrderActivity extends AppCompatActivity {
         CollectionReference customerForAddCrat = FirebaseFirestore.getInstance()
                 .collection("Globlecustomers").document(globlecutouser_id).collection("AdddedCart");
 
-        if (wishOrFavert.equals("f"))
+        if (wishOrFavert.equals("f")) {
+            customerForFeverite.document(productId).set(GlobaleProductObject).addOnCompleteListener(new OnCompleteListener<Void>() {
+                @Override
+                public void onComplete(@NonNull Task<Void> task) {
 
 
-        customerForFeverite.document(productId).set(GlobaleProductObject).addOnCompleteListener(new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
+                    new MaterialAlertDialogBuilder(ProductFullViewOrderActivity.this)
+                            .setMessage("Product add to your wish list")
+                            .setPositiveButton("GOT IT", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    dialogInterface.dismiss();
 
+                                }
+                            })
+                            .setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
 
-                new MaterialAlertDialogBuilder(ProductFullViewOrderActivity.this)
-                        .setMessage("Product add in your fevered list")
-                        .setPositiveButton("GOT IT", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-
-                                startActivity(new Intent(ProductFullViewOrderActivity.this,FeveretActivity.class));
-                                finish();
-                            }
-                        })
-                        .setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-
-                                dialogInterface.dismiss();
-                            }
-                        })
-                        .show();
-            }
-        });
-        if (wishOrFavert.equals("chat"))
+                                    dialogInterface.dismiss();
+                                }
+                            })
+                            .show();
+                }
+            });
+        } else if (wishOrFavert.equals("chat"))
             customerForAddCrat.document(productId).set(GlobaleProductObject).addOnCompleteListener(new OnCompleteListener<Void>() {
                 @Override
                 public void onComplete(@NonNull Task<Void> task) {
 
                     new MaterialAlertDialogBuilder(ProductFullViewOrderActivity.this)
-                            .setMessage("Product add in your wish list")
+                            .setMessage("Product add to your chat")
                             .setPositiveButton("GOT IT", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialogInterface, int i) {
 
-                                    startActivity(new Intent(ProductFullViewOrderActivity.this,wishListActivity.class));
-                                    finish();
-
+                                    dialogInterface.dismiss();
                                 }
                             })
                             .setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
