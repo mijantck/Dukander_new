@@ -98,7 +98,7 @@ public class SeleTwoActivity extends AppCompatActivity {
 
      List<String> titleList;
 
-    String  idup, nameup,phoneup,takaup,addresup,imageup;
+    String  idup, nameup,phoneup,takaup,totalPaytakaup,addresup,imageup;
 
     String bundelId,takacutomerup;
 
@@ -276,6 +276,7 @@ public class SeleTwoActivity extends AppCompatActivity {
             nameup = bundle.getString("name");
             phoneup = bundle.getString("phone");
             takaup = bundle.getString("taka");
+            totalPaytakaup = bundle.getString("totalPaytaka");
             addresup = bundle.getString("addreds");
             imageup = bundle.getString("imageurl");
 
@@ -308,7 +309,7 @@ public class SeleTwoActivity extends AppCompatActivity {
                 // Include dialog.xml file
                 barDialog.setContentView(R.layout.bar_code_dialog_view);
                 // Set dialog title
-                barDialog.setTitle("বিল পরিশোধ");
+                barDialog.setTitle("");
                 barDialog.show();
                 barDialog.setCanceledOnTouchOutside(false);
 
@@ -396,7 +397,10 @@ public class SeleTwoActivity extends AppCompatActivity {
                         double paymonyDouable  = Double.parseDouble(paymony);
                         final double totallastbill = Double.parseDouble(TotalAmount.getText().toString());
 
+                        final double totalPaytakaD = Double.parseDouble(totalPaytakaup);
+
                         double dautakaccustomer = 00.0;
+                        double totalPaytakaDTemp = 00.0;
                         if (bundelId!=null){
                             dautakaccustomer = Double.parseDouble(takacutomerup);
 
@@ -406,6 +410,7 @@ public class SeleTwoActivity extends AppCompatActivity {
                         }
 
                         withpaytaka = totallastbill - paymonyDouable;
+                        totalPaytakaDTemp = totalPaytakaD + paymonyDouable;
 
                         Double conditonBil = totallastbill + dautakaccustomer;
 
@@ -472,7 +477,7 @@ public class SeleTwoActivity extends AppCompatActivity {
                             pd.show();
                             final CollectionReference customer = FirebaseFirestore.getInstance()
                                     .collection("users").document(user_id).collection("Customers");
-                            customer.document(bundelId).update("taka", daubill).addOnCompleteListener(new OnCompleteListener<Void>() {
+                            customer.document(bundelId).update("taka", daubill,"totalPaytaka",totalPaytakaDTemp).addOnCompleteListener(new OnCompleteListener<Void>() {
                                 @Override
                                 public void onComplete(@NonNull Task<Void> task) {
 
@@ -516,7 +521,7 @@ public class SeleTwoActivity extends AppCompatActivity {
                             String phone = unKnonePhone.getText().toString();
                             final CollectionReference unkonwnCustomarksdf = FirebaseFirestore.getInstance()
                                     .collection("users").document(user_id).collection("UnknownCustomer");
-                            unkonwnCustomarksdf.document(unknonwnCustomerId).update("taka", withpaytaka,"nameCUstomer",name,"phone",phone,"lastTotal", 00.00,"pdfTotal",totallastbill).addOnCompleteListener(new OnCompleteListener<Void>() {
+                            unkonwnCustomarksdf.document(unknonwnCustomerId).update("taka", withpaytaka,"totalPaytaka",paymonyDouable,"nameCUstomer",name,"search",name.toLowerCase(),"phone",phone,"lastTotal", 00.00,"pdfTotal",totallastbill).addOnCompleteListener(new OnCompleteListener<Void>() {
                                 @Override
                                 public void onComplete(@NonNull Task<Void> task) {
                                             final CollectionReference unkonwnCustomar = FirebaseFirestore.getInstance()

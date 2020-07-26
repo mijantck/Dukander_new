@@ -242,7 +242,7 @@ public class CustomerAddActivity extends AppCompatActivity implements EasyPermis
                         final String taxtId = customerTaxetId.getText().toString();
                         final String NID = customerNIDnumber.getText().toString();
 
-                        customer.document(id).update("customerIdDucunt", id, "nameCUstomer", name, "phone", phone, "taka", dtaka, "addres", addres,"TaxtId",taxtId,"NID",NID).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        customer.document(id).update("customerIdDucunt", id, "nameCUstomer", name,"search",name.toLowerCase(), "phone", phone, "taka", dtaka, "addres", addres,"TaxtId",taxtId,"NID",NID).addOnCompleteListener(new OnCompleteListener<Void>() {
                             @Override
                             public void onComplete(@NonNull Task<Void> task) {
 
@@ -272,7 +272,7 @@ public class CustomerAddActivity extends AppCompatActivity implements EasyPermis
                     final String NID = customerNIDnumber.getText().toString();
 
 
-                    customer.add(new CustomerNote(null, name, phone, dtaka, addres,00.00,00.00,taxtId,NID)).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
+                    customer.add(new CustomerNote(null, name,name.toLowerCase(), phone, dtaka, addres,00.00,00.00,taxtId,NID)).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
                         @Override
                         public void onComplete(@NonNull Task<DocumentReference> task) {
 
@@ -520,7 +520,7 @@ public class CustomerAddActivity extends AppCompatActivity implements EasyPermis
 
                                 if (image!=false){
 
-                                    customer.document(id).update("customerIdDucunt", id,"nameCUstomer",name,"phone",phone,"taka",dtaka,"addres",addres,"imageUrl",uri.toString(),"TaxtId",taxtId,"NID",NID)
+                                    customer.document(id).update("customerIdDucunt", id,"nameCUstomer",name,"search",name.toLowerCase(),"phone",phone,"taka",dtaka,"addres",addres,"imageUrl",uri.toString(),"TaxtId",taxtId,"NID",NID)
                                     .addOnCompleteListener(new OnCompleteListener<Void>() {
                                         @Override
                                         public void onComplete(@NonNull Task<Void> task) {
@@ -535,7 +535,7 @@ public class CustomerAddActivity extends AppCompatActivity implements EasyPermis
 
                                 }else {
 
-                                customer.add(new CustomerNote(null,name,phone,dtaka,addres,uri.toString(),00.00,00.00,taxtId,NID)).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
+                                customer.add(new CustomerNote(null,name,name.toLowerCase(),phone,dtaka,addres,uri.toString(),00.00,00.00,taxtId,NID)).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
                                     @Override
                                     public void onComplete(@NonNull Task<DocumentReference> task) {
 
@@ -549,7 +549,7 @@ public class CustomerAddActivity extends AppCompatActivity implements EasyPermis
                                                 public void onComplete(@NonNull Task<Void> task) {
 
 
-                                                    Toast.makeText(CustomerAddActivity.this, " সফল ", Toast.LENGTH_SHORT).show();
+                                                    Toast.makeText(CustomerAddActivity.this, " successful ", Toast.LENGTH_SHORT).show();
 
                                                 }
                                             });
@@ -636,7 +636,7 @@ public class CustomerAddActivity extends AppCompatActivity implements EasyPermis
 
                     if (image!=false){
 
-                        customer.document(id).update("customerIdDucunt", id,"nameCUstomer",name,"phone",phone,"taka",dtaka,"addres",addres,"imageUrl",downloadLink,"TaxtId",taxtId,"NID",NID)
+                        customer.document(id).update("customerIdDucunt", id,"nameCUstomer",name,"search",name.toLowerCase(),"phone",phone,"taka",dtaka,"addres",addres,"imageUrl",downloadLink,"TaxtId",taxtId,"NID",NID)
                                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                                     @Override
                                     public void onComplete(@NonNull Task<Void> task) {
@@ -651,7 +651,7 @@ public class CustomerAddActivity extends AppCompatActivity implements EasyPermis
 
                     }else {
 
-                        customer.add(new CustomerNote(null,name,phone,dtaka,addres,downloadLink,00.00,00.00,taxtId,NID)).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
+                        customer.add(new CustomerNote(null,name,name.toLowerCase(),phone,dtaka,addres,downloadLink,00.00,00.00,taxtId,NID)).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
                             @Override
                             public void onComplete(@NonNull Task<DocumentReference> task) {
 

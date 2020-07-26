@@ -391,7 +391,7 @@ public class ProductListActivity extends AppCompatActivity {
     private void recyclear( String search) {
 
 
-        Query query = product.whereLessThanOrEqualTo("proName",search).orderBy("proName", Query.Direction.ASCENDING);
+        Query query = product.orderBy("search").startAt(search.toLowerCase()).endAt(search.toLowerCase()+ "\uf8ff");
 
         FirestoreRecyclerOptions<ProductNote> options = new FirestoreRecyclerOptions.Builder<ProductNote>()
                 .setQuery(query, ProductNote.class)
@@ -566,6 +566,7 @@ public class ProductListActivity extends AppCompatActivity {
             @Override
             public boolean onQueryTextChange(String newText) {
 
+                recyclear(newText);
                 return false;
             }
         });

@@ -141,7 +141,7 @@ public class SaleoOneActivity extends AppCompatActivity {
                 final CollectionReference unkonwnCustomar = FirebaseFirestore.getInstance()
                         .collection("users").document(user_id).collection("UnknownCustomer");
 
-                unkonwnCustomar.add(new CustomerNote(null,"Unknown","Unknown",00.00,"Unknown",00.0,00.00,"Unknown","Unknown")).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
+                unkonwnCustomar.add(new CustomerNote(null,"Unknown","Unknown","Unknown",00.00,"Unknown",00.0,00.00,"Unknown","Unknown")).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
                     @Override
                     public void onComplete(@NonNull Task<DocumentReference> task) {
 
@@ -208,9 +208,12 @@ public class SaleoOneActivity extends AppCompatActivity {
                 String imageurl = customerNote.getImageUrl();
                 String name = customerNote.getNameCUstomer();
                 String phone = customerNote.getPhone();
+
                 double takadobul = customerNote.getTaka();
+                double totalPaytaka = customerNote.getTotalPaytaka();
 
                 String taka = Double.toString(takadobul);
+                String totalPaytakaS = Double.toString(totalPaytaka);
 
 
                 String addreds = customerNote.getAddres();
@@ -229,12 +232,16 @@ public class SaleoOneActivity extends AppCompatActivity {
 
                     pdfIntent.putExtra("taka", taka);
                 }
+                if (totalPaytakaS != null) {
+                    pdfIntent.putExtra("totalPaytaka", totalPaytakaS);
+                }
 
 
                 if (addreds != null) {
                     pdfIntent.putExtra("addreds", addreds);
                 }
-                startActivity(pdfIntent);
+
+            startActivity(pdfIntent);
             }
         });
 
@@ -242,7 +249,7 @@ public class SaleoOneActivity extends AppCompatActivity {
 
     private void recyclear(String search) {
 
-        Query query = customer.whereGreaterThanOrEqualTo("nameCUstomer",search).orderBy("nameCUstomer", Query.Direction.ASCENDING);
+        Query query = customer.orderBy("search").startAt(search.toLowerCase()).endAt(search.toLowerCase()+ "\uf8ff");
 
         FirestoreRecyclerOptions<CustomerNote> options = new FirestoreRecyclerOptions.Builder<CustomerNote>()
                 .setQuery(query, CustomerNote.class)
@@ -271,6 +278,9 @@ public class SaleoOneActivity extends AppCompatActivity {
                 String taka = Double.toString(takadubol);
                 String addreds = customerNote.getAddres();
 
+                double totalPaytaka = customerNote.getTotalPaytaka();
+
+                String totalPaytakaS = Double.toString(totalPaytaka);
 
                 Intent pdfIntent = new Intent(SaleoOneActivity.this, SeleTwoActivity.class);
 
@@ -283,6 +293,9 @@ public class SaleoOneActivity extends AppCompatActivity {
                 pdfIntent.putExtra("phone", phone);
                 if (taka!=null) {
                     pdfIntent.putExtra("taka", taka);
+                }
+                if (totalPaytakaS != null) {
+                    pdfIntent.putExtra("totalPaytaka", totalPaytaka);
                 }
                 if (addreds != null) {
                     pdfIntent.putExtra("addreds", addreds);
@@ -313,7 +326,7 @@ public class SaleoOneActivity extends AppCompatActivity {
 
             @Override
             public boolean onQueryTextChange(String newText) {
-
+                recyclear(newText);
                 return false;
             }
         });

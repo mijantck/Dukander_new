@@ -3,8 +3,10 @@ package com.mrsoftit.dukander;
 public class CustomerNote {
     private String customerIdDucunt;
     private String nameCUstomer;
+    private String search;
     private String phone;
     private double taka;
+    private double totalPaytaka;
     private String addres;
     private String imageUrl;
     private double lastTotal;
@@ -14,9 +16,10 @@ public class CustomerNote {
 
     public  CustomerNote(){}
 
-    public CustomerNote(String customerIdDucunt, String nameCUstomer, String phone, double taka, String addres, String imageUrl, double lastTotal,double pdfTotal,String TaxtId,String NID) {
+    public CustomerNote(String customerIdDucunt, String nameCUstomer,String search, String phone, double taka, String addres, String imageUrl, double lastTotal,double pdfTotal,String TaxtId,String NID) {
         this.customerIdDucunt = customerIdDucunt;
         this.nameCUstomer = nameCUstomer;
+        this.search = search;
         this.phone = phone;
         this.taka = taka;
         this.addres = addres;
@@ -27,9 +30,10 @@ public class CustomerNote {
         this.NID = NID;
     }
 
-    public CustomerNote(String customerIdDucunt, String nameCUstomer, String phone, double taka, String addres, double lastTotal,double pdfTotal,String TaxtId,String NID) {
+    public CustomerNote(String customerIdDucunt, String nameCUstomer,String search, String phone, double taka, String addres, double lastTotal,double pdfTotal,String TaxtId,String NID) {
         this.customerIdDucunt = customerIdDucunt;
         this.nameCUstomer = nameCUstomer;
+        this.search = search;
         this.phone = phone;
         this.taka = taka;
         this.addres = addres;
@@ -40,6 +44,22 @@ public class CustomerNote {
 
     }
 
+
+    public double getTotalPaytaka() {
+        return totalPaytaka;
+    }
+
+    public void setTotalPaytaka(double totalPaytaka) {
+        this.totalPaytaka = totalPaytaka;
+    }
+
+    public String getSearch() {
+        return search;
+    }
+
+    public void setSearch(String search) {
+        this.search = search;
+    }
 
     public String getCustomerIdDucunt() {
         return customerIdDucunt;

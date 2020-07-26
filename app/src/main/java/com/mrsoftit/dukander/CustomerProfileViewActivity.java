@@ -8,13 +8,17 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -51,7 +55,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class CustomerProfileViewActivity extends AppCompatActivity {
 
-    String  idup,uidup, nameup,phoneup,takaup,addresup,imageup;
+    String  idup,uidup, nameup,phoneup,takaup,totalPaytakaup,addresup,imageup;
 
     private CircleImageView profileImage;
     private TextView profileName,profilePhone,profileadddres,totaldue,totalpayment,totalbuy;
@@ -118,6 +122,7 @@ public class CustomerProfileViewActivity extends AppCompatActivity {
             nameup = bundle.getString("name");
             phoneup = bundle.getString("phone");
             takaup = bundle.getString("taka");
+            totalPaytakaup = bundle.getString("totalPaytaka");
             addresup = bundle.getString("addreds");
             imageup = bundle.getString("imageurl");
 
@@ -148,6 +153,8 @@ public class CustomerProfileViewActivity extends AppCompatActivity {
             }
             if (takaup != null) {
                 totaldue.setText(takaup);
+            } if (totalPaytakaup != null) {
+                totalpayment.setText(totalPaytakaup);
             }
             if (addresup != null) {
                 profileadddres.setText(addresup);
@@ -208,7 +215,7 @@ public class CustomerProfileViewActivity extends AppCompatActivity {
                 Double payment = totalsum - takaD;
 
 
-                totalpayment.setText(payment + "");
+                totalpayment.setText(totalPaytakaup);
             }
         });
 
@@ -262,7 +269,7 @@ public class CustomerProfileViewActivity extends AppCompatActivity {
 
                     Double payment = totalsum - takaD;
 
-                    totalpayment.setText(payment + "");
+                    totalpayment.setText(totalPaytakaup);
                 }
             });
 
@@ -367,10 +374,12 @@ public class CustomerProfileViewActivity extends AppCompatActivity {
                                         return;
                                     }
 
-                                    double paymonyDouable  = Double.parseDouble(paymony);
+                                    final double paymonyDouable  = Double.parseDouble(paymony);
+                                    double totalPay  = Double.parseDouble(totalpayment.getText().toString());
 
 
                                     double dautakaccustomer = 00.0;
+
                                     if (id!=null){
                                         dautakaccustomer = Double.parseDouble(totaldue.getText().toString().trim());
                                     }
@@ -383,20 +392,57 @@ public class CustomerProfileViewActivity extends AppCompatActivity {
                                         return;
                                     }
                                     double withpaytaka = dautakaccustomer - paymonyDouable;
+                                    final double totalpayTemp = totalPay + paymonyDouable;
                                     final double daubill = withpaytaka;
 
-                                    if (activeBalance!=null){
-                                        activeBalance += paymonyDouable;
-                                    }
-
-                                    if (dueBalance != null){
-                                        dueBalance += paymonyDouable;
-
-                                    }
 
 
 
-                                    myInfo.document(myinfoid).update("activeBalance",activeBalance,"totalpaybil",dueBalance,"date",datenew);
+                                    CollectionReference myInfo = FirebaseFirestore.getInstance()
+                                            .collection("users").document(user_id).collection("DukanInfo");
+
+
+                                    myInfo.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                            for (QueryDocumentSnapshot document : Objects.requireNonNull(task.getResult())) {
+                                                MyInfoNote myInfoNote = document.toObject(MyInfoNote.class);
+
+                                                activeBalance = myInfoNote.getActiveBalance();
+
+                                                dueBalance = myInfoNote.getTotalpaybil();
+                                            }
+
+                                            if (activeBalance!=null){
+                                                activeBalance += paymonyDouable;
+                                            }
+
+                                            if (dueBalance != null){
+                                                dueBalance += paymonyDouable;
+
+                                            }
+                                            Date calendar1 = Calendar.getInstance().getTime();
+                                            @SuppressLint("SimpleDateFormat")
+                                            DateFormat df1 = new SimpleDateFormat("yyyyMMdd");
+                                            String todayString = df1.format(calendar1);
+                                            final int datenew = Integer.parseInt(todayString);
+
+                                            CollectionReference myInfo = FirebaseFirestore.getInstance()
+                                                    .collection("users").document(user_id).collection("DukanInfo");
+
+                                            if (myinfoid!=null){
+                                                myInfo.document(myinfoid).update("activeBalance",activeBalance,"totalpaybil",dueBalance,"date",datenew).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                    @Override
+                                                    public void onComplete(@NonNull Task<Void> task) {
+
+
+                                                    }
+                                                });
+
+                                            }
+
+                                            }
+                                    });
 
 
                                     if (id!=null) {
@@ -406,7 +452,7 @@ public class CustomerProfileViewActivity extends AppCompatActivity {
                                             @Override
                                             public void onComplete(@NonNull Task<DocumentReference> task) {
 
-                                                customer.document(id).update("taka", daubill).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                customer.document(id).update("taka", daubill,"totalPaytaka",totalpayTemp).addOnCompleteListener(new OnCompleteListener<Void>() {
                                                     @Override
                                                     public void onComplete(@NonNull Task<Void> task) {
                                                         customer.document(id).update("lastTotal", 00.0).addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -425,6 +471,73 @@ public class CustomerProfileViewActivity extends AppCompatActivity {
                                     }if (uid!=null) {
 
 
+                                        CollectionReference myInfoUID = FirebaseFirestore.getInstance()
+                                                .collection("users").document(user_id).collection("DukanInfo");
+
+
+                                        myInfo.addSnapshotListener(new EventListener<QuerySnapshot>() {
+                                            @Override
+                                            public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
+
+                                                if (e != null) {
+
+                                                    return;
+                                                }
+                                                assert queryDocumentSnapshots != null;
+                                                for (QueryDocumentSnapshot doc : queryDocumentSnapshots) {
+                                                    if (doc.get("myid") != null) {
+                                                        myinfoid = doc.getId();
+                                                    }
+                                                    if (doc.get("activeBalance") != null) {
+
+                                                        Double activeBalanceConvert = Double.parseDouble(doc.get("activeBalance").toString());
+                                                        activeBalance = activeBalanceConvert;
+                                                    }
+
+                                                    if (doc.get("totalpaybil") != null) {
+
+                                                        Double dueBalanceConvert = Double.parseDouble(doc.get("totalpaybil").toString());
+
+                                                        dueBalance = dueBalanceConvert;
+
+
+
+                                                        if (activeBalance!=null){
+                                                            activeBalance += paymonyDouable;
+                                                        }
+
+                                                        if (dueBalance != null){
+                                                            dueBalance += paymonyDouable;
+
+                                                        }
+
+
+
+                                                        Date calendar1 = Calendar.getInstance().getTime();
+                                                        @SuppressLint("SimpleDateFormat")
+                                                        DateFormat df1 = new SimpleDateFormat("yyyyMMdd");
+                                                        String todayString = df1.format(calendar1);
+                                                        final int datenew = Integer.parseInt(todayString);
+
+                                                        CollectionReference myInfo = FirebaseFirestore.getInstance()
+                                                                .collection("users").document(user_id).collection("DukanInfo");
+
+                                                        if (myinfoid!=null){
+                                                            myInfo.document(myinfoid).update("activeBalance",activeBalance,"totalpaybil",dueBalance,"date",datenew).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                                @Override
+                                                                public void onComplete(@NonNull Task<Void> task) {
+
+
+                                                                }
+                                                            });
+
+                                                        }
+
+                                                    }
+                                                }
+
+                                            }
+                                        });
 
                                         final CollectionReference customer = FirebaseFirestore.getInstance().collection("users").document(user_id).collection("UnknownCustomer");
 
@@ -432,7 +545,7 @@ public class CustomerProfileViewActivity extends AppCompatActivity {
                                            @Override
                                            public void onComplete(@NonNull Task<DocumentReference> task) {
 
-                                               customer.document(uid).update("taka", daubill).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                               customer.document(uid).update("taka", daubill,"totalPaytaka",totalpayTemp).addOnCompleteListener(new OnCompleteListener<Void>() {
                                                    @Override
                                                    public void onComplete(@NonNull Task<Void> task) {
                                                        customer.document(uid).update("lastTotal", 00.0).addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -476,12 +589,14 @@ public class CustomerProfileViewActivity extends AppCompatActivity {
                             final Button okButton = dialogpayment.findViewById(R.id.addMoneyButtonproductsale);
                             Button cancelButton = dialogpayment.findViewById(R.id.cancelButtonproductsale);
 
-                            final TextView productname,productSinglePrice,paymentProductQuantidy,paymentProductToatalPrice;
+                            final TextView productname,productSinglePrice,paymentProductQuantidy
+                                    ,paymentProductToatalPrice,currentpaymentProduct;
 
                             productname= dialogpayment.findViewById(R.id.productname);
                             productSinglePrice= dialogpayment.findViewById(R.id.productSinglePrice);
                             paymentProductQuantidy= dialogpayment.findViewById(R.id.paymentProductQuantidy);
                             paymentProductToatalPrice = dialogpayment.findViewById(R.id.paymentProductToatalPrice);
+                            currentpaymentProduct = dialogpayment.findViewById(R.id.currentpaymentProduct);
 
 
                             okButton.setOnClickListener(new View.OnClickListener() {
@@ -491,9 +606,14 @@ public class CustomerProfileViewActivity extends AppCompatActivity {
 
 
                                     final String proname = productname.getText().toString();
-                                    String proSingPrice = productSinglePrice.getText().toString();
+                                    final String proSingPrice = productSinglePrice.getText().toString();
                                     final String proQuatidy = paymentProductQuantidy.getText().toString();
-                                    final String paymony = paymentProductToatalPrice.getText().toString();
+                                    final String totalPraice = paymentProductToatalPrice.getText().toString();
+                                    final String currentpayment = currentpaymentProduct.getText().toString();
+
+                                    double totalPay  = Double.parseDouble(totalpayment.getText().toString());
+                                    double currentpaymentD  = Double.parseDouble(totalpayment.getText().toString());
+
 
                                     if (proname.isEmpty()){
                                         Toast.makeText(CustomerProfileViewActivity.this, "product Name ", Toast.LENGTH_SHORT).show();
@@ -507,7 +627,11 @@ public class CustomerProfileViewActivity extends AppCompatActivity {
                                         Toast.makeText(CustomerProfileViewActivity.this, "Quantity", Toast.LENGTH_SHORT).show();
                                         return;
                                     }
-                                    if (paymony.isEmpty()){
+                                    if (totalPraice.isEmpty()){
+                                        Toast.makeText(CustomerProfileViewActivity.this, "Total price", Toast.LENGTH_SHORT).show();
+                                        return;
+                                    }
+                                    if (currentpayment.isEmpty()){
                                         Toast.makeText(CustomerProfileViewActivity.this, "pay maony", Toast.LENGTH_SHORT).show();
                                         return;
                                     }
@@ -523,7 +647,8 @@ public class CustomerProfileViewActivity extends AppCompatActivity {
 
                                     final double prosPrice  = Double.parseDouble(proSingPrice);
                                     final double proquantdy  = Double.parseDouble(proQuatidy);
-                                    final double proTotal  = Double.parseDouble(paymony);
+                                    final double proTotal  = Double.parseDouble(totalPraice);
+                                    final double currentpaymentF  = Double.parseDouble(currentpayment);
 
 
                                     double dautakaccustomer = 00.0;
@@ -534,24 +659,62 @@ public class CustomerProfileViewActivity extends AppCompatActivity {
                                         dautakaccustomer = Double.parseDouble(totaldue.getText().toString().trim());
                                     }
 
-                                    double withpaytaka = dautakaccustomer + proTotal;
+                                    double totalPrice = proTotal;
+
+
+                                    final double withpaytaka = totalPrice - currentpaymentF;
+
+                                    final double totalpayTemp = totalPay + withpaytaka;
+
                                     final double daubill = withpaytaka;
 
+                                    myInfo.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                            for (QueryDocumentSnapshot document : Objects.requireNonNull(task.getResult())) {
+                                                MyInfoNote myInfoNote = document.toObject(MyInfoNote.class);
 
-                                    if (dueBalance != null){
+                                                activeBalance = myInfoNote.getActiveBalance();
 
-                                        dueBalance += proTotal;
+                                                dueBalance = myInfoNote.getTotalpaybil();
+                                            }
 
-                                    }
+                                            if (activeBalance!=null){
+                                                activeBalance += currentpaymentF;
+                                            }
 
-                                    myInfo.document(myinfoid).update("activeBalance",activeBalance,"totalpaybil",dueBalance,"date",datenew);
+                                            if (dueBalance != null){
+                                                dueBalance += withpaytaka;
 
+                                            }
+                                            Date calendar1 = Calendar.getInstance().getTime();
+                                            @SuppressLint("SimpleDateFormat")
+                                            DateFormat df1 = new SimpleDateFormat("yyyyMMdd");
+                                            String todayString = df1.format(calendar1);
+                                            final int datenew = Integer.parseInt(todayString);
+
+                                            CollectionReference myInfo = FirebaseFirestore.getInstance()
+                                                    .collection("users").document(user_id).collection("DukanInfo");
+
+                                            if (myinfoid!=null){
+                                                myInfo.document(myinfoid).update("activeBalance",activeBalance,"totalpaybil",dueBalance,"date",datenew).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                    @Override
+                                                    public void onComplete(@NonNull Task<Void> task) {
+
+
+                                                    }
+                                                });
+
+                                            }
+
+                                        }
+                                    });
                                     if (id!=null){
 
                                         final CollectionReference customer = FirebaseFirestore.getInstance()
                                                 .collection("users").document(user_id).collection("Customers").document(id).collection("saleProduct");
 
-                                        customer.add(new SaleProductCutomerNote(null,proname,prosPrice,proquantdy,proTotal,datenew,0,true,true))
+                                        customer.add(new SaleProductCutomerNote(null,proname,prosPrice,proquantdy,totalPrice,datenew,0,true,true))
                                                 .addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
                                                     @Override
                                                     public void onComplete(@NonNull Task<DocumentReference> task) {
@@ -564,7 +727,7 @@ public class CustomerProfileViewActivity extends AppCompatActivity {
 
                                                                     final CollectionReference customer = FirebaseFirestore.getInstance()
                                                                             .collection("users").document(user_id).collection("Customers");
-                                                                           customer.document(id).update("taka", daubill).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                                           customer.document(id).update("taka", daubill,"totalPaytaka",totalpayTemp).addOnCompleteListener(new OnCompleteListener<Void>() {
                                                                         @Override
                                                                         public void onComplete(@NonNull Task<Void> task) {
 
@@ -623,7 +786,7 @@ public class CustomerProfileViewActivity extends AppCompatActivity {
 
                                                                      final CollectionReference customer = FirebaseFirestore.getInstance()
                                                                              .collection("users").document(user_id).collection("UnknownCustomer");
-                                                                     customer.document(uid).update("taka", daubill).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                                     customer.document(uid).update("taka", daubill,"totalPaytaka",totalpayTemp).addOnCompleteListener(new OnCompleteListener<Void>() {
                                                                          @Override
                                                                          public void onComplete(@NonNull Task<Void> task) {
                                                                              customer.document(uid).update("lastTotal", 00.0).addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -747,7 +910,7 @@ public class CustomerProfileViewActivity extends AppCompatActivity {
                             Double payment = totalsum - takaD;
 
 
-                            totalpayment.setText(payment + "");
+                            totalpayment.setText(totalPaytakaup);
                         }
                     });
 
@@ -800,7 +963,7 @@ public class CustomerProfileViewActivity extends AppCompatActivity {
 
                             Double payment = totalsum - takaD;
 
-                            totalpayment.setText(payment + "");
+                            totalpayment.setText(totalPaytakaup);
                         }
                     });
 

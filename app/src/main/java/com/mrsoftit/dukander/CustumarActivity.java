@@ -8,6 +8,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
@@ -37,6 +38,10 @@ import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
@@ -59,6 +64,11 @@ public class CustumarActivity extends AppCompatActivity {
 
  TextView customer_text_view;
     RecyclerView recyclerView;
+
+    String myinfoid;
+    Double dueBalance ;
+    Double activeBalance;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -202,10 +212,12 @@ public class CustumarActivity extends AppCompatActivity {
                             String id = documentSnapshot.getId();
                             String imageurl = customerNote.getImageUrl();
                             String name = customerNote.getNameCUstomer();
+                            double totalPaytakaget = customerNote.getTotalPaytaka();
                             String phone = customerNote.getPhone();
                             double takadobul = customerNote.getTaka();
 
                             String taka = Double.toString(takadobul);
+                            String totalPaytaka = Double.toString(totalPaytakaget);
 
                             String addreds = customerNote.getAddres();
 
@@ -222,6 +234,9 @@ public class CustumarActivity extends AppCompatActivity {
 
                                 pdfIntent.putExtra("taka", taka);
                             }
+                            if (totalPaytaka != null) {
+                                pdfIntent.putExtra("totalPaytaka", totalPaytaka);
+                            }
 
                             if (addreds != null) {
                                 pdfIntent.putExtra("addreds", addreds);
@@ -233,6 +248,11 @@ public class CustumarActivity extends AppCompatActivity {
                         if(which == 2){
                             CustomerNote customerNote = documentSnapshot.toObject(CustomerNote.class);
                             String name = customerNote.getNameCUstomer();
+                            String id = documentSnapshot.getId();
+                            String imageurl = customerNote.getImageUrl();
+                            final double totalPaytakaget = customerNote.getTotalPaytaka();
+                            String phone = customerNote.getPhone();
+                            final double takadobul = customerNote.getTaka();
 
                             new AlertDialog.Builder(CustumarActivity.this)
                                     .setIcon(R.drawable.ic_delete)
@@ -240,9 +260,87 @@ public class CustumarActivity extends AppCompatActivity {
                                     .setMessage("Confirm Cancel?")
                                     .setPositiveButton("Yes",
                                             new DialogInterface.OnClickListener() {
-                                                public void onClick(DialogInterface dialog, int which) {
+                                                public void onClick(final DialogInterface dialog, int which) {
+
+                                                    CollectionReference myInfo = FirebaseFirestore.getInstance()
+                                                            .collection("users").document(user_id).collection("DukanInfo");
+
+
+                                                    myInfo.addSnapshotListener(new EventListener<QuerySnapshot>() {
+                                                        @Override
+                                                        public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
+
+                                                            if (e != null) {
+
+                                                                return;
+                                                            }
+                                                            assert queryDocumentSnapshots != null;
+                                                            for (QueryDocumentSnapshot doc : queryDocumentSnapshots) {
+                                                                if (doc.get("myid") != null) {
+                                                                    myinfoid = doc.getId();
+                                                                }
+                                                                if (doc.get("activeBalance") != null) {
+
+                                                                    Double activeBalanceConvert = Double.parseDouble(doc.get("activeBalance").toString());
+                                                                    activeBalance = activeBalanceConvert;
+                                                                }
+
+                                                                if (doc.get("totalpaybil") != null) {
+
+                                                                    Double dueBalanceConvert = Double.parseDouble(doc.get("totalpaybil").toString());
+
+                                                                    dueBalance = dueBalanceConvert;
+
+                                                                    if (activeBalance!=null ){
+                                                                        if ( activeBalance >= totalPaytakaget){
+                                                                            activeBalance -= totalPaytakaget;
+                                                                        }else {
+                                                                            activeBalance = 0.0;
+                                                                        }
+
+                                                                    }
+
+                                                                    if (dueBalance != null){
+
+                                                                        if ( dueBalance >= takadobul){
+                                                                            dueBalance -= takadobul;
+                                                                        }else {
+                                                                            dueBalance = 0.0;
+                                                                        }
+
+
+                                                                    }
+
+
+                                                                    Date calendar1 = Calendar.getInstance().getTime();
+                                                                    @SuppressLint("SimpleDateFormat")
+                                                                    DateFormat df1 = new SimpleDateFormat("yyyyMMdd");
+                                                                    String todayString = df1.format(calendar1);
+                                                                    final int datenew = Integer.parseInt(todayString);
+
+                                                                    CollectionReference myInfo = FirebaseFirestore.getInstance()
+                                                                            .collection("users").document(user_id).collection("DukanInfo");
+
+                                                                    if (myinfoid!=null){
+                                                                        myInfo.document(myinfoid).update("activeBalance",activeBalance,"totalpaybil",dueBalance,"date",datenew).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                                            @Override
+                                                                            public void onComplete(@NonNull Task<Void> task) {
+
+
+                                                                            }
+                                                                        });
+
+                                                                    }
+
+                                                                }
+                                                            }
+                                                        }
+                                                    });
+
+
                                                     adapter.deleteItem(position);
                                                     dialog.dismiss();
+
                                                 }
                                             })
                                     .setNegativeButton("No", new DialogInterface.OnClickListener() {
@@ -267,7 +365,7 @@ public class CustumarActivity extends AppCompatActivity {
 
     private void recyclear(String search) {
 
-        Query query = customer.whereLessThanOrEqualTo("nameCUstomer",search).orderBy("nameCUstomer", Query.Direction.ASCENDING);
+        Query query = customer.orderBy("search").startAt(search.toLowerCase()).endAt(search.toLowerCase()+ "\uf8ff");
 
         FirestoreRecyclerOptions<CustomerNote> options = new FirestoreRecyclerOptions.Builder<CustomerNote>()
                 .setQuery(query, CustomerNote.class)
@@ -335,10 +433,12 @@ public class CustumarActivity extends AppCompatActivity {
                             String id = documentSnapshot.getId();
                             String imageurl = customerNote.getImageUrl();
                             String name = customerNote.getNameCUstomer();
+                            double totalPaytakaget = customerNote.getTotalPaytaka();
                             String phone = customerNote.getPhone();
                             double takadobul = customerNote.getTaka();
 
                             String taka = Double.toString(takadobul);
+                            String totalPaytaka = Double.toString(totalPaytakaget);
 
                             String addreds = customerNote.getAddres();
 
@@ -353,6 +453,9 @@ public class CustumarActivity extends AppCompatActivity {
                             pdfIntent.putExtra("phone", phone);
                             if (taka != null) {
                                 pdfIntent.putExtra("taka", taka);
+                            }
+                            if (totalPaytaka != null) {
+                                pdfIntent.putExtra("totalPaytaka", totalPaytaka);
                             }
                             if (addreds != null) {
                                 pdfIntent.putExtra("addreds", addreds);
@@ -371,6 +474,8 @@ public class CustumarActivity extends AppCompatActivity {
                                     .setPositiveButton("Yes",
                                             new DialogInterface.OnClickListener() {
                                                 public void onClick(DialogInterface dialog, int which) {
+
+
                                                     adapter.deleteItem(position);
                                                     dialog.dismiss();
                                                 }
@@ -431,6 +536,8 @@ public class CustumarActivity extends AppCompatActivity {
 
             @Override
             public boolean onQueryTextChange(String newText) {
+
+                recyclear(newText);
 
                 return false;
             }
